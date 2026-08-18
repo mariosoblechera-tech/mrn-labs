@@ -151,6 +151,24 @@
   .pricing-perks li{padding-left:24px;position:relative;font-size:.92rem;color:rgba(255,255,255,.85);}
   .pricing-perks li::before{content:"✓";position:absolute;left:0;color:var(--clay);}
 
+  /* LEAD FORM */
+  .lead-form{margin-top:36px;display:flex;flex-direction:column;gap:20px;}
+  .form-grid-2{display:grid;grid-template-columns:1fr;gap:20px;}
+  .form-row{display:flex;flex-direction:column;gap:8px;}
+  .form-row label{font-size:.85rem;font-weight:600;color:var(--ink);}
+  .form-row input,.form-row textarea{
+    font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);
+    background:var(--white);border:1px solid var(--line);border-radius:12px;
+    padding:13px 16px;resize:vertical;
+  }
+  .form-row input:focus,.form-row textarea:focus{outline:none;border-color:var(--clay);}
+  .lead-form .btn-primary{align-self:flex-start;}
+  .lead-form .btn-primary:disabled{opacity:.6;cursor:not-allowed;}
+  .form-status{font-size:.9rem;min-height:1.2em;}
+  .form-status.ok{color:#3F7D4F;}
+  .form-status.error{color:#B23A3A;}
+  @media(min-width:560px){ .form-grid-2{grid-template-columns:1fr 1fr;} }
+
   /* FOOTER */
   footer{padding:56px 0 32px;border-top:1px solid var(--line);}
   .footer-grid{display:grid;grid-template-columns:1fr;gap:32px;}
@@ -397,9 +415,52 @@
     </div>
   </section>
 
+  <!-- LEAD FORM -->
+  <section id="contacto" class="bg-cream">
+    <div class="container reveal" style="max-width:640px;">
+      <span class="eyebrow">Solicitar propuesta</span>
+      <h2 class="section-h2">Cuéntanos sobre tu restaurante</h2>
+      <p class="section-sub">Rellena esto y te escribimos con una propuesta a medida en menos de 24 horas.</p>
+
+      <form id="leadForm" class="lead-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="Nueva solicitud de propuesta — MRN Labs">
+
+        <div class="form-row">
+          <label for="lf-nombre">Nombre</label>
+          <input id="lf-nombre" type="text" name="Nombre" required autocomplete="name">
+        </div>
+
+        <div class="form-row">
+          <label for="lf-restaurante">Nombre del restaurante</label>
+          <input id="lf-restaurante" type="text" name="Restaurante" required autocomplete="organization">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label for="lf-email">Email</label>
+            <input id="lf-email" type="email" name="Email" required autocomplete="email">
+          </div>
+          <div class="form-row">
+            <label for="lf-telefono">Teléfono</label>
+            <input id="lf-telefono" type="tel" name="Teléfono" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="lf-mensaje">Cuéntanos un poco más (opcional)</label>
+          <textarea id="lf-mensaje" name="Mensaje" rows="4" placeholder="Nº de locales, canales que usáis ahora, volumen de mensajes al mes..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="leadFormSubmit">Enviar solicitud</button>
+        <p id="leadFormStatus" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
 </main>
 
-<footer id="contacto">
+<footer>
   <div class="container footer-grid">
     <div class="footer-cols">
       <div class="footer-col">
@@ -442,6 +503,39 @@
       if (!isOpen) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
     });
   });
+
+  // lead form submit (AJAX to Formspree)
+  const leadForm = document.getElementById('leadForm');
+  if (leadForm) {
+    const submitBtn = document.getElementById('leadFormSubmit');
+    const status = document.getElementById('leadFormStatus');
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      status.textContent = 'Enviando...';
+      status.className = 'form-status';
+      try {
+        const res = await fetch(leadForm.action, {
+          method: 'POST',
+          body: new FormData(leadForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          leadForm.reset();
+          status.textContent = 'Listo, hemos recibido tu solicitud. Te escribimos en menos de 24 horas.';
+          status.className = 'form-status ok';
+        } else {
+          status.textContent = 'No se ha podido enviar. Prueba de nuevo o escríbenos a hola@mrnlabs.com.';
+          status.className = 'form-status error';
+        }
+      } catch (err) {
+        status.textContent = 'No se ha podido enviar. Prueba de nuevo o escríbenos a hola@mrnlabs.com.';
+        status.className = 'form-status error';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  }
 
   // reveal on scroll
   const revealEls = document.querySelectorAll('.reveal');
