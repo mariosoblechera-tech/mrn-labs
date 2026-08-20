@@ -572,5 +572,155 @@
   }
 </script>
 
+<!-- ============================================================= -->
+<!-- WIDGET DE CHAT "MARNI" · MRN Labs                             -->
+<!-- ============================================================= -->
+<script>
+(function () {
+  // ---- CONFIG ----------------------------------------------------
+  var WEBHOOK_URL = "https://n8npanel.lumarym.cloud/webhook/chat";
+  var WELCOME = "¡Hola! Soy Marni, el asistente de MRN Labs 👋 ¿En qué puedo ayudarte? Puedo contarte cómo llenamos más mesas o reservarte una demo gratis.";
+  // ----------------------------------------------------------------
+
+  // sessionId único y estable por visitante (se guarda en el navegador)
+  var sessionId = localStorage.getItem("marni_session_id");
+  if (!sessionId) {
+    sessionId = (crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : "s-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+    localStorage.setItem("marni_session_id", sessionId);
+  }
+
+  // ---- ESTILOS ---------------------------------------------------
+  var css = `
+  #marni-launcher{position:fixed;right:22px;bottom:22px;z-index:99999;width:60px;height:60px;border:none;border-radius:999px;
+    background:#B5652E;color:#fff;cursor:pointer;box-shadow:0 8px 24px rgba(35,26,20,.28);display:flex;align-items:center;
+    justify-content:center;transition:transform .18s ease, box-shadow .18s ease}
+  #marni-launcher:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 12px 30px rgba(35,26,20,.34)}
+  #marni-launcher svg{width:28px;height:28px}
+  #marni-panel{position:fixed;right:22px;bottom:94px;z-index:99999;width:370px;max-width:calc(100vw - 32px);height:540px;
+    max-height:calc(100vh - 120px);background:#FFFCF7;border-radius:20px;box-shadow:0 20px 60px rgba(35,26,20,.30);
+    display:none;flex-direction:column;overflow:hidden;font-family:Inter,system-ui,-apple-system,sans-serif;
+    border:1px solid #efe6d8}
+  #marni-panel.open{display:flex;animation:marniIn .22s ease}
+  @keyframes marniIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  #marni-head{background:#B5652E;color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px}
+  #marni-head .marni-avatar{width:38px;height:38px;border-radius:999px;background:rgba(255,255,255,.18);display:flex;
+    align-items:center;justify-content:center;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:18px}
+  #marni-head .marni-title{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:17px;line-height:1.1}
+  #marni-head .marni-sub{font-size:12px;opacity:.85;margin-top:2px}
+  #marni-head .marni-close{margin-left:auto;background:none;border:none;color:#fff;cursor:pointer;opacity:.85;font-size:22px;
+    line-height:1;padding:4px}
+  #marni-head .marni-close:hover{opacity:1}
+  #marni-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#FFFCF7}
+  .marni-msg{max-width:82%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+  .marni-bot{align-self:flex-start;background:#F6EFE4;color:#231A14;border-bottom-left-radius:4px}
+  .marni-user{align-self:flex-end;background:#B5652E;color:#fff;border-bottom-right-radius:4px}
+  .marni-typing{align-self:flex-start;background:#F6EFE4;border-bottom-left-radius:4px;padding:12px 14px;display:flex;gap:4px}
+  .marni-typing span{width:7px;height:7px;border-radius:50%;background:#b09a82;animation:marniBlink 1.2s infinite}
+  .marni-typing span:nth-child(2){animation-delay:.2s}.marni-typing span:nth-child(3){animation-delay:.4s}
+  @keyframes marniBlink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+  #marni-form{display:flex;gap:8px;padding:12px;border-top:1px solid #efe6d8;background:#FFFCF7}
+  #marni-input{flex:1;border:1px solid #e2d6c4;border-radius:999px;padding:11px 15px;font-size:14px;font-family:inherit;
+    outline:none;color:#231A14;background:#fff}
+  #marni-input:focus{border-color:#B5652E}
+  #marni-send{border:none;background:#B5652E;color:#fff;border-radius:999px;width:42px;height:42px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  #marni-send:disabled{opacity:.5;cursor:default}
+  #marni-send svg{width:20px;height:20px}
+  @media(max-width:480px){#marni-panel{right:8px;left:8px;width:auto;bottom:88px}}
+  `;
+  var style = document.createElement("style");
+  style.textContent = css;
+  document.head.appendChild(style);
+
+  // ---- MARKUP ----------------------------------------------------
+  var launcher = document.createElement("button");
+  launcher.id = "marni-launcher";
+  launcher.setAttribute("aria-label", "Abrir chat");
+  launcher.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
+
+  var panel = document.createElement("div");
+  panel.id = "marni-panel";
+  panel.innerHTML =
+    '<div id="marni-head">' +
+      '<div class="marni-avatar">M</div>' +
+      '<div><div class="marni-title">Marni</div><div class="marni-sub">Asistente de MRN Labs · en línea</div></div>' +
+      '<button class="marni-close" aria-label="Cerrar">&times;</button>' +
+    '</div>' +
+    '<div id="marni-msgs"></div>' +
+    '<form id="marni-form">' +
+      '<input id="marni-input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off"/>' +
+      '<button id="marni-send" type="submit" aria-label="Enviar">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>' +
+      '</button>' +
+    '</form>';
+
+  document.body.appendChild(launcher);
+  document.body.appendChild(panel);
+
+  var msgs = panel.querySelector("#marni-msgs");
+  var form = panel.querySelector("#marni-form");
+  var input = panel.querySelector("#marni-input");
+  var sendBtn = panel.querySelector("#marni-send");
+  var started = false;
+
+  function addMsg(text, who) {
+    var el = document.createElement("div");
+    el.className = "marni-msg " + (who === "user" ? "marni-user" : "marni-bot");
+    el.textContent = text;
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return el;
+  }
+  function showTyping() {
+    var t = document.createElement("div");
+    t.className = "marni-typing";
+    t.innerHTML = "<span></span><span></span><span></span>";
+    msgs.appendChild(t);
+    msgs.scrollTop = msgs.scrollHeight;
+    return t;
+  }
+
+  function toggle(open) {
+    panel.classList.toggle("open", open);
+    if (open) {
+      if (!started) { addMsg(WELCOME, "bot"); started = true; }
+      setTimeout(function () { input.focus(); }, 100);
+    }
+  }
+  launcher.addEventListener("click", function () { toggle(!panel.classList.contains("open")); });
+  panel.querySelector(".marni-close").addEventListener("click", function () { toggle(false); });
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var text = input.value.trim();
+    if (!text) return;
+    addMsg(text, "user");
+    input.value = "";
+    input.disabled = true; sendBtn.disabled = true;
+    var typing = showTyping();
+    try {
+      var res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text, sessionId: sessionId })
+      });
+      var data = await res.json().catch(function () { return {}; });
+      typing.remove();
+      addMsg(data.reply || "Ups, no he podido responder ahora mismo. Prueba de nuevo o escríbenos a hola@mrnlabs.io", "bot");
+    } catch (err) {
+      typing.remove();
+      addMsg("Ha habido un problema de conexión. Inténtalo otra vez en un momento.", "bot");
+    } finally {
+      input.disabled = false; sendBtn.disabled = false; input.focus();
+    }
+  });
+})();
+</script>
+<!-- ============================================================= -->
+<!-- FIN WIDGET MARNI                                              -->
+<!-- ============================================================= -->
+
 </body>
 </html>
