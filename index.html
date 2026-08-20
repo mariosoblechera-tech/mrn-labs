@@ -620,6 +620,9 @@
   .marni-typing span{width:7px;height:7px;border-radius:50%;background:#b09a82;animation:marniBlink 1.2s infinite}
   .marni-typing span:nth-child(2){animation-delay:.2s}.marni-typing span:nth-child(3){animation-delay:.4s}
   @keyframes marniBlink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+  .marni-cta{align-self:flex-start;background:#B5652E;color:#fff;border:none;border-radius:999px;
+    padding:10px 18px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;margin-top:-2px}
+  .marni-cta:hover{background:#965021}
   #marni-form{display:flex;gap:8px;padding:12px;border-top:1px solid #efe6d8;background:#FFFCF7}
   #marni-input{flex:1;border:1px solid #e2d6c4;border-radius:999px;padding:11px 15px;font-size:16px;font-family:inherit;
     outline:none;color:#231A14;background:#fff}
@@ -672,6 +675,20 @@
     msgs.appendChild(el);
     msgs.scrollTop = msgs.scrollHeight;
     return el;
+  }
+  function addCta(label) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "marni-cta";
+    btn.textContent = label || "Ir al formulario";
+    btn.addEventListener("click", function () {
+      toggle(false);
+      var target = document.getElementById("contacto");
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    msgs.appendChild(btn);
+    msgs.scrollTop = msgs.scrollHeight;
+    return btn;
   }
   function showTyping() {
     var t = document.createElement("div");
@@ -727,6 +744,7 @@
       var data = await res.json().catch(function () { return {}; });
       typing.remove();
       addMsg(data.reply || "Ups, no he podido responder ahora mismo. Prueba de nuevo o escríbenos a hola@mrnlabs.io", "bot");
+      if (data.action === "open_form") addCta(data.ctaLabel || "Rellenar formulario de contacto");
     } catch (err) {
       typing.remove();
       addMsg("Ha habido un problema de conexión. Inténtalo otra vez en un momento.", "bot");
