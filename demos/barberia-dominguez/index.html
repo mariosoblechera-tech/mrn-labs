@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbería Domínguez — Barbería clásica en Madrid</title>
+<meta name="description" content="Barbería clásica y moderna. Corte, barba y afeitado tradicional. Reserva tu cita online en segundos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5">
+</head>
+<body>
+
+<!-- ============ CABECERA ============ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#inicio" class="logo">
+      <span class="logo__mark">B</span>
+      <span class="logo__text">Barbería<strong>Domínguez</strong></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#reservar" class="btn btn--primary nav__cta">Pedir cita</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <!-- IMAGEN 1: cambia el src por tu foto (recomendado 1600x1000px) -->
+  <img class="hero__bg"
+       src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1600&q=80"
+       alt="Interior de la barbería">
+  <div class="hero__overlay"></div>
+
+  <div class="container hero__content">
+    <p class="hero__eyebrow">Desde 1998 · Madrid Centro</p>
+    <h1 class="hero__title">El arte de un buen corte</h1>
+    <p class="hero__text">
+      Barbería clásica con trato cercano. Corte a tijera, arreglo de barba
+      y afeitado tradicional a navaja. Sin prisas y con cita previa.
+    </p>
+    <div class="hero__actions">
+      <a href="#reservar" class="btn btn--primary btn--lg">Reservar cita</a>
+      <a href="tel:+34910000000" class="btn btn--ghost btn--lg">Llamar: 910 000 000</a>
+    </div>
+    <ul class="hero__facts">
+      <li><strong>4,9★</strong> 320 reseñas</li>
+      <li><strong>25 min</strong> corte medio</li>
+      <li><strong>L–S</strong> 10:00 – 20:30</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="section" id="servicios">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Servicios</p>
+      <h2 class="section__title">Precios claros, sin sorpresas</h2>
+      <p class="section__sub">Todos los servicios incluyen lavado, toalla caliente y peinado final.</p>
+    </header>
+
+    <div class="services">
+      <article class="service">
+        <div class="service__top">
+          <h3>Corte de pelo</h3>
+          <span class="service__price">16 €</span>
+        </div>
+        <p>Corte a máquina y tijera adaptado a tu tipo de pelo. Incluye lavado y peinado.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Arreglo de barba</h3>
+          <span class="service__price">12 €</span>
+        </div>
+        <p>Perfilado con navaja, toalla caliente y aceite hidratante para la piel.</p>
+        <span class="service__meta">20 min</span>
+      </article>
+
+      <article class="service service--featured">
+        <span class="service__tag">Más pedido</span>
+        <div class="service__top">
+          <h3>Corte + barba</h3>
+          <span class="service__price">25 €</span>
+        </div>
+        <p>El pack completo. Salir con el look terminado de arriba abajo.</p>
+        <span class="service__meta">45 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Afeitado clásico</h3>
+          <span class="service__price">18 €</span>
+        </div>
+        <p>Afeitado tradicional a navaja con jabón caliente y bálsamo final.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Corte infantil</h3>
+          <span class="service__price">11 €</span>
+        </div>
+        <p>Para los más pequeños, con paciencia y sin agobios. Hasta 12 años.</p>
+        <span class="service__meta">25 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Corte jubilados</h3>
+          <span class="service__price">10 €</span>
+        </div>
+        <p>Tarifa especial de lunes a jueves para mayores de 65 años.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOBRE NOSOTROS ============ -->
+<section class="section section--alt" id="nosotros">
+  <div class="container about">
+    <div class="about__media">
+      <!-- IMAGEN 2: cambia el src (recomendado 900x1100px) -->
+      <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=900&q=80"
+           alt="Barbero trabajando en la barbería" loading="lazy">
+    </div>
+    <div class="about__text">
+      <p class="eyebrow">La casa</p>
+      <h2 class="section__title">Tres generaciones con las mismas tijeras</h2>
+      <p>
+        Abrimos en 1998 en un local pequeño del barrio y seguimos en el mismo sitio.
+        Aquí no hay prisas: cada cliente tiene su tiempo, su silla y su café si le apetece.
+      </p>
+      <p>
+        Trabajamos con producto profesional, esterilizamos el material entre servicios
+        y atendemos siempre con cita para que nadie tenga que esperar de pie.
+      </p>
+      <ul class="checklist">
+        <li>Local accesible, sin escalones en la entrada</li>
+        <li>Pago con tarjeta, Bizum o efectivo</li>
+        <li>Cita previa online o por teléfono</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<section class="section" id="galeria">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Galería</p>
+      <h2 class="section__title">Nuestro trabajo</h2>
+      <p class="section__sub">Sustituye estas imágenes por fotos reales del local y de tus cortes.</p>
+    </header>
+
+    <div class="gallery">
+      <!-- IMÁGENES 3 a 8: cambia cada src (recomendado 800x800px) -->
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80" alt="Corte de pelo degradado" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Arreglo de barba con navaja" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&q=80" alt="Herramientas de barbería" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800&q=80" alt="Silla de barbero clásica" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80" alt="Detalle del interior del local" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=800&q=80" alt="Producto de peinado" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPO ============ -->
+<section class="section section--alt" id="equipo">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Equipo</p>
+      <h2 class="section__title">Quién te va a atender</h2>
+    </header>
+
+    <div class="team">
+      <!-- IMÁGENES 9 a 11: retratos del equipo (recomendado 600x600px) -->
+      <article class="member">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Retrato de Antonio" loading="lazy">
+        <h3>Antonio</h3>
+        <p>Maestro barbero · 25 años de oficio</p>
+      </article>
+      <article class="member">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Retrato de Rubén" loading="lazy">
+        <h3>Rubén</h3>
+        <p>Especialista en degradados y diseño</p>
+      </article>
+      <article class="member">
+        <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=600&q=80" alt="Retrato de Lucía" loading="lazy">
+        <h3>Lucía</h3>
+        <p>Barbería clásica y afeitado a navaja</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESERVAR (GOOGLE CALENDAR) ============ -->
+<section class="section" id="reservar">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Reservas</p>
+      <h2 class="section__title">Elige tu día y tu hora</h2>
+      <p class="section__sub">
+        Selecciona un hueco libre en el calendario. Recibirás la confirmación
+        en tu correo al instante.
+      </p>
+    </header>
+
+    <!-- Selector de barbero: cada uno con su enlace de Google Calendar -->
+    <!-- Cada barbero lleva su propia página de citas de Google.
+         data-embed = URL larga del iframe (Compartir -> Insertar)
+         data-link  = enlace corto para compartir (calendar.app.google/...)
+         Si rehaces la página de citas en Google, actualiza AMBOS. -->
+    <div class="barbers" role="tablist" aria-label="Elige tu barbero">
+      <!-- PENDIENTE: pega aquí el enlace de citas de Roberto (ver README) -->
+      <button class="barber is-active" role="tab" aria-selected="true"
+              data-name="Roberto"
+              data-embed=""
+              data-link="">
+        <span class="barber__avatar">R</span>
+        <span class="barber__info">
+          <strong>Roberto</strong>
+          <small>Corte y barba</small>
+        </span>
+      </button>
+
+      <!-- PENDIENTE: pega aquí el enlace de citas de Néstor (ver README) -->
+      <button class="barber" role="tab" aria-selected="false"
+              data-name="Néstor"
+              data-embed=""
+              data-link="">
+        <span class="barber__avatar">N</span>
+        <span class="barber__info">
+          <strong>Néstor</strong>
+          <small>Degradados</small>
+        </span>
+      </button>
+
+      <!-- PENDIENTE: pega aquí el enlace de citas de Mario (ver README) -->
+      <button class="barber" role="tab" aria-selected="false"
+              data-name="Mario"
+              data-embed=""
+              data-link="">
+        <span class="barber__avatar">M</span>
+        <span class="barber__info">
+          <strong>Mario</strong>
+          <small>Afeitado clásico</small>
+        </span>
+      </button>
+    </div>
+
+    <div class="booking">
+      <p class="booking__who">Reservando con <strong id="barberName">Roberto</strong></p>
+
+      <!-- Widget oficial de Google Calendar (Appointment Schedule) -->
+      <div class="booking__frame">
+        <!-- El src lo rellena el selector de barbero al pulsar uno.
+             Para arrancar con un calendario por defecto, pega su URL aquí. -->
+        <iframe id="bookingFrame"
+          src=""
+          title="Reserva de citas en Google Calendar"
+          frameborder="0"></iframe>
+      </div>
+
+      <!-- Aviso si ese barbero aún no tiene calendario configurado -->
+      <p class="booking__pending" id="bookingPending" hidden>
+        Este barbero todavía no tiene su calendario conectado.
+        Añade su enlace en <code>index.html</code> o reserva por teléfono.
+      </p>
+
+      <!-- Alternativa: abrir el calendario a pantalla completa -->
+      <div class="booking__fallback">
+        <p>¿Vas con prisa o prefieres verlo a pantalla completa?</p>
+        <a class="btn btn--primary btn--lg" id="bookingLink"
+           href="#" target="_blank" rel="noopener">Abrir calendario completo</a>
+        <a class="btn btn--ghost btn--lg" href="tel:+34910000000">Reservar por teléfono</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="section section--alt" id="contacto">
+  <div class="container contact">
+    <div class="contact__block">
+      <p class="eyebrow">Dónde estamos</p>
+      <h2 class="section__title">Contacto y horario</h2>
+
+      <dl class="info">
+        <div>
+          <dt>Dirección</dt>
+          <dd>Calle de la Tijera, 12 · 28012 Madrid</dd>
+        </div>
+        <div>
+          <dt>Teléfono</dt>
+          <dd><a href="tel:+34910000000">910 000 000</a></dd>
+        </div>
+        <div>
+          <dt>Correo</dt>
+          <dd><a href="mailto:hola@barberiadominguez.es">hola@barberiadominguez.es</a></dd>
+        </div>
+        <div>
+          <dt>Horario</dt>
+          <dd>Lunes a viernes: 10:00 – 20:30<br>Sábado: 10:00 – 14:00<br>Domingo: cerrado</dd>
+        </div>
+      </dl>
+
+      <div class="contact__actions">
+        <a class="btn btn--primary" href="#reservar">Pedir cita</a>
+        <a class="btn btn--ghost" href="https://maps.google.com/?q=Madrid" target="_blank" rel="noopener">Ver en el mapa</a>
+      </div>
+    </div>
+
+    <div class="contact__map">
+      <!-- Sustituye por el iframe de tu ubicación real en Google Maps -->
+      <iframe
+        src="https://www.google.com/maps?q=Puerta+del+Sol,+Madrid&output=embed"
+        title="Mapa de la barbería"
+        width="100%" height="100%" style="border:0" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIE ============ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="logo__mark">B</span>
+      <p>Barbería Domínguez<br><span>Calle de la Tijera, 12 · Madrid</span></p>
+    </div>
+    <nav class="footer__nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <p class="footer__legal">© 2026 Barbería Domínguez. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- Botón fijo de reserva en móvil -->
+<a href="#reservar" class="sticky-cta">Pedir cita</a>
+
+<script>
+  // Menú móvil
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('nav--open');
+    burger.classList.toggle('burger--open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('nav--open');
+    burger.classList.remove('burger--open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+
+  // ---- Selector de barbero ----
+  const frame   = document.getElementById('bookingFrame');
+  const who     = document.getElementById('barberName');
+  const link    = document.getElementById('bookingLink');
+  const pending = document.getElementById('bookingPending');
+
+  // Estado inicial: si el barbero activo no tiene calendario, muestra el aviso
+  // en lugar de un iframe vacío.
+  const activo = document.querySelector('.barber.is-active');
+  if (activo && !activo.dataset.embed) {
+    frame.hidden = true;
+    pending.hidden = false;
+    link.hidden = true;
+  }
+
+  document.querySelectorAll('.barber').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.barber').forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const embed = btn.dataset.embed;
+      const url   = btn.dataset.link;
+      who.textContent = btn.dataset.name;
+
+      if (embed) {
+        // Calendario configurado: se carga en el widget
+        frame.src = embed;
+        frame.hidden = false;
+        pending.hidden = true;
+        link.href = url || embed;
+        link.hidden = false;
+      } else {
+        // Sin enlace todavía: se avisa en lugar de mostrar un iframe roto
+        frame.hidden = true;
+        pending.hidden = false;
+        link.hidden = true;
+      }
+    });
+  });
+
+  // Oculta el botón fijo al llegar a la zona de reservas: si no, tapa
+  // justo los días seleccionables del calendario en móvil.
+  const sticky = document.querySelector('.sticky-cta');
+  const booking = document.getElementById('reservar');
+
+  // Cálculo directo por posición: funciona en cualquier navegador y no
+  // depende de que se dispare ningún observador.
+  const updateSticky = () => {
+    const r = booking.getBoundingClientRect();
+    const solapa = r.top < window.innerHeight - 40 && r.bottom > 0;
+    sticky.classList.toggle('sticky-cta--hidden', solapa);
+  };
+  updateSticky();
+  window.addEventListener('scroll', updateSticky, { passive: true });
+  window.addEventListener('resize', updateSticky);
+
+  // Sombra en la cabecera al hacer scroll
+  const header = document.getElementById('header');
+  const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 20);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+</body>
+</html>
