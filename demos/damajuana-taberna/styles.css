@@ -198,6 +198,19 @@ h2{font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:-.5px;}
 .visit-info dd a:hover{color:var(--accent-ink);}
 .visit-info .btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;}
 
+/* WHATSAPP FAB */
+.whatsapp-fab{
+  position:fixed;right:24px;bottom:24px;z-index:999;width:58px;height:58px;border-radius:50%;
+  background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .18s ease,box-shadow .18s ease;
+}
+.whatsapp-fab:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 12px 30px rgba(0,0,0,.32);}
+.whatsapp-fab svg{width:30px;height:30px;}
+@media(max-width:560px){
+  .whatsapp-fab{right:16px;bottom:16px;width:52px;height:52px;}
+  .whatsapp-fab svg{width:26px;height:26px;}
+}
+
 /* FOOTER */
 footer{padding:56px 0 32px;border-top:1px solid var(--line);text-align:center;}
 footer .footer-name{font-family:var(--f-display);font-weight:700;font-size:1.2rem;}
