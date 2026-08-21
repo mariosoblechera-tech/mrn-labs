@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Damajuana Taberna — Bar de tapas en La Línea de la Concepción</title>
+<meta name="description" content="Damajuana Taberna: tapas de mercado, ibéricos y platos de fusión en el centro de La Línea de la Concepción. Consulta la carta, la galería y cómo llegar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav__inner wrap">
+    <a href="#top" class="nav__brand"><span class="nav__logo">D</span>Damajuana Taberna</a>
+    <nav class="nav__links">
+      <a href="#about">Sobre nosotros</a>
+      <a href="#menu">Carta</a>
+      <a href="#gallery">Galería</a>
+      <a href="#reviews">Opiniones</a>
+      <a href="#visit">Cómo llegar</a>
+    </nav>
+    <!-- TODO: sustituir por el enlace real de WhatsApp, p.ej. https://wa.me/34XXXXXXXXX -->
+    <a href="#visit" class="btn btn--sm">Reservar</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <picture class="hero__media">
+      <source media="(max-width:560px)" srcset="images/hero-mobile.png">
+      <img src="images/hero.png" alt="Interior de Damajuana Taberna" loading="eager"
+           onerror="this.closest('.hero').classList.add('img-missing')">
+    </picture>
+    <div class="hero__ph hero__ph--desktop">Foto horizontal del local o de una tabla de ibéricos servida en barra — recomendado 1920×1080, colócala en images/hero.png</div>
+    <div class="hero__ph hero__ph--mobile">Foto vertical del local o de un plato destacado — recomendado 1200×1500, colócala en images/hero-mobile.png</div>
+    <div class="hero__scrim"></div>
+    <div class="hero__content">
+      <span class="eyebrow">Bar de tapas · La Línea de la Concepción</span>
+      <h1>Tapas de mercado con acento propio, en el corazón de La Línea.</h1>
+      <p class="hero__lede">Salmorejo, ibéricos y carrillera conviven con tacos y sándwich coreano en una carta pensada para compartir — y para quedarse hasta tarde.</p>
+      <div class="hero__cta">
+        <a href="#visit" class="btn">Reservar por WhatsApp</a>
+        <a href="#menu" class="btn btn--ghost">Ver la carta</a>
+      </div>
+      <div class="hero__facts">
+        <span>★ 4,5 (51 reseñas en Google)</span>
+        <span>10–20 € por persona</span>
+        <span>Abierto hasta las 02:00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Sobre nosotros</span>
+        <h2>Una taberna de barrio con carta de mercado</h2>
+        <p class="lede">En pleno centro de La Línea de la Concepción, Damajuana Taberna mezcla el picoteo de toda la vida —ibéricos, tostas, patatas bravas— con guiños de cocina fusión como los tacos o el sándwich coreano de pata al horno. Un sitio pensado para picar, compartir y alargar la sobremesa.</p>
+        <ul class="tags">
+          <li>Tapas de mercado</li>
+          <li>Ibéricos</li>
+          <li>Fusión asiática-mexicana</li>
+          <li>Para compartir</li>
+          <li>Abierto hasta tarde</li>
+        </ul>
+      </div>
+      <div class="split__media">
+        <img src="images/about.png" alt="Barra y ambiente de Damajuana Taberna" loading="lazy"
+             onerror="this.closest('.split__media').classList.add('img-missing')">
+        <div class="split__ph">Foto de la barra o la sala con clientes, ambiente informal — colócala en images/about.png</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" class="bg-tint">
+    <div class="wrap">
+      <span class="eyebrow">Carta</span>
+      <h2>Lo más pedido</h2>
+      <p class="lede">Una selección de los platos que más se repiten en las conversaciones sobre Damajuana — de la tosta de salmorejo a la carrillera.</p>
+
+      <div class="dish-grid">
+        <div class="dish">
+          <div class="dish__media">
+            <img src="images/dish-1.png" alt="Tosta de salmorejo con jamón ibérico" loading="lazy" onerror="this.closest('.dish__media').classList.add('img-missing')">
+            <div class="dish__ph">Foto cenital de la tosta de salmorejo</div>
+          </div>
+          <div class="dish__body">
+            <h3>Tosta de salmorejo, jamón ibérico y piparras</h3>
+            <p>Nieve de huevo duro y piparras fritas.</p>
+            <div class="dish__price">3,00 / 5,50 €</div>
+          </div>
+        </div>
+
+        <div class="dish">
+          <div class="dish__media">
+            <img src="images/dish-2.png" alt="Patatas bravas" loading="lazy" onerror="this.closest('.dish__media').classList.add('img-missing')">
+            <div class="dish__ph">Primer plano de las patatas bravas</div>
+          </div>
+          <div class="dish__body">
+            <h3>Patatas bravas</h3>
+            <p>Clásico de la casa, siempre en la mesa.</p>
+            <div class="dish__price">3,00 €</div>
+          </div>
+        </div>
+
+        <div class="dish">
+          <div class="dish__media">
+            <img src="images/dish-3.png" alt="Tacos de carrillera y queso" loading="lazy" onerror="this.closest('.dish__media').classList.add('img-missing')">
+            <div class="dish__ph">Foto de los dos tacos de carrillera</div>
+          </div>
+          <div class="dish__body">
+            <h3>Tacos de carrillera y queso (2 uds)</h3>
+            <p>Una de las referencias favoritas de la carta.</p>
+            <div class="dish__price">7,95 €</div>
+          </div>
+        </div>
+
+        <div class="dish">
+          <div class="dish__media">
+            <img src="images/dish-4.png" alt="Sándwich coreano de pata al horno" loading="lazy" onerror="this.closest('.dish__media').classList.add('img-missing')">
+            <div class="dish__ph">Foto del sándwich coreano cortado por la mitad</div>
+          </div>
+          <div class="dish__body">
+            <h3>Sándwich coreano de pata al horno</h3>
+            <p>Coleslaw, pepinillo y mayo-mostaza.</p>
+            <div class="dish__price">4,95 €</div>
+          </div>
+        </div>
+
+        <div class="dish">
+          <div class="dish__media">
+            <img src="images/dish-5.png" alt="Carrillera en salsa con patatas" loading="lazy" onerror="this.closest('.dish__media').classList.add('img-missing')">
+            <div class="dish__ph">Plato de carrillera en salsa con patatas</div>
+          </div>
+          <div class="dish__body">
+            <h3>Carrillera en salsa con patatas</h3>
+            <p>Muy tierna, una de las más valoradas.</p>
+            <div class="dish__price">4,00 / 7,00 €</div>
+          </div>
+        </div>
+
+        <div class="dish">
+          <div class="dish__media">
+            <img src="images/dish-6.png" alt="Tabla de ibéricos" loading="lazy" onerror="this.closest('.dish__media').classList.add('img-missing')">
+            <div class="dish__ph">Tabla de ibéricos servida para compartir</div>
+          </div>
+          <div class="dish__body">
+            <h3>Tabla de ibéricos</h3>
+            <p>Selección para compartir en la mesa.</p>
+            <div class="dish__price">12,95 / 22,95 €</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc">
+        <details class="acc__item" open>
+          <summary class="acc__head">De la taberna<span class="acc__icon">+</span></summary>
+          <div class="acc__list">
+            <div class="acc__row"><span>Chorizo ibérico</span><span>3,00 / 5,95 / 9,95 €</span></div>
+            <div class="acc__row"><span>Salchichón ibérico</span><span>3,00 / 5,95 / 9,95 €</span></div>
+            <div class="acc__row"><span>Jamón ibérico</span><span>8,00 / 14,00 / 27,00 €</span></div>
+            <div class="acc__row"><span>Queso curado</span><span>3,00 / 5,95 / 9,95 €</span></div>
+            <div class="acc__row"><span>Tabla de ibéricos</span><span>12,95 / 22,95 €</span></div>
+            <div class="acc__row"><span>Gildas (2 uds)</span><span>2,95 €</span></div>
+            <div class="acc__row"><span>Pimientos fritos</span><span>3,00 / 5,50 €</span></div>
+            <div class="acc__row"><span>Sardinillas picantes en conserva</span><span>5,95 €</span></div>
+            <div class="acc__row"><span>Mejillones en escabeche en conserva</span><span>5,95 €</span></div>
+            <div class="acc__row"><span>Ventresca de merluza en conserva</span><span>5,95 €</span></div>
+          </div>
+        </details>
+
+        <details class="acc__item">
+          <summary class="acc__head">Picoteo<span class="acc__icon">+</span></summary>
+          <div class="acc__list">
+            <div class="acc__row"><span>Bomba Damajuana (2 uds)</span><span>3,00 €</span></div>
+            <div class="acc__row"><span>Ensaladilla rusa con ventresca</span><span>2,50 / 4,50 €</span></div>
+            <div class="acc__row"><span>Ensalada de tomate raf</span><span>2,50 / 4,50 €</span></div>
+            <div class="acc__row"><span>Ensalada de tomate raf con ventresca</span><span>4,50 / 8,50 €</span></div>
+            <div class="acc__row"><span>Gambones al pil pil</span><span>7,95 €</span></div>
+            <div class="acc__row"><span>Patatas bravas</span><span>3,00 €</span></div>
+            <div class="acc__row"><span>Mini tortilla de patata con alioli de AOVE, con chorizo o jamón</span><span>5,95 / 8,95 €</span></div>
+            <div class="acc__row"><span>Carrillera en salsa con patatas</span><span>4,00 / 7,00 €</span></div>
+            <div class="acc__row"><span>Albóndigas de bacalao con patatas</span><span>3,50 / 6,50 €</span></div>
+          </div>
+        </details>
+
+        <details class="acc__item">
+          <summary class="acc__head">Montaditos y brioche<span class="acc__icon">+</span></summary>
+          <div class="acc__list">
+            <div class="acc__row"><span>Montadito serranito de pollo / lomo</span><span>3,00 €</span></div>
+            <div class="acc__row"><span>Montadito de pringá del cocido</span><span>3,00 €</span></div>
+            <div class="acc__row"><span>Montadito lomo, queso y gaucha</span><span>2,50 €</span></div>
+            <div class="acc__row"><span>Montadito de chorizo picante y huevo frito</span><span>2,50 €</span></div>
+            <div class="acc__row"><span>Montadito de salmón ahumado, queso crema y rúcula</span><span>3,00 €</span></div>
+            <div class="acc__row"><span>Brioche de gambón, spicy mayo y aguacate</span><span>3,95 €</span></div>
+            <div class="acc__row"><span>Brioche de atún marinado con mayo-aguacate y cebolla crispy</span><span>3,95 €</span></div>
+            <div class="acc__row"><span>Sándwich coreano de pata al horno, coleslaw, pepinillo y mayo-mostaza</span><span>4,95 €</span></div>
+          </div>
+        </details>
+
+        <details class="acc__item">
+          <summary class="acc__head">Tostas<span class="acc__icon">+</span></summary>
+          <div class="acc__list">
+            <div class="acc__row"><span>Matrimonio de anchoa y boquerón, piquillos y piparras</span><span>3,50 / 5,95 €</span></div>
+            <div class="acc__row"><span>Tosta de aguacate, atún teriyaki, japo-mayo y cebolla encurtida</span><span>5,00 / 8,50 €</span></div>
+            <div class="acc__row"><span>Salmorejo, jamón ibérico, nieve de huevo duro y piparras fritas</span><span>3,00 / 5,50 €</span></div>
+          </div>
+        </details>
+
+        <details class="acc__item">
+          <summary class="acc__head">De la parrilla<span class="acc__icon">+</span></summary>
+          <div class="acc__list">
+            <div class="acc__row"><span>Chorizo picante</span><span>3,50 / 6,00 €</span></div>
+            <div class="acc__row"><span>Morcilla</span><span>3,50 / 6,00 €</span></div>
+            <div class="acc__row"><span>Churrasco de pollo</span><span>6,95 €</span></div>
+            <div class="acc__row"><span>Entraña</span><span>6,95 / 13,50 €</span></div>
+            <div class="acc__row"><span>Picaña</span><span>16,95 €</span></div>
+            <div class="acc__row"><span>Miniburger brioche con queso y salsa especial</span><span>2,95 €</span></div>
+          </div>
+        </details>
+
+        <details class="acc__item">
+          <summary class="acc__head">Tacos (2 uds)<span class="acc__icon">+</span></summary>
+          <div class="acc__list">
+            <div class="acc__row"><span>Carrillera y queso</span><span>7,95 €</span></div>
+            <div class="acc__row"><span>Gambón crispy, aguacate y cebolla encurtida</span><span>7,95 €</span></div>
+            <div class="acc__row"><span>Pollo frito con lechuga, cebolla crispy y spicy mayo</span><span>6,95 €</span></div>
+            <div class="acc__row"><span>Cochinita pibil y pico de gallo</span><span>7,95 €</span></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="wrap">
+      <span class="eyebrow">Galería</span>
+      <h2>Un vistazo a la taberna</h2>
+      <div class="gallery">
+        <div class="gallery__cell gallery__cell--wide">
+          <img src="images/gallery-1.png" alt="Fachada de Damajuana Taberna" loading="lazy" onerror="this.closest('.gallery__cell').classList.add('img-missing')">
+          <div class="gallery__ph">Fachada del local en Calle Méndez Núñez</div>
+        </div>
+        <div class="gallery__cell gallery__cell--tall">
+          <img src="images/gallery-2.png" alt="Barra y ambiente de sala" loading="lazy" onerror="this.closest('.gallery__cell').classList.add('img-missing')">
+          <div class="gallery__ph">Barra y ambiente de sala</div>
+        </div>
+        <div class="gallery__cell">
+          <img src="images/gallery-3.png" alt="Tabla de ibéricos" loading="lazy" onerror="this.closest('.gallery__cell').classList.add('img-missing')">
+          <div class="gallery__ph">Detalle de la tabla de ibéricos</div>
+        </div>
+        <div class="gallery__cell">
+          <img src="images/gallery-4.png" alt="Tacos de la carta" loading="lazy" onerror="this.closest('.gallery__cell').classList.add('img-missing')">
+          <div class="gallery__ph">Primer plano de los tacos</div>
+        </div>
+        <div class="gallery__cell">
+          <img src="images/gallery-5.png" alt="Sala por la noche" loading="lazy" onerror="this.closest('.gallery__cell').classList.add('img-missing')">
+          <div class="gallery__ph">Mesas o barra por la noche</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="reviews">
+    <div class="wrap">
+      <span class="eyebrow">Opiniones</span>
+      <h2>Lo que se repite en Google</h2>
+      <p class="lede">51 reseñas en Google coinciden en unos pocos platos — estos son los que más se mencionan.</p>
+      <div class="reviews__stat"><strong>4,5 ★</strong><span>media sobre 51 reseñas en Google</span></div>
+
+      <div class="review-grid">
+        <div class="review">
+          <div class="review__stars">★★★★★</div>
+          <p>La tosta de salmorejo con jamón serrano es uno de los platos que más se repite entre las menciones de los clientes.</p>
+          <div class="review__source">Tendencia recogida en reseñas de Google</div>
+        </div>
+        <div class="review">
+          <div class="review__stars">★★★★★</div>
+          <p>Las patatas bravas y los tacos aparecen una y otra vez como los favoritos para picar.</p>
+          <div class="review__source">Tendencia recogida en reseñas de Google</div>
+        </div>
+        <div class="review">
+          <div class="review__stars">★★★★★</div>
+          <p>La carrillera se describe como muy tierna y es uno de los platos mejor valorados de la carta.</p>
+          <div class="review__source">Tendencia recogida en reseñas de Google</div>
+        </div>
+        <div class="review">
+          <div class="review__stars">★★★★★</div>
+          <p>El sándwich coreano sorprende como la apuesta de fusión más comentada de la carta.</p>
+          <div class="review__source">Tendencia recogida en reseñas de Google</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit">
+    <div class="wrap split split--reverse">
+      <div class="split__media">
+        <img src="images/map.png" alt="Mapa de ubicación de Damajuana Taberna" loading="lazy" onerror="this.closest('.split__media').classList.add('img-missing')">
+        <div class="split__ph">Captura del mapa o foto de la fachada con la calle — colócala en images/map.png</div>
+      </div>
+      <div class="visit-info">
+        <span class="eyebrow">Cómo llegar</span>
+        <h2>Ven a probarlo</h2>
+        <dl>
+          <dt>Dirección</dt>
+          <dd>C. Méndez Núñez, 2a, 11300 La Línea de la Concepción, Cádiz</dd>
+          <dt>Precio medio</dt>
+          <dd>10–20 € por persona</dd>
+          <dt>Horario</dt>
+          <dd>Abierto · cierra a las 02:00 (consulta el horario actualizado en Google Maps)</dd>
+          <dt>Reservas</dt>
+          <dd>Por WhatsApp</dd>
+        </dl>
+        <div class="btn-row">
+          <a href="https://www.google.com/maps/search/?api=1&query=Damajuana+Taberna+La+L%C3%ADnea+de+la+Concepci%C3%B3n" target="_blank" rel="noopener" class="btn">Ver en Google Maps</a>
+          <!-- TODO: sustituir por el enlace real de WhatsApp, p.ej. https://wa.me/34XXXXXXXXX -->
+          <a href="#" class="btn btn--ghost">Reservar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-name">Damajuana Taberna</div>
+    <p>C. Méndez Núñez, 2a, 11300 La Línea de la Concepción, Cádiz</p>
+    <p>Reservas por WhatsApp</p>
+    <p>© <span id="year"></span> Damajuana Taberna. Todos los derechos reservados.</p>
+    <p class="footer-credit">Landing demo creada por <a href="https://mrn-labs.vercel.app" target="_blank" rel="noopener">MRN Labs</a></p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('is-stuck', window.scrollY > 8);
+  }, { passive: true });
+</script>
+
+</body>
+</html>
