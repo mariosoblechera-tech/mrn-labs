@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=13">
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -856,6 +857,28 @@
   const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 20);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  createChat({
+    webhookUrl: 'https://n8npanel.lumarym.cloud/webhook/barberia-chatbot-webhook/chat',
+    mode: 'window',
+    showWelcomeScreen: false,
+    loadPreviousSession: true,
+    initialMessages: [
+      '¡Hola! 👋 Soy el asistente de Barbería Domínguez.',
+      '¿Quieres reservar una cita o ver la disponibilidad?'
+    ],
+    i18n: { en: {
+      title: 'Barbería Domínguez',
+      subtitle: 'Reserva tu cita por chat.',
+      footer: '',
+      getStarted: 'Nueva conversación',
+      inputPlaceholder: 'Escribe tu mensaje...',
+      closeButtonTooltip: 'Cerrar'
+    }}
+  });
 </script>
 
 </body>
