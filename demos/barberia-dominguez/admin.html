@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Agenda · Barbería Domínguez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="admin.css?v=17">
+</head>
+<body class="admin">
+
+<!-- ============ LOGIN ============ -->
+<div class="login" id="login">
+  <form class="login__box" id="loginForm">
+    <span class="logo__mark">B</span>
+    <h1 class="login__title">Agenda</h1>
+    <p class="login__sub">Acceso solo para el equipo.</p>
+
+    <div class="bookform__row">
+      <label for="lEmail">Correo</label>
+      <input type="email" id="lEmail" autocomplete="username" required>
+    </div>
+    <div class="bookform__row">
+      <label for="lPass">Contraseña</label>
+      <input type="password" id="lPass" autocomplete="current-password" required>
+    </div>
+
+    <p class="login__err" id="loginErr"></p>
+    <button type="submit" class="btn btn--primary btn--lg" id="loginBtn">Entrar</button>
+  </form>
+</div>
+
+<!-- ============ PANEL ============ -->
+<div class="panel" id="panel" hidden>
+
+  <header class="ahead">
+    <div class="ahead__left">
+      <span class="logo__mark">B</span>
+      <div>
+        <strong class="ahead__title">Agenda del día</strong>
+        <span class="ahead__user" id="who"></span>
+      </div>
+    </div>
+    <div class="ahead__acts">
+      <button class="btn btn--ghost ahead__out" id="cfgBtn">Ajustes</button>
+      <button class="btn btn--ghost ahead__out" id="outBtn">Salir</button>
+    </div>
+  </header>
+
+  <!-- Navegación por días -->
+  <div class="datebar">
+    <button class="datebar__arrow" id="prevDay" aria-label="Día anterior">‹</button>
+    <div class="datebar__mid">
+      <strong id="dateLabel"></strong>
+      <button class="datebar__today" id="todayBtn">Hoy</button>
+    </div>
+    <button class="datebar__arrow" id="nextDay" aria-label="Día siguiente">›</button>
+  </div>
+
+  <!-- Resumen del día -->
+  <div class="stats" id="stats"></div>
+
+  <!-- Qué hace cada botón, para no tener que adivinarlo -->
+  <p class="leyenda">
+    <span><b>&#10003;</b> atendida</span>
+    <span><b>&#10005;</b> no vino</span>
+    <span><b>&#128465;</b> cancelar</span>
+    <span><b>&#8635;</b> deshacer</span>
+  </p>
+
+  <!-- Agenda: una columna por barbero -->
+  <div class="board" id="board">
+    <p class="board__loading">Cargando agenda…</p>
+  </div>
+
+  <!-- Bloqueos activos -->
+  <section class="bloqueos" id="bloqueos" hidden>
+    <h2 class="bloqueos__titulo">Ausencias programadas</h2>
+    <ul class="bloqueos__lista" id="bloqueosLista"></ul>
+  </section>
+
+  <!-- Acciones -->
+  <div class="actions">
+    <button class="btn btn--primary" id="newBtn">+ Añadir cita</button>
+    <button class="btn btn--ghost" id="blockBtn">Bloquear horas</button>
+  </div>
+
+  <!-- ============ VISTA SEMANAL ============ -->
+  <section class="semana" id="semana">
+    <div class="semana__head">
+      <h2 class="semana__titulo">Ocupación de la semana</h2>
+      <div class="semana__nav">
+        <button class="datebar__arrow" id="semPrev" aria-label="Semana anterior">‹</button>
+        <span class="semana__rango" id="semRango"></span>
+        <button class="datebar__arrow" id="semNext" aria-label="Semana siguiente">›</button>
+      </div>
+    </div>
+
+    <div class="semana__scroll">
+      <table class="rejilla" id="rejilla">
+        <caption class="visually-hidden">
+          Porcentaje de la jornada ocupado por cada barbero y día
+        </caption>
+      </table>
+    </div>
+
+    <div class="semana__pie">
+      <p class="semana__total" id="semTotal"></p>
+      <ul class="escala">
+        <li><span class="pastilla pastilla--0"></span> libre</li>
+        <li><span class="pastilla pastilla--1"></span> flojo</li>
+        <li><span class="pastilla pastilla--2"></span> medio</li>
+        <li><span class="pastilla pastilla--3"></span> lleno</li>
+        <li><span class="pastilla pastilla--0 pastilla--parcial"></span> con ausencia</li>
+        <li><span class="pastilla pastilla--x"></span> cerrado o libre todo el día</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ============ VENTANA: cita a mano ============ -->
+<div class="modal" id="mNew" hidden>
+  <form class="modal__box" id="newForm">
+    <h2 class="modal__title">Añadir cita</h2>
+    <p class="modal__sub">Para quien llama o entra por la puerta.</p>
+
+    <div class="bookform__row">
+      <label for="nBarber">Barbero</label>
+      <select id="nBarber" required></select>
+    </div>
+    <div class="bookform__row">
+      <label for="nService">Servicio</label>
+      <select id="nService" required></select>
+    </div>
+    <div class="modal__two">
+      <div class="bookform__row">
+        <label for="nDate">Día</label>
+        <input type="date" id="nDate" required>
+      </div>
+      <div class="bookform__row">
+        <label for="nTime">Hora</label>
+        <input type="time" id="nTime" step="900" required>
+      </div>
+    </div>
+    <div class="bookform__row">
+      <label for="nName">Nombre</label>
+      <input type="text" id="nName" required minlength="2">
+    </div>
+    <div class="bookform__row">
+      <label for="nPhone">Teléfono</label>
+      <input type="tel" id="nPhone" inputmode="numeric" required>
+    </div>
+
+    <p class="modal__err" id="newErr"></p>
+    <div class="modal__actions">
+      <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
+      <button type="submit" class="btn btn--primary">Guardar cita</button>
+    </div>
+  </form>
+</div>
+
+<!-- ============ VENTANA: bloquear ============ -->
+<div class="modal" id="mBlock" hidden>
+  <form class="modal__box" id="blockForm">
+    <h2 class="modal__title">Bloquear horas</h2>
+    <p class="modal__sub">Vacaciones, médico, formación… no se podrá reservar.</p>
+
+    <div class="bookform__row">
+      <label for="bBarber">Barbero</label>
+      <select id="bBarber" required></select>
+    </div>
+
+    <div class="modal__two">
+      <div class="bookform__row">
+        <label for="bDesde">Desde el día</label>
+        <input type="date" id="bDesde" required>
+      </div>
+      <div class="bookform__row">
+        <label for="bHasta">Hasta el día</label>
+        <input type="date" id="bHasta" required>
+      </div>
+    </div>
+
+    <label class="check">
+      <input type="checkbox" id="bTodoDia" checked>
+      <span>Días completos</span>
+    </label>
+
+    <div class="modal__two" id="bHoras" hidden>
+      <div class="bookform__row">
+        <label for="bHoraIni">Desde las</label>
+        <input type="time" id="bHoraIni" step="900" value="09:00">
+      </div>
+      <div class="bookform__row">
+        <label for="bHoraFin">Hasta las</label>
+        <input type="time" id="bHoraFin" step="900" value="14:00">
+      </div>
+    </div>
+
+    <div class="bookform__row">
+      <label for="bWhy">Motivo (opcional)</label>
+      <input type="text" id="bWhy" placeholder="Ej. vacaciones">
+    </div>
+
+    <!-- Aviso si el bloqueo pisa citas ya confirmadas -->
+    <div class="choque" id="bChoque" hidden>
+      <p class="choque__titulo" id="bChoqueTitulo"></p>
+      <ul class="choque__lista" id="bChoqueLista"></ul>
+      <p class="choque__nota">
+        Avisa a estos clientes antes de continuar. Si sigues, sus citas
+        quedarán canceladas.
+      </p>
+    </div>
+
+    <p class="modal__err" id="blockErr"></p>
+    <div class="modal__actions">
+      <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
+      <button type="submit" class="btn btn--primary" id="bSubmit">Bloquear</button>
+    </div>
+  </form>
+</div>
+
+<!-- ============ VENTANA: ajustes ============ -->
+<div class="modal" id="mCfg" hidden>
+  <form class="modal__box" id="cfgForm">
+    <h2 class="modal__title">Ajustes</h2>
+    <p class="modal__sub">Afectan a lo que ven los clientes al reservar.</p>
+
+    <div class="bookform__row">
+      <label for="cDias">Agenda abierta a</label>
+      <select id="cDias">
+        <option value="7">1 semana</option>
+        <option value="14">2 semanas</option>
+        <option value="21">3 semanas</option>
+        <option value="30">1 mes</option>
+        <option value="60">2 meses</option>
+        <option value="90">3 meses</option>
+      </select>
+      <span class="bookform__hint">
+        Cuántos días vista pueden reservar. Menos margen = menos plantones,
+        pero pierdes reservas anticipadas.
+      </span>
+    </div>
+
+    <div class="bookform__row">
+      <label for="cMin">Antelación mínima para reservar</label>
+      <select id="cMin">
+        <option value="0">Sin margen</option>
+        <option value="1">1 hora</option>
+        <option value="2">2 horas</option>
+        <option value="4">4 horas</option>
+        <option value="24">1 día</option>
+      </select>
+    </div>
+
+    <div class="bookform__row">
+      <label for="cCancel">Margen para cancelar o cambiar</label>
+      <select id="cCancel">
+        <option value="0">Hasta la hora de la cita</option>
+        <option value="2">2 horas antes</option>
+        <option value="4">4 horas antes</option>
+        <option value="24">1 día antes</option>
+      </select>
+    </div>
+
+    <div class="bookform__row">
+      <label for="cMax">Citas activas por teléfono</label>
+      <select id="cMax">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+      </select>
+      <span class="bookform__hint">Frena las reservas en bucle con datos falsos.</span>
+    </div>
+
+    <p class="modal__err" id="cfgErr"></p>
+    <div class="modal__actions">
+      <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
+      <button type="submit" class="btn btn--primary">Guardar ajustes</button>
+    </div>
+  </form>
+</div>
+
+<script>
+// =====================================================================
+//  Panel de agenda
+//  Usa la clave anon + la sesión del usuario. RLS decide qué se ve:
+//  aunque alguien abra esta página, sin sesión no recibe ni una fila.
+//  La service_role NUNCA va aquí.
+// =====================================================================
+
+const SUPABASE_URL  = 'https://krlotacemsjkqbxzhfij.supabase.co';   // https://xxxxx.supabase.co
+const SUPABASE_ANON  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybG90YWNlbXNqa3FieHpoZmlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0ODMwOTUsImV4cCI6MjEwMzA1OTA5NX0.dIqs9zWSXLJdQGO3fEyZXhN3C__XwKP6PBzH2nCSHK4';  // la clave anon (pública, no la service_role)
+
+
+const $ = id => document.getElementById(id);
+let sesion = null;
+let dia = new Date();
+let barberos = [];
+let servicios = [];
+
+const CONECTADO = Boolean(SUPABASE_URL && SUPABASE_ANON);
+
+// ---- Llamadas a Supabase ----
+function cab(extra = {}) {
+  const h = {
+    'Content-Type':'application/json',
+    'apikey': SUPABASE_ANON,
+    ...extra
+  };
+  h['Authorization'] = sesion
+    ? `Bearer ${sesion.access_token}`
+    : `Bearer ${SUPABASE_ANON}`;
+  return h;
+}
+
+async function api(ruta, opts = {}) {
+  const r = await fetch(`${SUPABASE_URL}${ruta}`, { ...opts, headers: cab(opts.headers) });
+  if (!r.ok) {
+    const cuerpo = await r.text();
+    const err = new Error(cuerpo || `Error ${r.status}`);
+    err.status = r.status;   // 401 = sesión / permisos, se trata distinto
+    throw err;
+  }
+  return r.status === 204 ? null : r.json();
+}
+
+// Mensaje según lo que devuelva Supabase, en vez de un "no se ha podido" seco
+function explicar(e) {
+  const m = String(e?.message || '');
+  if (e?.status === 401 || /JWT|expired|invalid/i.test(m)) {
+    return { texto: 'Tu sesión ha caducado. Vuelve a entrar.', volverAlLogin: true };
+  }
+  if (/42501|permission denied/i.test(m)) {
+    return { texto: 'Tu usuario no tiene permisos. Falta añadirlo a la tabla ' +
+                    'staff como owner (ver PASO2.md).', volverAlLogin: false };
+  }
+  if (/PGRST\d+|does not exist|Could not find/i.test(m)) {
+    return { texto: 'Faltan funciones en la base de datos. ' +
+                    'Revisa que has ejecutado todos los pasos del SQL.', volverAlLogin: false };
+  }
+  if (/Failed to fetch|NetworkError/i.test(m)) {
+    return { texto: 'Sin conexión con Supabase. Revisa la URL y tu red.', volverAlLogin: false };
+  }
+  return { texto: 'No se ha podido cargar: ' + m.slice(0, 120), volverAlLogin: false };
+}
+
+function fallo(e) {
+  const info = explicar(e);
+  $('board').innerHTML =
+    `<div class="aviso-error">
+       <p><strong>Algo no ha ido bien</strong></p>
+       <p>${info.texto}</p>
+       ${info.volverAlLogin
+         ? '<button class="btn btn--primary" id="reLogin">Volver a entrar</button>'
+         : ''}
+     </div>`;
+  $('stats').innerHTML = '';
+  $('semana').hidden = true;
+  const b = $('reLogin');
+  if (b) b.addEventListener('click', () => {
+    localStorage.removeItem('sesion');
+    location.reload();
+  });
+  console.error('Panel:', e);
+}
+
+// ---- Sesión ----
+async function entrar(email, pass) {
+  const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'apikey': SUPABASE_ANON },
+    body: JSON.stringify({ email, password: pass })
+  });
+  if (!r.ok) {
+    // El motivo real de Supabase: usuario sin confirmar, credenciales, etc.
+    let motivo = 'credenciales';
+    try {
+      const j = JSON.parse(await r.text());
+      motivo = j.error_description || j.msg || j.error || motivo;
+    } catch (e) { /* respuesta no JSON */ }
+    throw new Error(motivo);
+  }
+  return r.json();
+}
+
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('loginErr').textContent = '';
+  $('loginBtn').disabled = true;
+  $('loginBtn').textContent = 'Entrando…';
+
+  try {
+    if (!CONECTADO) throw new Error('sin_config');
+    sesion = await entrar($('lEmail').value.trim(), $('lPass').value);
+    localStorage.setItem('sesion', JSON.stringify(sesion));
+    abrirPanel();
+  } catch (err) {
+    const m = String(err.message || '');
+    $('loginErr').textContent =
+      m === 'sin_config'          ? 'Falta configurar Supabase en admin.html.'
+    : /Email not confirmed/i.test(m) ? 'El usuario no está confirmado. Confírmalo en '
+                                     + 'Authentication → Users.'
+    : /Failed to fetch/i.test(m)  ? 'Sin conexión con Supabase. Revisa la URL.'
+    : 'Correo o contraseña incorrectos.';
+  } finally {
+    $('loginBtn').disabled = false;
+    $('loginBtn').textContent = 'Entrar';
+  }
+});
+
+$('outBtn').addEventListener('click', () => {
+  localStorage.removeItem('sesion');
+  sesion = null;
+  $('panel').hidden = true;
+  $('login').hidden = false;
+});
+
+function abrirPanel() {
+  $('login').hidden = true;
+  $('panel').hidden = false;
+  let email = '';
+  try {
+    email = JSON.parse(atob(sesion.access_token.split('.')[1] || 'e30=')).email || '';
+  } catch (e) { /* token raro: se verá al primer fetch */ }
+  $('who').textContent = email;
+
+  $('board').innerHTML = '<p class="board__loading">Cargando agenda…</p>';
+
+  cargarMaestros()
+    .then(() => {
+      $('semana').hidden = false;
+      pintar();
+      cargarBloqueos();
+      cargarSemana();
+    })
+    .catch(fallo);
+}
+
+// ---- Datos base ----
+async function cargarMaestros() {
+  // Si esto falla no se puede pintar nada, así que el error se propaga
+  // para explicarlo en pantalla en vez de mostrar una agenda vacía.
+  barberos  = await api('/rest/v1/barbers?select=id,name&active=eq.true&order=name');
+  servicios = await api('/rest/v1/services?select=id,name,duration_min&active=eq.true&order=name');
+  const ob = barberos.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
+  const os = servicios.map(s => `<option value="${s.id}">${s.name} (${s.duration_min} min)</option>`).join('');
+  $('nBarber').innerHTML = ob;
+  $('bBarber').innerHTML = ob;
+  $('nService').innerHTML = os;
+}
+
+// ---- Agenda del día ----
+// Fecha en formato YYYY-MM-DD usando la hora LOCAL.
+// Con toISOString() se convierte a UTC y en España (+1/+2) un día a las
+// 00:00 locales retrocede al día anterior: la semana empezaba en domingo.
+const iso = d => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const x = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${x}`;
+};
+
+async function pintar() {
+  $('dateLabel').textContent = dia.toLocaleDateString('es-ES',
+    { weekday:'long', day:'numeric', month:'long' });
+
+  const desde = `${iso(dia)}T00:00:00`;
+  const hasta = `${iso(dia)}T23:59:59`;
+
+  let citas = [];
+  try {
+    citas = await api(`/rest/v1/appointments?select=*,barbers(name),services(name,duration_min)` +
+      `&starts_at=gte.${desde}&starts_at=lte.${hasta}&order=starts_at`);
+  } catch (e) {
+    fallo(e);
+    return;
+  }
+
+  // Resumen del día que se está viendo
+  const vivas  = citas.filter(c => c.status === 'confirmed');
+  const hechas = citas.filter(c => c.status === 'done').length;
+  const fallos = citas.filter(c => c.status === 'no_show').length;
+
+  // Minutos vendidos, que es lo que de verdad dice si el día está cargado
+  const mins = vivas.reduce((s,c) =>
+    s + (new Date(c.ends_at) - new Date(c.starts_at)) / 60000, 0);
+  const horas = mins >= 60
+    ? `${Math.floor(mins/60)}h${mins%60 ? ' '+Math.round(mins%60)+'m' : ''}`
+    : `${Math.round(mins)}m`;
+
+  $('stats').innerHTML = `
+    <div class="stat"><strong>${vivas.length}</strong><span>por atender</span></div>
+    <div class="stat"><strong>${horas}</strong><span>de trabajo</span></div>
+    <div class="stat"><strong>${hechas}</strong><span>atendidas</span></div>
+    <div class="stat"><strong>${fallos}</strong><span>no vinieron</span></div>`;
+
+  // Una columna por barbero
+  $('board').innerHTML = barberos.map(b => {
+    const mias = citas.filter(c => c.barber_id === b.id);
+    const filas = mias.length ? mias.map(c => {
+      const t = new Date(c.starts_at);
+      const hh = t.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',hour12:false});
+      // Cada estado con su etiqueta y su color. Antes, todo lo que no fuera
+      // 'no_show' se etiquetaba "cancelada", incluidas las atendidas.
+      const ETIQUETA = {
+        done:      { texto: 'atendida',  clase: 'appt--done' },
+        no_show:   { texto: 'no vino',   clase: 'appt--off'  },
+        cancelled: { texto: 'cancelada', clase: 'appt--off'  }
+      };
+      const est = ETIQUETA[c.status];   // undefined mientras siga 'confirmed'
+      return `
+        <li class="appt ${est ? est.clase : ''}">
+          <span class="appt__time">${hh}</span>
+          <span class="appt__body">
+            <strong>${c.customer_name}</strong>
+            <small>${c.services?.name || ''}</small>
+            <a class="appt__tel" href="tel:${c.customer_phone}">${c.customer_phone}</a>
+            ${c.customer_email
+              ? ''
+              : '<em class="appt__nomail" title="Sin correo: no recibe avisos">sin correo</em>'}
+          </span>
+          <span class="appt__acts">
+            ${est
+              ? `<em class="appt__tag">${est.texto}</em>
+                 <button class="mini" data-id="${c.id}" data-do="confirmed" title="Deshacer">&#8635;</button>`
+              : `<button class="mini mini--ok" data-id="${c.id}" data-do="done" title="Atendida">&#10003;</button>
+                 <button class="mini" data-id="${c.id}" data-do="no_show" title="No vino">&#10005;</button>
+                 <button class="mini mini--del" data-id="${c.id}" data-do="cancelled" title="Cancelar cita">&#128465;</button>`}
+          </span>
+        </li>`;
+    }).join('') : '<li class="appt appt--empty">Sin citas</li>';
+
+    return `
+      <section class="col">
+        <h2 class="col__head">${b.name} <span>${mias.filter(c=>c.status==='confirmed').length}</span></h2>
+        <ul class="col__list">${filas}</ul>
+      </section>`;
+  }).join('') ||
+    '<div class="aviso-error"><p><strong>No hay barberos</strong></p>' +
+    '<p>La tabla <code>barbers</code> está vacía o todos están inactivos.</p></div>';
+
+  // Marcar estado: atendida / no vino / cancelada / deshacer
+  $('board').querySelectorAll('.mini').forEach(b => {
+    b.addEventListener('click', async () => {
+      const accion = b.dataset.do;
+
+      // Cancelar sí pide confirmación: libera el hueco y lo puede coger otro
+      if (accion === 'cancelled' &&
+          !confirm('¿Cancelar esta cita? El hueco quedará libre para otro cliente.')) {
+        return;
+      }
+
+      b.disabled = true;
+      try {
+        await api(`/rest/v1/appointments?id=eq.${b.dataset.id}`, {
+          method:'PATCH',
+          headers:{ 'Prefer':'return=minimal' },
+          body: JSON.stringify({ status: accion })
+        });
+        pintar();
+        cargarSemana();
+      } catch (e) {
+        b.disabled = false;
+        // Al deshacer, el hueco puede estar ya ocupado por otra cita
+        const m = String(e.message || '');
+        alert(/no_solapamiento|conflict/i.test(m)
+          ? 'No se puede recuperar: ese hueco ya lo tiene otra cita.'
+          : 'No se ha podido cambiar el estado. Inténtalo de nuevo.');
+      }
+    });
+  });
+}
+
+// ---- Navegación de días ----
+$('prevDay').addEventListener('click', () => { dia.setDate(dia.getDate()-1); pintar(); });
+$('nextDay').addEventListener('click', () => { dia.setDate(dia.getDate()+1); pintar(); });
+$('todayBtn').addEventListener('click', () => { dia = new Date(); pintar(); });
+
+// ---- Ventanas ----
+const abrir  = id => { $(id).hidden = false; };
+const cerrar = id => { $(id).hidden = true; };
+document.querySelectorAll('[data-close]').forEach(b =>
+  b.addEventListener('click', () => { cerrar('mNew'); cerrar('mBlock'); }));
+document.querySelectorAll('.modal').forEach(m =>
+  m.addEventListener('click', e => { if (e.target === m) m.hidden = true; }));
+
+$('newBtn').addEventListener('click', () => {
+  $('nDate').value = iso(dia);
+  abrir('mNew');
+});
+$('blockBtn').addEventListener('click', () => {
+  $('bDesde').value = iso(dia);
+  $('bHasta').value = iso(dia);
+  $('bChoque').hidden = true;
+  $('blockErr').textContent = '';
+  choqueAceptado = false;
+  $('bSubmit').textContent = 'Bloquear';
+  abrir('mBlock');
+});
+
+// "Días completos" oculta las horas
+$('bTodoDia').addEventListener('change', e => {
+  $('bHoras').hidden = e.target.checked;
+});
+
+// Al cambiar cualquier dato, hay que volver a comprobar los choques
+['bBarber','bDesde','bHasta','bTodoDia','bHoraIni','bHoraFin'].forEach(id =>
+  $(id).addEventListener('change', () => {
+    choqueAceptado = false;
+    $('bChoque').hidden = true;
+    $('bSubmit').textContent = 'Bloquear';
+  }));
+
+// ---- Crear cita a mano ----
+// Pasa por la MISMA función que la web pública: mismas validaciones,
+// mismo constraint. Así el mostrador tampoco puede provocar un solape.
+$('newForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('newErr').textContent = '';
+  try {
+    await api('/rest/v1/rpc/reservar', {
+      method:'POST',
+      body: JSON.stringify({
+        p_barber: $('nBarber').value,
+        p_service: $('nService').value,
+        p_inicio: new Date(`${$('nDate').value}T${$('nTime').value}`).toISOString(),
+        p_nombre: $('nName').value.trim(),
+        p_tel: $('nPhone').value.replace(/[\s-]/g,''),
+        p_source: 'mostrador'
+      })
+    });
+    cerrar('mNew');
+    $('newForm').reset();
+    pintar();
+  } catch (err) {
+    const m = String(err.message||'');
+    $('newErr').textContent = /no_solapamiento|conflict/i.test(m)
+      ? 'Ese barbero ya tiene una cita a esa hora.'
+      : /AFORO/i.test(m) ? 'Se supera el aforo a esa hora.'
+      : 'No se ha podido guardar. Revisa los datos.';
+  }
+});
+
+// ---- Bloquear horas ----
+let choqueAceptado = false;
+
+function rangoBloqueo() {
+  const todoDia = $('bTodoDia').checked;
+  const ini = todoDia ? '00:00' : $('bHoraIni').value;
+  const fin = todoDia ? '23:59' : $('bHoraFin').value;
+  return {
+    desde: new Date(`${$('bDesde').value}T${ini}`).toISOString(),
+    hasta: new Date(`${$('bHasta').value}T${fin}`).toISOString()
+  };
+}
+
+$('blockForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('blockErr').textContent = '';
+
+  const { desde, hasta } = rangoBloqueo();
+  if (new Date(hasta) <= new Date(desde)) {
+    $('blockErr').textContent = 'La fecha final debe ser posterior a la inicial.';
+    return;
+  }
+
+  const btn = $('bSubmit');
+  btn.disabled = true;
+
+  try {
+    // Primer intento sin cancelar: si hay citas dentro, la función avisa
+    // en vez de crear el bloqueo a ciegas.
+    const r = await api('/rest/v1/rpc/bloquear_horas', {
+      method:'POST',
+      body: JSON.stringify({
+        p_barber: $('bBarber').value,
+        p_desde: desde,
+        p_hasta: hasta,
+        p_motivo: $('bWhy').value.trim() || null,
+        p_cancelar_citas: choqueAceptado
+      })
+    });
+
+    cerrar('mBlock');
+    $('blockForm').reset();
+    $('bTodoDia').checked = true;
+    $('bHoras').hidden = true;
+    choqueAceptado = false;
+
+    const n = r?.[0]?.citas_canceladas || 0;
+    if (n > 0) alert(`Bloqueo creado. Se han cancelado ${n} cita(s). Avisa a esos clientes.`);
+
+    pintar();
+    cargarBloqueos();
+
+  } catch (err) {
+    const m = String(err.message || '');
+    const choque = m.match(/HAY_CITAS:(\d+)/);
+
+    if (choque) {
+      // Muestro qué citas se perderían y pido confirmación
+      await mostrarChoque(desde, hasta, +choque[1]);
+      choqueAceptado = true;
+      btn.textContent = 'Bloquear y cancelar esas citas';
+    } else {
+      $('blockErr').textContent = /RANGO_INVALIDO/.test(m)
+        ? 'El rango de fechas no es válido.'
+        : 'No se ha podido bloquear. Revisa las fechas.';
+    }
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+async function mostrarChoque(desde, hasta, n) {
+  $('bChoqueTitulo').textContent =
+    n === 1 ? 'Hay 1 cita en esas fechas:' : `Hay ${n} citas en esas fechas:`;
+  try {
+    const citas = await api('/rest/v1/rpc/citas_en_rango', {
+      method:'POST',
+      body: JSON.stringify({ p_barber: $('bBarber').value, p_desde: desde, p_hasta: hasta })
+    });
+    $('bChoqueLista').innerHTML = (citas || []).map(c => {
+      const t = new Date(c.empieza);
+      return `<li>
+        <strong>${t.toLocaleDateString('es-ES',{day:'numeric',month:'short'})}
+        ${t.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',hour12:false})}</strong>
+        ${c.cliente} · <a href="tel:${c.telefono}">${c.telefono}</a>
+      </li>`;
+    }).join('');
+  } catch (e) {
+    $('bChoqueLista').innerHTML = '<li>No se han podido listar.</li>';
+  }
+  $('bChoque').hidden = false;
+}
+
+// ---- Lista de ausencias ----
+async function cargarBloqueos() {
+  try {
+    const hoy = new Date().toISOString();
+    const lista = await api(`/rest/v1/time_off?select=*,barbers(name)` +
+      `&ends_at=gte.${hoy}&order=starts_at`);
+
+    if (!lista || !lista.length) { $('bloqueos').hidden = true; return; }
+
+    $('bloqueos').hidden = false;
+    $('bloqueosLista').innerHTML = lista.map(b => {
+      const d = new Date(b.starts_at), h = new Date(b.ends_at);
+      const unDia = d.toDateString() === h.toDateString();
+      const fmt = x => x.toLocaleDateString('es-ES',{day:'numeric',month:'short'});
+      return `<li class="bloqueo">
+        <span class="bloqueo__info">
+          <strong>${b.barbers?.name || '—'}</strong>
+          <span>${unDia ? fmt(d) : `${fmt(d)} → ${fmt(h)}`}${b.reason ? ' · ' + b.reason : ''}</span>
+        </span>
+        <button class="mini mini--del" data-off="${b.id}" title="Quitar bloqueo">&#128465;</button>
+      </li>`;
+    }).join('');
+
+    $('bloqueosLista').querySelectorAll('[data-off]').forEach(b => {
+      b.addEventListener('click', async () => {
+        if (!confirm('¿Quitar este bloqueo? Esas horas volverán a estar libres.')) return;
+        b.disabled = true;
+        try {
+          await api(`/rest/v1/time_off?id=eq.${b.dataset.off}`, {
+            method:'DELETE', headers:{ 'Prefer':'return=minimal' }
+          });
+          cargarBloqueos();
+          pintar();
+        } catch (e) { b.disabled = false; alert('No se ha podido quitar.'); }
+      });
+    });
+  } catch (e) {
+    $('bloqueos').hidden = true;
+  }
+}
+
+// ---- Ajustes ----
+$('cfgBtn').addEventListener('click', async () => {
+  $('cfgErr').textContent = '';
+  try {
+    const c = await api('/rest/v1/settings?select=*&id=eq.1');
+    const s = c?.[0];
+    if (s) {
+      $('cDias').value   = s.dias_antelacion;
+      $('cMin').value    = s.horas_minimas;
+      $('cCancel').value = s.horas_cancelacion;
+      $('cMax').value    = s.max_citas_activas;
+    }
+  } catch (e) { /* se abre con los valores por defecto */ }
+  abrir('mCfg');
+});
+
+$('cfgForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('cfgErr').textContent = '';
+  try {
+    await api('/rest/v1/settings?id=eq.1', {
+      method:'PATCH',
+      headers:{ 'Prefer':'return=minimal' },
+      body: JSON.stringify({
+        dias_antelacion:   +$('cDias').value,
+        horas_minimas:     +$('cMin').value,
+        horas_cancelacion: +$('cCancel').value,
+        max_citas_activas: +$('cMax').value,
+        updated_at: new Date().toISOString()
+      })
+    });
+    cerrar('mCfg');
+    alert('Ajustes guardados. Los clientes ya ven la agenda con el nuevo margen.');
+  } catch (err) {
+    $('cfgErr').textContent = 'No se han podido guardar. ¿Tienes permisos de dueño?';
+  }
+});
+
+// =====================================================================
+//  Vista semanal de ocupación
+// =====================================================================
+
+let lunes = lunesDe(new Date());
+
+function lunesDe(d) {
+  const x = new Date(d);
+  x.setHours(0,0,0,0);
+  // getDay(): 0=domingo. Quiero el lunes anterior.
+  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  return x;
+}
+
+// Cuatro tramos: la escala fina no aporta de un vistazo
+function nivel(pct) {
+  if (pct === 0)  return 0;
+  if (pct < 35)   return 1;
+  if (pct < 70)   return 2;
+  return 3;
+}
+
+async function cargarSemana() {
+  const dom = new Date(lunes); dom.setDate(dom.getDate() + 6);
+  const fmt = d => d.toLocaleDateString('es-ES',{day:'numeric',month:'short'});
+  $('semRango').textContent = `${fmt(lunes)} – ${fmt(dom)}`;
+
+  let filas = [];
+  try {
+    filas = await api('/rest/v1/rpc/ocupacion_semana', {
+      method:'POST',
+      body: JSON.stringify({ p_lunes: iso(lunes) })
+    });
+  } catch (e) {
+    $('rejilla').innerHTML =
+      '<tr><td class="rejilla__vacio">No se ha podido cargar la semana.</td></tr>';
+    return;
+  }
+
+  if (!filas || !filas.length) {
+    $('rejilla').innerHTML =
+      '<tr><td class="rejilla__vacio">Sin datos.</td></tr>';
+    return;
+  }
+
+  // Agrupo por barbero, en el orden en que llegan
+  const porBarbero = new Map();
+  const dias = [];
+  for (const f of filas) {
+    if (!porBarbero.has(f.barbero)) porBarbero.set(f.barbero, new Map());
+    porBarbero.get(f.barbero).set(f.dia, f);
+    if (!dias.includes(f.dia)) dias.push(f.dia);
+  }
+  dias.sort();
+
+  const cabecera = `<thead><tr>
+    <th class="rejilla__esq"></th>
+    ${dias.map(d => {
+      const x = new Date(d + 'T12:00:00');
+      const hoy = iso(new Date()) === d;
+      return `<th class="${hoy ? 'es-hoy' : ''}">
+        <span class="rejilla__dia">${x.toLocaleDateString('es-ES',{weekday:'short'})}</span>
+        <span class="rejilla__num">${x.getDate()}</span>
+      </th>`;
+    }).join('')}
+  </tr></thead>`;
+
+  const cuerpo = [...porBarbero.entries()].map(([nombre, porDia]) => `
+    <tr>
+      <th class="rejilla__barbero">${nombre}</th>
+      ${dias.map(d => {
+        const f = porDia.get(d);
+        if (!f) return '<td></td>';
+        // Si hay citas ese día, el barbero NO estaba fuera todo el día:
+        // la ausencia era parcial. Esto también protege del caso en que la
+        // base de datos aún tenga la versión antigua de ocupacion_semana(),
+        // que marcaba 'ausente' con cualquier ausencia por corta que fuera.
+        const ausenciaReal = f.ausente && f.citas === 0;
+        const fuera = f.cerrado || ausenciaReal;
+        const parcial = !fuera && ((f.minutos_ausente || 0) > 0 || f.ausente);
+        const cls = fuera
+          ? 'pastilla--x'
+          : `pastilla--${nivel(f.porcentaje)}${parcial ? ' pastilla--parcial' : ''}`;
+        const dia = new Date(f.dia + 'T12:00:00')
+          .toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long' });
+        const disp = f.minutos_jornada - (f.minutos_ausente || 0);
+        const titulo = fuera
+          ? `${nombre} · ${dia}: ${ausenciaReal ? 'ausente todo el día' : 'cerrado'}`
+          : `${nombre} · ${dia}: ${f.citas} cita(s), ${f.minutos} min` +
+            (disp > 0 ? ` de ${disp} disponibles` : '') +
+            (f.minutos_ausente ? ` · ${f.minutos_ausente} min de ausencia` : '') +
+            (parcial && !f.minutos_ausente ? ' · con ausencia parcial' : '') +
+            ` (${f.porcentaje}%)`;
+        // Siempre un símbolo: una celda vacía no se distingue de un fallo
+        return `<td>
+          <span class="pastilla ${cls}" title="${titulo}">
+            ${fuera ? '–' : f.citas}
+          </span>
+        </td>`;
+      }).join('')}
+    </tr>`).join('');
+
+  $('rejilla').innerHTML = cabecera + '<tbody>' + cuerpo + '</tbody>';
+
+  // Resumen de la semana
+  const citas = filas.reduce((s,f) => s + (f.citas||0), 0);
+  const ocup  = filas.reduce((s,f) => s + (f.minutos||0), 0);
+  const cap   = filas.reduce((s,f) => s + (f.ausente ? 0 : (f.minutos_jornada||0)), 0);
+  const pct   = cap > 0 ? Math.round(ocup * 100 / cap) : 0;
+  $('semTotal').innerHTML =
+    `<strong>${citas}</strong> citas esta semana · ` +
+    `<strong>${pct}%</strong> de la agenda ocupada · ` +
+    `quedan <strong>${Math.round((cap - ocup)/60)} h</strong> libres`;
+}
+
+$('semPrev').addEventListener('click', () => {
+  lunes.setDate(lunes.getDate() - 7); cargarSemana();
+});
+$('semNext').addEventListener('click', () => {
+  lunes.setDate(lunes.getDate() + 7); cargarSemana();
+});
+
+// ---- Sesión guardada ----
+const guardada = localStorage.getItem('sesion');
+if (guardada && CONECTADO) {
+  sesion = JSON.parse(guardada);
+  abrirPanel();
+}
+</script>
+
+</body>
+</html>

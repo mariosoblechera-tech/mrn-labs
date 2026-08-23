@@ -26,6 +26,9 @@
 
 *,*::before,*::after{ box-sizing:border-box; }
 
+/* El atributo hidden debe ganar a cualquier display de más abajo */
+[hidden]{ display:none !important; }
+
 html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
 
 body{
@@ -282,16 +285,49 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
 
 /* ---------- Reservas ---------- */
 
-/* Selector de barbero */
-.barbers{
-  display:grid; gap:10px;
-  margin:0 0 22px;
+.step{ margin-bottom:30px; }
+.step__label{
+  display:flex; align-items:center; gap:12px;
+  margin:0 0 14px;
+  font-size:1.1rem; font-weight:600;
 }
+.step__num{
+  width:30px; height:30px; flex:0 0 30px;
+  display:grid; place-items:center;
+  background:var(--ink); color:var(--gold);
+  border-radius:50%;
+  font-size:.92rem; font-weight:600;
+  font-variant-numeric:lining-nums;
+}
+
+/* Rejilla común de opciones pulsables */
+.options, .barbers{ display:grid; gap:10px; }
+
+.option{
+  display:flex; flex-direction:column; gap:4px;
+  width:100%; min-height:68px;
+  padding:14px 18px;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:var(--radius);
+  font-family:inherit; text-align:left; cursor:pointer;
+  transition:border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+}
+.option:hover{ border-color:#cdbfa9; transform:translateY(-2px); }
+.option.is-active{
+  border-color:var(--gold);
+  box-shadow:0 6px 20px rgba(169,129,75,.18);
+}
+.option__name{ font-size:1.05rem; font-weight:600; }
+.option__meta{
+  color:var(--ink-soft); font-size:.9rem;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+
+/* Barberos */
 .barber{
   display:flex; align-items:center; gap:14px;
-  width:100%;
-  /* Alto generoso: cómodo de pulsar con el dedo */
-  min-height:72px;
+  width:100%; min-height:72px;
   padding:12px 18px;
   background:var(--paper);
   border:1.5px solid var(--line);
@@ -317,61 +353,251 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
 .barber__info strong{ font-size:1.05rem; font-weight:600; }
 .barber__info small{ color:var(--ink-soft); font-size:.88rem; }
 
-/* Bloque del calendario */
-.booking{
+/* Días: tira horizontal deslizable en móvil */
+.days{
+  display:flex; gap:9px;
+  overflow-x:auto;
+  padding:4px 2px 12px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.days::-webkit-scrollbar{ height:5px; }
+.days::-webkit-scrollbar-thumb{ background:var(--line); border-radius:3px; }
+
+.day{
+  flex:0 0 auto;
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  min-width:64px; min-height:78px;
+  padding:10px 8px;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);
+  font-family:inherit; cursor:pointer;
+  scroll-snap-align:start;
+  transition:border-color .2s ease, background .2s ease;
+}
+.day:hover{ border-color:#cdbfa9; }
+.day.is-active{ border-color:var(--gold); background:var(--gold); color:#fff; }
+.day__name{ font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; opacity:.75; }
+.day__num{
+  font-size:1.4rem; font-weight:600; line-height:1.1;
+  font-variant-numeric:lining-nums;
+}
+.day__mon{ font-size:.74rem; opacity:.7; }
+
+/* Horas */
+.slots{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(88px, 1fr));
+  gap:9px;
+  min-height:56px;
+}
+.slot{
+  min-height:52px;
+  padding:12px 8px;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);
+  font-family:inherit; font-size:1.05rem; font-weight:600;
+  font-variant-numeric:lining-nums tabular-nums;
+  cursor:pointer;
+  transition:border-color .2s ease, background .2s ease, color .2s ease;
+}
+.slot:hover{ border-color:var(--gold); }
+.slot.is-active{ background:var(--gold); border-color:var(--gold); color:#fff; }
+
+.slots__hint, .slots__empty{
+  grid-column:1/-1;
+  margin:0; padding:16px 2px;
+  color:var(--ink-soft); font-size:.95rem;
+}
+.slots__empty{ color:var(--ink); }
+
+/* Formulario */
+.bookform{ display:flex; flex-direction:column; gap:18px; }
+.bookform__row{ display:flex; flex-direction:column; gap:6px; }
+.bookform__row label{ font-weight:600; font-size:1rem; }
+/* "(opcional)" en tono suave: informa sin competir con la etiqueta */
+.opcional{ font-weight:400; color:var(--ink-soft); font-size:.92em; }
+.bookform__row input{
+  min-height:54px;
+  padding:14px 16px;
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);
+  font-family:inherit;
+  /* 17px o más: evita que iOS haga zoom al enfocar */
+  font-size:1.05rem;
+  color:var(--ink);
+}
+.bookform__row input:focus{
+  outline:none; border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(169,129,75,.16);
+}
+.bookform__hint{ color:var(--ink-soft); font-size:.88rem; }
+.bookform__err{ color:#b3261e; font-size:.88rem; min-height:1em; }
+.bookform__submit{ width:100%; margin-top:4px; }
+.bookform__submit:disabled{
+  opacity:.5; cursor:not-allowed; transform:none; box-shadow:none;
+}
+.bookform__legal{ margin:0; color:var(--ink-soft); font-size:.82rem; }
+
+/* Resumen antes de confirmar */
+.summary{
+  padding:16px 18px;
+  background:var(--paper-alt);
+  border:1px solid var(--line);
+  border-left:3px solid var(--gold);
+  border-radius:var(--radius-sm);
+}
+.summary__title{
+  margin:0 0 4px;
+  font-size:.76rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gold); font-weight:600;
+}
+.summary__line{ margin:0; font-size:1.05rem; font-weight:500; }
+
+/* Confirmación */
+.done{
+  text-align:center;
+  /* Hueco abajo para que el botón fijo de móvil no tape nada */
+  padding:24px 8px 90px;
+}
+@media (min-width:960px){ .done{ padding-bottom:24px; } }
+.done__mark{
+  width:66px; height:66px; margin:0 auto 18px;
+  display:grid; place-items:center;
+  background:var(--gold); color:#fff;
+  border-radius:50%; font-size:2rem;
+}
+.done__title{ font-size:1.9rem; margin-bottom:10px; }
+.done__detail{ margin:0 0 10px; font-size:1.1rem; }
+.done__note{ margin:0 auto 22px; max-width:44ch; color:var(--ink-soft); }
+.done__actions{ display:flex; flex-direction:column; gap:10px; align-items:center; }
+.done__actions .btn{ width:100%; max-width:320px; }
+
+/* Código de reserva en la confirmación */
+.codigo{
+  margin:0 auto 22px; max-width:340px;
+  padding:18px;
+  background:var(--paper-alt);
+  border:1.5px dashed var(--gold);
+  border-radius:var(--radius);
+}
+.codigo__label{
+  margin:0 0 6px;
+  font-size:.76rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gold); font-weight:600;
+}
+.codigo__valor{
+  margin:0 0 10px;
+  font-family:ui-monospace, "SF Mono", Menlo, monospace;
+  font-size:2rem; font-weight:600; letter-spacing:.2em;
+}
+.codigo__nota{ margin:0; font-size:.86rem; color:var(--ink-soft); line-height:1.5; }
+.codigo__mail{
+  margin:10px 0 0; padding-top:10px;
+  border-top:1px solid var(--line);
+  font-size:.86rem; color:#2e7d32; font-weight:600;
+}
+.codigo__mail--ojo{ color:#8a6d1f; }
+.codigo__nota a{ color:var(--gold); }
+
+/* Enlace para guardar la cita */
+.guardar{
+  margin:0 auto 22px; max-width:420px;
+  padding:20px 18px;
   background:var(--paper-alt);
   border:1px solid var(--line);
   border-radius:var(--radius);
-  /* En móvil sin padding lateral: el widget de Google necesita todo el ancho */
-  padding:14px 0;
 }
-/* En móvil el bloque rompe el padding del contenedor y va a sangre:
-   así Google recibe el ancho completo y muestra su diseño táctil. */
-@media (max-width:959px){
-  .booking{
-    margin-left:calc(var(--pad) * -1);
-    margin-right:calc(var(--pad) * -1);
-    border-radius:0;
-    border-left:0; border-right:0;
-  }
+.guardar__titulo{
+  margin:0 0 6px;
+  font-size:.76rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gold); font-weight:600;
 }
-.booking__who{
-  margin:0 0 12px; padding:0 14px;
-  text-align:center; color:var(--ink-soft); font-size:.95rem;
+.guardar__texto{
+  margin:0 0 16px;
+  font-size:.92rem; color:var(--ink-soft); line-height:1.5;
 }
-.booking__who strong{ color:var(--ink); }
-
-.booking__frame{
-  background:#fff;
-  overflow:hidden;
-  /* Alto suficiente para que Google NO active su scroll interno:
-     con scroll propio, en móvil el dedo mueve el iframe y no la página. */
-  height:920px;
-}
-.booking__frame iframe{
-  display:block;
-  width:100%; height:100%;
-  border:0;
+.guardar__acciones{ display:flex; flex-direction:column; gap:10px; }
+.guardar__acciones .btn{ width:100%; min-height:50px; }
+.guardar__ok{
+  margin:12px 0 0; text-align:center;
+  color:#2e7d32; font-size:.9rem; font-weight:600;
 }
 
-.booking__pending{
-  margin:0; padding:40px 22px;
-  text-align:center; color:var(--ink-soft);
-  background:#fff;
-}
-.booking__pending code{
-  background:var(--paper-alt); padding:2px 6px; border-radius:4px;
-  font-size:.9em;
+@media (min-width:640px){
+  .guardar__acciones{ flex-direction:row; }
+  .guardar__acciones .btn{ width:auto; flex:1 1 0; }
 }
 
-.booking__fallback{
+/* Aviso de error */
+.alert{
+  margin-top:18px; padding:18px;
+  background:#fdf3f2;
+  border:1px solid #f2c7c3;
+  border-radius:var(--radius-sm);
   text-align:center;
-  /* Espacio extra abajo para que el botón fijo de móvil no tape nada */
-  padding:22px 14px 84px;
-  display:flex; flex-direction:column; gap:12px; align-items:center;
 }
-.booking__fallback p{ margin:0; color:var(--ink-soft); font-size:.95rem; }
-.booking__fallback .btn{ width:100%; max-width:340px; }
+.alert p{ margin:0 0 12px; color:#8c2f27; }
+
+/* ---------- Mi cita (gestión por el cliente) ---------- */
+.micita{ max-width:620px; }
+.micita__volver{ min-height:44px; padding:10px 20px; }
+.micita__form{ margin-top:8px; }
+/* El código se lee mejor espaciado y en monoespaciada */
+.micita__cod{
+  font-family:ui-monospace, "SF Mono", Menlo, monospace;
+  letter-spacing:.22em; text-transform:uppercase;
+  font-size:1.3rem !important; text-align:center;
+}
+.micita__ayuda{
+  margin:22px 0 0; text-align:center;
+  color:var(--ink-soft); font-size:.92rem;
+}
+.micita__ayuda a{ color:var(--gold); }
+
+.ficha{
+  padding:22px;
+  background:var(--paper-alt);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+.ficha__estado{
+  margin:0 0 18px; padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+  font-weight:600; font-size:1.05rem;
+}
+.ficha__estado--ok{ color:#2e7d32; }
+.ficha__estado--off{ color:var(--ink-soft); }
+.ficha__datos{ margin:0; display:grid; gap:16px; }
+.ficha__datos dt{
+  font-size:.76rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--gold); font-weight:600; margin-bottom:3px;
+}
+.ficha__datos dd{ margin:0; font-size:1.05rem; }
+#fCod{
+  font-family:ui-monospace, "SF Mono", Menlo, monospace;
+  letter-spacing:.18em; font-weight:600;
+}
+.ficha__acciones{
+  display:flex; flex-direction:column; gap:10px;
+  margin-top:22px;
+}
+.ficha__aviso{
+  margin:18px 0 0; padding:16px 18px;
+  background:#fdf8ee; border:1px solid #ecdcb8;
+  border-left:3px solid var(--gold);
+  border-radius:var(--radius-sm);
+  color:#6b5325; font-size:.95rem;
+}
+
+@media (min-width:640px){
+  .ficha__datos{ grid-template-columns:1fr 1fr; }
+  .ficha__acciones{ flex-direction:row; }
+  .ficha__acciones .btn{ flex:1 1 0; }
+}
 
 /* ---------- Contacto ---------- */
 .contact{ display:grid; gap:30px; }
@@ -429,6 +655,12 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
 @media (min-width:640px){
   .hero__actions{ flex-direction:row; }
   .hero__actions .btn{ width:auto; }
+
+  /* En tablet las tarjetas ya caben de dos en dos y los barberos de tres:
+     en una sola columna quedaban larguísimas y con hueco desperdiciado. */
+  .options{ grid-template-columns:repeat(2, 1fr); gap:12px; }
+  .barbers{ grid-template-columns:repeat(3, 1fr); gap:12px; }
+  .bookform{ max-width:520px; }
   .services{ grid-template-columns:repeat(2, 1fr); }
   .gallery{ grid-template-columns:repeat(3, 1fr); }
   .team{ grid-template-columns:repeat(3, 1fr); }
@@ -479,10 +711,13 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
   .contact__map{ height:420px; }
   .contact__actions .btn{ flex:0 0 auto; }
 
-  .barbers{ grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:28px; }
-  .booking{ padding:24px; }
-  .booking__frame{ height:760px; border-radius:var(--radius-sm); }
-  .booking__fallback{ flex-direction:row; justify-content:center; gap:16px; padding:22px 0 8px; }
+  .options{ grid-template-columns:repeat(2, 1fr); gap:14px; }
+  .barbers{ grid-template-columns:repeat(3, 1fr); gap:16px; }
+  .step{ margin-bottom:42px; }
+  .slots{ grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); gap:12px; }
+  .bookform{ max-width:560px; }
+  .done__actions{ flex-direction:row; justify-content:center; }
+  .done__actions .btn{ width:auto; }
   .booking__fallback p{ margin-right:8px; }
   .booking__fallback .btn{ width:auto; max-width:none; }
 

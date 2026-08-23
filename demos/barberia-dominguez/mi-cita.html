@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi cita · Barbería Domínguez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=13">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="index.html" class="logo">
+      <span class="logo__mark">B</span>
+      <span class="logo__text">Barbería<strong>Domínguez</strong></span>
+    </a>
+    <a href="index.html" class="btn btn--ghost micita__volver">Volver</a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container micita">
+
+    <!-- ---- Buscar la cita ---- -->
+    <div id="buscar">
+      <header class="section__head">
+        <p class="eyebrow">Tu cita</p>
+        <h1 class="section__title">Cambiar o cancelar tu cita</h1>
+        <p class="section__sub">
+          Necesitas el teléfono con el que reservaste y tu código de reserva.
+        </p>
+      </header>
+
+      <form class="bookform micita__form" id="buscarForm" novalidate>
+        <div class="bookform__row">
+          <label for="qTel">Teléfono</label>
+          <input type="tel" id="qTel" inputmode="numeric" autocomplete="tel"
+                 required placeholder="Ej. 612 345 678">
+        </div>
+        <div class="bookform__row">
+          <label for="qCod">Código de reserva</label>
+          <input type="text" id="qCod" required maxlength="6"
+                 autocapitalize="characters" spellcheck="false"
+                 placeholder="Ej. A7K2M9" class="micita__cod">
+          <span class="bookform__hint">
+            Son 6 letras y números. Te lo dimos al reservar.
+          </span>
+        </div>
+        <p class="bookform__err" id="qErr"></p>
+        <button type="submit" class="btn btn--primary btn--lg" id="qBtn">Buscar mi cita</button>
+      </form>
+
+      <p class="micita__ayuda">
+        ¿No encuentras el código? Llámanos al
+        <a href="tel:+34910000000">910 000 000</a> y lo vemos.
+      </p>
+    </div>
+
+    <!-- ---- La cita encontrada ---- -->
+    <div id="ficha" hidden>
+      <header class="section__head">
+        <p class="eyebrow">Tu cita</p>
+        <h1 class="section__title" id="fTitulo">Tu reserva</h1>
+      </header>
+
+      <div class="ficha">
+        <p class="ficha__estado" id="fEstado"></p>
+        <dl class="ficha__datos">
+          <div><dt>Código</dt><dd id="fCod"></dd></div>
+          <div><dt>Cliente</dt><dd id="fCliente"></dd></div>
+          <div><dt>Servicio</dt><dd id="fServicio"></dd></div>
+          <div><dt>Barbero</dt><dd id="fBarbero"></dd></div>
+          <div><dt>Día y hora</dt><dd id="fCuando"></dd></div>
+        </dl>
+      </div>
+
+      <div class="ficha__acciones" id="fAcciones">
+        <button type="button" class="btn btn--primary btn--lg" id="cambiarBtn">
+          Cambiar de hora
+        </button>
+        <button type="button" class="btn btn--ghost btn--lg" id="cancelarBtn">
+          Cancelar cita
+        </button>
+      </div>
+
+      <p class="ficha__aviso" id="fAviso" hidden></p>
+
+      <!-- Elegir hora nueva -->
+      <div id="cambiar" hidden>
+        <p class="step__label"><span class="step__num">1</span> ¿Con quién?</p>
+        <div class="barbers" id="cBarberos" role="radiogroup"></div>
+
+        <p class="step__label"><span class="step__num">2</span> Elige el nuevo día</p>
+        <div class="days" id="cDias" role="radiogroup"></div>
+
+        <p class="step__label"><span class="step__num">3</span> Elige la nueva hora</p>
+        <div class="slots" id="cHoras" aria-live="polite">
+          <p class="slots__hint">Elige antes un día.</p>
+        </div>
+
+        <div class="summary" id="cResumen" hidden>
+          <p class="summary__title">Nueva hora</p>
+          <p class="summary__line" id="cResumenTexto"></p>
+        </div>
+
+        <div class="ficha__acciones">
+          <button type="button" class="btn btn--primary btn--lg" id="confirmarBtn" disabled>
+            Confirmar cambio
+          </button>
+          <button type="button" class="btn btn--ghost btn--lg" id="atrasBtn">Dejarlo como está</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- Resultado ---- -->
+    <div class="done" id="hecho" hidden>
+      <div class="done__mark" id="hMark">✓</div>
+      <h2 class="done__title" id="hTitulo"></h2>
+      <p class="done__detail" id="hDetalle"></p>
+      <div class="done__actions">
+        <a class="btn btn--primary" href="index.html">Volver a la web</a>
+        <a class="btn btn--ghost" href="tel:+34910000000">Llamar a la barbería</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__legal">© 2026 Barbería Domínguez</p>
+  </div>
+</footer>
+
+<script>
+// =====================================================================
+//  Gestión de la cita por parte del cliente
+//  Identificación: teléfono + código de reserva.
+//  Toda la validación real está en la base de datos; aquí solo se pinta.
+// =====================================================================
+
+const SUPABASE_URL  = 'https://krlotacemsjkqbxzhfij.supabase.co';   // https://xxxxx.supabase.co
+const SUPABASE_ANON  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybG90YWNlbXNqa3FieHpoZmlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0ODMwOTUsImV4cCI6MjEwMzA1OTA5NX0.dIqs9zWSXLJdQGO3fEyZXhN3C__XwKP6PBzH2nCSHK4';  // la clave anon (pública, no la service_role)
+
+const BASE = SUPABASE_URL.trim().replace(/\/+$/,'').replace(/\/rest\/v1$/,'');
+const CONECTADO = Boolean(BASE && SUPABASE_ANON);
+
+const $ = id => document.getElementById(id);
+let cita = null;          // la cita encontrada
+let cred = null;          // { tel, cod } para las siguientes llamadas
+let nuevaHora = null;
+let nuevoBarbero = null;   // null = se queda el mismo
+
+async function rpc(fn, params) {
+  const r = await fetch(`${BASE}/rest/v1/rpc/${fn}`, {
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'apikey': SUPABASE_ANON,
+      'Authorization': `Bearer ${SUPABASE_ANON}`
+    },
+    body: JSON.stringify(params)
+  });
+  if (!r.ok) throw new Error(await r.text() || `Error ${r.status}`);
+  return r.json();
+}
+
+const fecha = iso => new Date(iso).toLocaleDateString('es-ES',
+  { weekday:'long', day:'numeric', month:'long' });
+const hora = iso => new Date(iso).toLocaleTimeString('es-ES',
+  { hour:'2-digit', minute:'2-digit', hour12:false });
+
+// ---- Buscar ----
+$('buscarForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('qErr').textContent = '';
+
+  const tel = $('qTel').value.replace(/[\s-]/g,'');
+  const cod = $('qCod').value.trim().toUpperCase();
+
+  if (!/^[6-9]\d{8}$/.test(tel)) {
+    $('qErr').textContent = 'Escribe un teléfono español de 9 cifras.';
+    return;
+  }
+  if (cod.length !== 6) {
+    $('qErr').textContent = 'El código tiene 6 caracteres.';
+    return;
+  }
+
+  const btn = $('qBtn');
+  btn.disabled = true;
+  btn.textContent = 'Buscando…';
+
+  try {
+    if (!CONECTADO) throw new Error('sin_config');
+    const res = await rpc('mi_cita', { p_tel: tel, p_codigo: cod });
+
+    if (!res || !res.length) {
+      // Mismo mensaje si falla el teléfono o el código: no damos pistas
+      // sobre qué parte estaba bien.
+      $('qErr').textContent = 'No hemos encontrado ninguna cita con esos datos.';
+      return;
+    }
+
+    cita = res[0];
+    cred = { tel, cod };
+    pintarFicha();
+
+  } catch (err) {
+    $('qErr').textContent = String(err.message) === 'sin_config'
+      ? 'Falta configurar Supabase en mi-cita.html.'
+      : 'No hemos podido consultar la cita. Inténtalo de nuevo o llámanos.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Buscar mi cita';
+  }
+});
+
+// ---- Mostrar la cita ----
+function pintarFicha() {
+  $('buscar').hidden = true;
+  $('ficha').hidden = false;
+
+  $('fCod').textContent      = cita.codigo;
+  $('fCliente').textContent  = cita.cliente;
+  $('fServicio').textContent = `${cita.servicio} · ${cita.duracion} min · ` +
+                               (cita.precio/100).toLocaleString('es-ES',
+                                 {style:'currency',currency:'EUR',minimumFractionDigits:0});
+  $('fBarbero').textContent  = cita.barbero;
+  $('fCuando').textContent   = `${fecha(cita.empieza)} a las ${hora(cita.empieza)}`;
+
+  const ESTADO = {
+    confirmed: { texto:'Cita confirmada',   clase:'ficha__estado--ok' },
+    cancelled: { texto:'Cita cancelada',    clase:'ficha__estado--off' },
+    no_show:   { texto:'No se presentó',    clase:'ficha__estado--off' },
+    done:      { texto:'Servicio realizado', clase:'ficha__estado--ok' }
+  }[cita.estado] || { texto:cita.estado, clase:'' };
+
+  $('fEstado').textContent = ESTADO.texto;
+  $('fEstado').className = 'ficha__estado ' + ESTADO.clase;
+
+  // Solo se puede tocar si la base de datos dice que sí
+  if (cita.se_puede_cambiar) {
+    $('fAcciones').hidden = false;
+    $('fAviso').hidden = true;
+  } else {
+    $('fAcciones').hidden = true;
+    $('fAviso').hidden = false;
+    $('fAviso').textContent = cita.estado !== 'confirmed'
+      ? 'Esta cita ya está cerrada. Si necesitas otra, reserva de nuevo.'
+      : 'Faltan menos de 2 horas: ya no se puede cambiar por aquí. ' +
+        'Llámanos al 910 000 000 y lo arreglamos.';
+  }
+}
+
+// ---- Cancelar ----
+$('cancelarBtn').addEventListener('click', async () => {
+  if (!confirm('¿Seguro que quieres cancelar tu cita?')) return;
+
+  const btn = $('cancelarBtn');
+  btn.disabled = true;
+  btn.textContent = 'Cancelando…';
+  try {
+    await rpc('cancelar_cita', { p_tel: cred.tel, p_codigo: cred.cod });
+    fin('✓', 'Cita cancelada',
+        'Hemos liberado tu hueco. Puedes reservar otro cuando quieras.');
+  } catch (err) {
+    const m = String(err.message||'');
+    alert(/DEMASIADO_TARDE/.test(m)
+      ? 'Faltan menos de 2 horas para tu cita. Llámanos y lo vemos.'
+      : /YA_CERRADA/.test(m)
+      ? 'Esta cita ya estaba cerrada.'
+      : 'No hemos podido cancelar. Inténtalo de nuevo o llámanos.');
+    btn.disabled = false;
+    btn.textContent = 'Cancelar cita';
+  }
+});
+
+// ---- Cambiar de hora ----
+$('cambiarBtn').addEventListener('click', () => {
+  $('cambiar').hidden = false;
+  $('fAcciones').hidden = true;
+  nuevoBarbero = cita.barbero_id;      // arranca con el que ya tiene
+  cargarBarberos();
+  cargarDias();
+});
+
+// Los barberos que pueden hacer ESE servicio
+async function cargarBarberos() {
+  const caja = $('cBarberos');
+  try {
+    const lista = await rpc('barberos_para_servicio', { p_service: cita.servicio_id });
+    caja.innerHTML = (lista || []).map(b => `
+      <button type="button" class="barber ${b.id === cita.barbero_id ? 'is-active' : ''}"
+              role="radio" aria-checked="${b.id === cita.barbero_id}"
+              data-id="${b.id}" data-name="${b.name}">
+        <span class="barber__avatar">${b.name.charAt(0)}</span>
+        <span class="barber__info">
+          <strong>${b.name}</strong>
+          <small>${b.id === cita.barbero_id ? 'tu barbero actual' : (b.specialty || '')}</small>
+        </span>
+      </button>`).join('');
+
+    caja.querySelectorAll('.barber').forEach(b => {
+      b.addEventListener('click', () => {
+        caja.querySelectorAll('.barber').forEach(x => {
+          x.classList.remove('is-active');
+          x.setAttribute('aria-checked','false');
+        });
+        b.classList.add('is-active');
+        b.setAttribute('aria-checked','true');
+        nuevoBarbero = b.dataset.id;
+        // Cambiar de barbero cambia los huecos: hay que volver a buscar
+        const diaSel = $('cDias').querySelector('.day.is-active');
+        if (diaSel) cargarHoras(diaSel.dataset.date);
+        else limpiarHoras();
+      });
+    });
+  } catch (e) {
+    caja.innerHTML = '<p class="slots__hint">No se han podido cargar los barberos.</p>';
+  }
+}
+
+function limpiarHoras() {
+  nuevaHora = null;
+  $('confirmarBtn').disabled = true;
+  $('cResumen').hidden = true;
+  $('cHoras').innerHTML = '<p class="slots__hint">Elige un día.</p>';
+}
+
+$('atrasBtn').addEventListener('click', () => {
+  $('cambiar').hidden = true;
+  $('fAcciones').hidden = false;
+  nuevaHora = null;
+  nuevoBarbero = null;
+});
+
+function cargarDias() {
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  let html = '';
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(hoy); d.setDate(d.getDate() + i);
+    if (d.getDay() === 0) continue;
+    // Fecha local, no UTC (ver nota en index.html)
+    const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` +
+                `-${String(d.getDate()).padStart(2,'0')}`;
+    html += `
+      <button type="button" class="day" role="radio" aria-checked="false" data-date="${iso}">
+        <span class="day__name">${i === 0 ? 'Hoy' : d.toLocaleDateString('es-ES',{weekday:'short'})}</span>
+        <span class="day__num">${d.getDate()}</span>
+        <span class="day__mon">${d.toLocaleDateString('es-ES',{month:'short'})}</span>
+      </button>`;
+  }
+  $('cDias').innerHTML = html;
+  $('cDias').querySelectorAll('.day').forEach(b => {
+    b.addEventListener('click', () => {
+      $('cDias').querySelectorAll('.day').forEach(x => {
+        x.classList.remove('is-active');
+        x.setAttribute('aria-checked','false');
+      });
+      b.classList.add('is-active');
+      b.setAttribute('aria-checked','true');
+      cargarHoras(b.dataset.date);
+    });
+  });
+}
+
+async function cargarHoras(dia) {
+  const caja = $('cHoras');
+  nuevaHora = null;
+  $('confirmarBtn').disabled = true;
+  $('cResumen').hidden = true;
+  caja.innerHTML = '<p class="slots__hint">Buscando huecos…</p>';
+
+  try {
+    // Huecos del barbero elegido (puede ser otro distinto al actual)
+    const horas = await rpc('huecos_libres', {
+      p_barber: nuevoBarbero || cita.barbero_id,
+      p_service: cita.servicio_id,
+      p_dia: dia
+    });
+
+    if (!horas || !horas.length) {
+      caja.innerHTML = '<p class="slots__empty">No quedan huecos ese día. Prueba otro.</p>';
+      return;
+    }
+
+    caja.innerHTML = horas.map(h => {
+      const iso = h.slot || h;
+      return `<button type="button" class="slot" data-iso="${iso}">${hora(iso)}</button>`;
+    }).join('');
+
+    caja.querySelectorAll('.slot').forEach(b => {
+      b.addEventListener('click', () => {
+        caja.querySelectorAll('.slot').forEach(x => x.classList.remove('is-active'));
+        b.classList.add('is-active');
+        nuevaHora = b.dataset.iso;
+        const quien = $('cBarberos').querySelector('.barber.is-active')?.dataset.name || '';
+        $('cResumenTexto').textContent =
+          `${quien ? quien + ' · ' : ''}${fecha(nuevaHora)} a las ${hora(nuevaHora)}`;
+        $('cResumen').hidden = false;
+        $('confirmarBtn').disabled = false;
+      });
+    });
+  } catch (err) {
+    caja.innerHTML = '<p class="slots__empty">No hemos podido cargar los huecos.</p>';
+  }
+}
+
+$('confirmarBtn').addEventListener('click', async () => {
+  const btn = $('confirmarBtn');
+  btn.disabled = true;
+  btn.textContent = 'Cambiando…';
+  try {
+    await rpc('mover_cita', {
+      p_tel: cred.tel,
+      p_codigo: cred.cod,
+      p_inicio: nuevaHora,
+      p_barber: nuevoBarbero || null
+    });
+    const quien = $('cBarberos').querySelector('.barber.is-active')?.dataset.name;
+    fin('✓', 'Cita cambiada',
+        `Te esperamos el ${fecha(nuevaHora)} a las ${hora(nuevaHora)}` +
+        `${quien ? ' con ' + quien : ''}. Tu código sigue siendo ${cita.codigo}.`);
+  } catch (err) {
+    const m = String(err.message||'');
+    alert(/HUECO_NO_DISPONIBLE/.test(m)
+      ? 'Acaban de coger ese hueco. Elige otra hora.'
+      : /DEMASIADO_TARDE/.test(m)
+      ? 'Faltan menos de 2 horas para tu cita. Llámanos y lo vemos.'
+      : 'No hemos podido cambiar la cita. Inténtalo de nuevo o llámanos.');
+    btn.disabled = false;
+    btn.textContent = 'Confirmar cambio';
+  }
+});
+
+function fin(icono, titulo, detalle) {
+  $('ficha').hidden = true;
+  $('buscar').hidden = true;
+  $('hMark').textContent = icono;
+  $('hTitulo').textContent = titulo;
+  $('hDetalle').textContent = detalle;
+  $('hecho').hidden = false;
+}
+
+// El código en mayúsculas mientras se escribe
+$('qCod').addEventListener('input', e => {
+  e.target.value = e.target.value.toUpperCase();
+});
+
+// Si llegan con ?tel=...&cod=... se rellena y se busca sin tocar nada.
+// Es el atajo que se ofrece al confirmar la reserva.
+const par = new URLSearchParams(location.search);
+if (par.get('tel')) $('qTel').value = par.get('tel');
+if (par.get('cod')) $('qCod').value = par.get('cod').toUpperCase();
+
+if (par.get('tel') && par.get('cod')) {
+  $('buscarForm').dispatchEvent(new Event('submit', { cancelable:true }));
+}
+</script>
+
+</body>
+</html>

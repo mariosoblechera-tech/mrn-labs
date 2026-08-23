@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=13">
 </head>
 <body>
 
@@ -26,6 +26,7 @@
       <a href="#equipo">Equipo</a>
       <a href="#reservar">Reservar</a>
       <a href="#contacto">Contacto</a>
+      <a href="mi-cita.html">Mi cita</a>
       <a href="#reservar" class="btn btn--primary nav__cta">Pedir cita</a>
     </nav>
 
@@ -227,78 +228,129 @@
       <p class="eyebrow">Reservas</p>
       <h2 class="section__title">Elige tu día y tu hora</h2>
       <p class="section__sub">
-        Selecciona un hueco libre en el calendario. Recibirás la confirmación
-        en tu correo al instante.
+        En cuatro pasos y sin registrarte. Solo necesitamos tu nombre y un teléfono.
       </p>
     </header>
 
-    <!-- Selector de barbero: cada uno con su enlace de Google Calendar -->
-    <!-- Cada barbero lleva su propia página de citas de Google.
-         data-embed = URL larga del iframe (Compartir -> Insertar)
-         data-link  = enlace corto para compartir (calendar.app.google/...)
-         Si rehaces la página de citas en Google, actualiza AMBOS. -->
-    <div class="barbers" role="tablist" aria-label="Elige tu barbero">
-      <button class="barber is-active" role="tab" aria-selected="true"
-              data-name="Roberto"
-              data-embed="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3h91S4jhQ8VfTOr0Nj1AA2N_2zUAvVmxfz18ZEBKTXgv5wFfc5bifolCJXnvQMg3csnFBrLvN9?gv=true"
-              data-link="https://calendar.app.google/4vfenzPp4hD9Xq6E6">
-        <span class="barber__avatar">R</span>
-        <span class="barber__info">
-          <strong>Roberto</strong>
-          <small>Corte y barba</small>
-        </span>
-      </button>
-
-      <!-- PENDIENTE: pega aquí el enlace de citas de Néstor (ver README) -->
-      <button class="barber" role="tab" aria-selected="false"
-              data-name="Néstor"
-              data-embed=""
-              data-link="">
-        <span class="barber__avatar">N</span>
-        <span class="barber__info">
-          <strong>Néstor</strong>
-          <small>Degradados</small>
-        </span>
-      </button>
-
-      <button class="barber" role="tab" aria-selected="false"
-              data-name="Mario"
-              data-embed="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1-NtYa7mzXrCg6ggZXm_54GULdVoRG3N3tBbktKh-_52_0GNBn3eVt4IdP_2YpFCVyuSM5Q6ML?gv=true"
-              data-link="https://calendar.app.google/1mJMix2YVKrTGETw9">
-        <span class="barber__avatar">M</span>
-        <span class="barber__info">
-          <strong>Mario</strong>
-          <small>Afeitado clásico</small>
-        </span>
-      </button>
+    <!-- ---- Paso 1: servicio ---- -->
+    <div class="step" data-step="1">
+      <p class="step__label"><span class="step__num">1</span> ¿Qué te vas a hacer?</p>
+      <div class="options" id="serviceList" role="radiogroup" aria-label="Elige servicio">
+        <!-- Los rellena la base de datos. Si no hay conexión, se usan estos. -->
+      </div>
     </div>
 
-    <div class="booking">
-      <p class="booking__who">Reservando con <strong id="barberName">Roberto</strong></p>
+    <!-- ---- Paso 2: barbero ---- -->
+    <div class="step" data-step="2">
+      <p class="step__label"><span class="step__num">2</span> ¿Con quién?</p>
+      <div class="barbers" id="barberList" role="radiogroup" aria-label="Elige barbero">
+      </div>
+    </div>
 
-      <!-- Widget oficial de Google Calendar (Appointment Schedule) -->
-      <div class="booking__frame">
-        <!-- El src lo rellena el selector de barbero al pulsar uno.
-             Para arrancar con un calendario por defecto, pega su URL aquí. -->
-        <iframe id="bookingFrame"
-          src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3h91S4jhQ8VfTOr0Nj1AA2N_2zUAvVmxfz18ZEBKTXgv5wFfc5bifolCJXnvQMg3csnFBrLvN9?gv=true"
-          title="Reserva de citas en Google Calendar"
-          frameborder="0"></iframe>
+    <!-- ---- Paso 3: día ---- -->
+    <div class="step" data-step="3">
+      <p class="step__label"><span class="step__num">3</span> ¿Qué día?</p>
+      <div class="days" id="dayList" role="radiogroup" aria-label="Elige día"></div>
+    </div>
+
+    <!-- ---- Paso 4: hora ---- -->
+    <div class="step" data-step="4">
+      <p class="step__label"><span class="step__num">4</span> ¿A qué hora?</p>
+      <div class="slots" id="slotList" aria-live="polite">
+        <p class="slots__hint">Elige antes servicio, barbero y día.</p>
+      </div>
+    </div>
+
+    <!-- ---- Paso 5: datos ---- -->
+    <div class="step" data-step="5">
+      <p class="step__label"><span class="step__num">5</span> Tus datos</p>
+      <form class="bookform" id="bookForm" novalidate>
+        <div class="bookform__row">
+          <label for="fName">Nombre y apellidos</label>
+          <input type="text" id="fName" name="name" autocomplete="name"
+                 required minlength="2" placeholder="Ej. María García">
+          <span class="bookform__err" data-for="fName"></span>
+        </div>
+
+        <div class="bookform__row">
+          <label for="fPhone">Teléfono de contacto</label>
+          <input type="tel" id="fPhone" name="phone" autocomplete="tel"
+                 inputmode="numeric" required placeholder="Ej. 612 345 678">
+          <span class="bookform__hint">Solo para avisarte si hay algún cambio.</span>
+          <span class="bookform__err" data-for="fPhone"></span>
+        </div>
+
+        <div class="bookform__row">
+          <label for="fEmail">Correo electrónico <span class="opcional">(opcional)</span></label>
+          <input type="email" id="fEmail" name="email" autocomplete="email"
+                 inputmode="email" placeholder="Ej. maria@correo.com">
+          <span class="bookform__hint">
+            Si lo pones, te enviamos la confirmación con tu código de reserva.
+          </span>
+          <span class="bookform__err" data-for="fEmail"></span>
+        </div>
+
+        <!-- Resumen antes de confirmar: que nadie reserve a ciegas -->
+        <div class="summary" id="summary" hidden>
+          <p class="summary__title">Vas a reservar</p>
+          <p class="summary__line" id="summaryLine"></p>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg bookform__submit"
+                id="submitBtn" disabled>Confirmar reserva</button>
+
+        <p class="bookform__legal">
+          Al reservar aceptas que guardemos tu nombre y teléfono para gestionar la cita.
+          Puedes cancelarla cuando quieras desde <a href="mi-cita.html">Mi cita</a>.
+        </p>
+      </form>
+    </div>
+
+    <!-- ---- Confirmación ---- -->
+    <div class="done" id="done" hidden>
+      <div class="done__mark">✓</div>
+      <h3 class="done__title">¡Cita confirmada!</h3>
+      <p class="done__detail" id="doneDetail"></p>
+      <div class="codigo" id="codigoCaja" hidden>
+        <p class="codigo__label">Tu código de reserva</p>
+        <p class="codigo__valor" id="codigoValor"></p>
+        <p class="codigo__nota">
+          Apúntalo: con él y tu teléfono puedes cambiar o cancelar la cita.
+        </p>
+        <p class="codigo__mail" id="avisoEmail" hidden>
+          Te lo hemos enviado también por correo.
+        </p>
+        <p class="codigo__mail codigo__mail--ojo" id="avisoSinEmail" hidden>
+          No nos has dejado correo, así que apunta este código.
+        </p>
       </div>
 
-      <!-- Aviso si ese barbero aún no tiene calendario configurado -->
-      <p class="booking__pending" id="bookingPending" hidden>
-        Este barbero todavía no tiene su calendario conectado.
-        Añade su enlace en <code>index.html</code> o reserva por teléfono.
+      <!-- Atajo: el enlace ya lleva teléfono y código, así el cliente no
+           tiene que escribir nada para gestionar su cita. -->
+      <div class="guardar" id="guardarCaja" hidden>
+        <p class="guardar__titulo">Guarda este enlace</p>
+        <p class="guardar__texto">
+          Ábrelo cuando quieras para cambiar o cancelar tu cita, sin escribir nada.
+        </p>
+        <div class="guardar__acciones">
+          <a class="btn btn--primary" id="miCitaLink" href="#">Abrir mi cita</a>
+          <button type="button" class="btn btn--ghost" id="copiarBtn">Copiar enlace</button>
+        </div>
+        <p class="guardar__ok" id="copiadoAviso" hidden>Enlace copiado ✓</p>
+      </div>
+      <p class="done__note">
+        Te esperamos en Calle de la Tijera, 12.
       </p>
-
-      <!-- Alternativa: abrir el calendario a pantalla completa -->
-      <div class="booking__fallback">
-        <p>¿Vas con prisa o prefieres verlo a pantalla completa?</p>
-        <a class="btn btn--primary btn--lg" id="bookingLink"
-           href="https://calendar.app.google/4vfenzPp4hD9Xq6E6" target="_blank" rel="noopener">Abrir calendario completo</a>
-        <a class="btn btn--ghost btn--lg" href="tel:+34910000000">Reservar por teléfono</a>
+      <div class="done__actions">
+        <a class="btn btn--ghost" href="tel:+34910000000">Llamar a la barbería</a>
+        <button type="button" class="btn btn--ghost" id="againBtn">Reservar otra cita</button>
       </div>
+    </div>
+
+    <!-- Aviso de error, para que nunca quede en pantalla muerta -->
+    <div class="alert" id="alert" hidden role="alert">
+      <p id="alertMsg"></p>
+      <a class="btn btn--primary" href="tel:+34910000000">Reservar por teléfono</a>
     </div>
   </div>
 </section>
@@ -383,49 +435,405 @@
     burger.setAttribute('aria-expanded', 'false');
   }));
 
-  // ---- Selector de barbero ----
-  const frame   = document.getElementById('bookingFrame');
-  const who     = document.getElementById('barberName');
-  const link    = document.getElementById('bookingLink');
-  const pending = document.getElementById('bookingPending');
+  // =====================================================================
+  //  RESERVAS
+  //  Toda la disponibilidad la decide la base de datos, nunca este código.
+  //  Aquí solo se pinta lo que devuelve y se envía lo que el cliente elige.
+  // =====================================================================
 
-  // Estado inicial: si el barbero activo no tiene calendario, muestra el aviso
-  // en lugar de un iframe vacío.
-  const activo = document.querySelector('.barber.is-active');
-  if (activo && !activo.dataset.embed) {
-    frame.hidden = true;
-    pending.hidden = false;
-    link.hidden = true;
+  // --- Configuración: pega aquí tus datos de Supabase ---
+  const SUPABASE_URL  = 'https://krlotacemsjkqbxzhfij.supabase.co';   // https://xxxxx.supabase.co
+  const SUPABASE_ANON  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtybG90YWNlbXNqa3FieHpoZmlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0ODMwOTUsImV4cCI6MjEwMzA1OTA5NX0.dIqs9zWSXLJdQGO3fEyZXhN3C__XwKP6PBzH2nCSHK4';  // la clave anon (pública, no la service_role)
+
+  // Quita la barra final y un /rest/v1 de más, por si se pegan de sobra
+  const BASE = SUPABASE_URL.trim().replace(/\/+$/,'').replace(/\/rest\/v1$/,'');
+  const CONECTADO = Boolean(BASE && SUPABASE_ANON);
+
+  // Datos de muestra para ver el diseño antes de conectar la base de datos
+  const DEMO = {
+    servicios: [
+      { id:'s1', name:'Corte de pelo',  duration_min:30, price_cents:1600 },
+      { id:'s2', name:'Arreglo de barba', duration_min:20, price_cents:1200 },
+      { id:'s3', name:'Corte + barba',  duration_min:45, price_cents:2500 },
+      { id:'s4', name:'Afeitado clásico', duration_min:30, price_cents:1800 }
+    ],
+    barberos: [
+      { id:'b1', name:'Roberto', specialty:'Corte y barba' },
+      { id:'b2', name:'Néstor',  specialty:'Degradados' },
+      { id:'b3', name:'Mario',   specialty:'Afeitado clásico' }
+    ]
+  };
+
+  // Estado de la reserva en curso
+  const sel = { servicio:null, barbero:null, dia:null, hora:null };
+
+  const $ = id => document.getElementById(id);
+  const euros = c => (c/100).toLocaleString('es-ES',
+    { style:'currency', currency:'EUR', minimumFractionDigits:0 });
+
+  // --- Llamadas a Supabase (funciones RPC, nunca a las tablas) ---
+  async function rpc(fn, params) {
+    const r = await fetch(`${BASE}/rest/v1/rpc/${fn}`, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`
+      },
+      body: JSON.stringify(params)
+    });
+    if (!r.ok) {
+      const t = await r.text();
+      throw new Error(t || `Error ${r.status}`);
+    }
+    return r.json();
   }
 
-  document.querySelectorAll('.barber').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.barber').forEach(b => {
-        b.classList.remove('is-active');
-        b.setAttribute('aria-selected', 'false');
+  function mostrarError(msg) {
+    $('alertMsg').textContent = msg;
+    $('alert').hidden = false;
+  }
+  const limpiarError = () => { $('alert').hidden = true; };
+
+  // --- Paso 1: servicios ---
+  async function cargarServicios() {
+    let lista = DEMO.servicios;
+    if (CONECTADO) {
+      try { lista = await rpc('servicios_activos', {}); }
+      catch (e) { console.warn('Servicios: usando demo', e); }
+    }
+    $('serviceList').innerHTML = lista.map(s => `
+      <button type="button" class="option" role="radio" aria-checked="false"
+              data-id="${s.id}" data-name="${s.name}" data-dur="${s.duration_min}">
+        <span class="option__name">${s.name}</span>
+        <span class="option__meta">${s.duration_min} min · ${euros(s.price_cents)}</span>
+      </button>`).join('');
+
+    $('serviceList').querySelectorAll('.option').forEach(b => {
+      b.addEventListener('click', () => {
+        marcar($('serviceList'), b);
+        sel.servicio = { id:b.dataset.id, name:b.dataset.name, dur:+b.dataset.dur };
+        cargarHuecos();
+        revisar();
       });
-      btn.classList.add('is-active');
-      btn.setAttribute('aria-selected', 'true');
-
-      const embed = btn.dataset.embed;
-      const url   = btn.dataset.link;
-      who.textContent = btn.dataset.name;
-
-      if (embed) {
-        // Calendario configurado: se carga en el widget
-        frame.src = embed;
-        frame.hidden = false;
-        pending.hidden = true;
-        link.href = url || embed;
-        link.hidden = false;
-      } else {
-        // Sin enlace todavía: se avisa en lugar de mostrar un iframe roto
-        frame.hidden = true;
-        pending.hidden = false;
-        link.hidden = true;
-      }
     });
+  }
+
+  // --- Paso 2: barberos ---
+  async function cargarBarberos() {
+    let lista = DEMO.barberos;
+    if (CONECTADO) {
+      try { lista = await rpc('barberos_activos', {}); }
+      catch (e) { console.warn('Barberos: usando demo', e); }
+    }
+    $('barberList').innerHTML = lista.map(b => `
+      <button type="button" class="barber" role="radio" aria-checked="false"
+              data-id="${b.id}" data-name="${b.name}">
+        <span class="barber__avatar">${b.name.charAt(0)}</span>
+        <span class="barber__info">
+          <strong>${b.name}</strong>
+          <small>${b.specialty || ''}</small>
+        </span>
+      </button>`).join('');
+
+    $('barberList').querySelectorAll('.barber').forEach(b => {
+      b.addEventListener('click', () => {
+        marcar($('barberList'), b, 'is-active');
+        sel.barbero = { id:b.dataset.id, name:b.dataset.name };
+        cargarHuecos();
+        revisar();
+      });
+    });
+  }
+
+  // --- Paso 3: los días que permita la configuración ---
+  // El número lo decide la base de datos, no este código: así el jefe lo
+  // cambia desde el panel sin tocar el HTML.
+  let DIAS_VISTA = 14;
+
+  async function cargarConfig() {
+    if (!CONECTADO) return;
+    try {
+      const c = await rpc('config_publica', {});
+      if (c && c[0]?.dias_antelacion) DIAS_VISTA = c[0].dias_antelacion;
+    } catch (e) { /* nos quedamos con el valor por defecto */ }
+  }
+
+  function cargarDias() {
+    const hoy = new Date(); hoy.setHours(0,0,0,0);
+    let html = '';
+    for (let i = 0; i <= DIAS_VISTA; i++) {
+      const d = new Date(hoy); d.setDate(d.getDate() + i);
+      if (d.getDay() === 0) continue;                 // domingo cerrado
+      // Fecha local, no UTC: con toISOString() en España el día
+      // retrocede al anterior y se ofrecían días desplazados.
+      const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` +
+                  `-${String(d.getDate()).padStart(2,'0')}`;
+      const dia = d.toLocaleDateString('es-ES', { weekday:'short' });
+      html += `
+        <button type="button" class="day" role="radio" aria-checked="false" data-date="${iso}">
+          <span class="day__name">${i === 0 ? 'Hoy' : dia}</span>
+          <span class="day__num">${d.getDate()}</span>
+          <span class="day__mon">${d.toLocaleDateString('es-ES',{month:'short'})}</span>
+        </button>`;
+    }
+    $('dayList').innerHTML = html;
+    $('dayList').querySelectorAll('.day').forEach(b => {
+      b.addEventListener('click', () => {
+        marcar($('dayList'), b);
+        sel.dia = b.dataset.date;
+        cargarHuecos();
+        revisar();
+      });
+    });
+  }
+
+  // --- Paso 4: huecos reales ---
+  async function cargarHuecos() {
+    const caja = $('slotList');
+    sel.hora = null;
+    revisar();
+
+    if (!sel.servicio || !sel.barbero || !sel.dia) {
+      caja.innerHTML = '<p class="slots__hint">Elige antes servicio, barbero y día.</p>';
+      return;
+    }
+
+    caja.innerHTML = '<p class="slots__hint">Buscando huecos libres…</p>';
+
+    let horas = [];
+    if (CONECTADO) {
+      try {
+        horas = await rpc('huecos_libres', {
+          p_barber: sel.barbero.id,
+          p_service: sel.servicio.id,
+          p_dia: sel.dia
+        });
+      } catch (e) {
+        caja.innerHTML = '';
+        mostrarError('No hemos podido consultar los huecos. Inténtalo de nuevo o llámanos.');
+        return;
+      }
+    } else {
+      horas = huecosDemo();
+    }
+
+    if (!horas.length) {
+      caja.innerHTML = `<p class="slots__empty">
+        No quedan huecos ese día con ${sel.barbero.name}.
+        Prueba otro día u otro barbero.</p>`;
+      return;
+    }
+
+    caja.innerHTML = horas.map(h => {
+      const t = new Date(h.slot || h);
+      const hhmm = t.toLocaleTimeString('es-ES',
+        { hour:'2-digit', minute:'2-digit', hour12:false });
+      return `<button type="button" class="slot" data-iso="${t.toISOString()}">${hhmm}</button>`;
+    }).join('');
+
+    caja.querySelectorAll('.slot').forEach(b => {
+      b.addEventListener('click', () => {
+        caja.querySelectorAll('.slot').forEach(x => x.classList.remove('is-active'));
+        b.classList.add('is-active');
+        sel.hora = b.dataset.iso;
+        revisar();
+      });
+    });
+  }
+
+  // Horas de ejemplo mientras no hay base de datos
+  function huecosDemo() {
+    const out = [];
+    const base = new Date(sel.dia + 'T10:00:00');
+    for (let i = 0; i < 14; i++) {
+      const t = new Date(base.getTime() + i * 45 * 60000);
+      if (t.getHours() >= 14 && t.getHours() < 16) continue;   // comida
+      if (t > new Date()) out.push(t.toISOString());
+    }
+    return out;
+  }
+
+  // --- Utilidades de selección ---
+  function marcar(caja, btn, clase = 'is-active') {
+    caja.querySelectorAll('[role=radio]').forEach(x => {
+      x.classList.remove(clase);
+      x.setAttribute('aria-checked','false');
+    });
+    btn.classList.add(clase);
+    btn.setAttribute('aria-checked','true');
+  }
+
+  // --- Validación y resumen ---
+  const telValido = v => /^[6-9]\d{8}$/.test(v.replace(/[\s-]/g,''));
+  // El correo es opcional: vacío vale, pero si se escribe debe ser válido
+  const emailValido = v => v.trim() === '' || /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v.trim());
+
+  function revisar() {
+    const nombre = $('fName').value.trim();
+    const tel    = $('fPhone').value.trim();
+    const listo  = sel.servicio && sel.barbero && sel.dia && sel.hora
+                   && nombre.length >= 2 && telValido(tel)
+                   && emailValido($('fEmail').value);
+    $('submitBtn').disabled = !listo;
+
+    if (sel.servicio && sel.barbero && sel.hora) {
+      const t = new Date(sel.hora);
+      $('summaryLine').textContent =
+        `${sel.servicio.name} con ${sel.barbero.name} · ` +
+        t.toLocaleDateString('es-ES',{weekday:'long', day:'numeric', month:'long'}) +
+        ` a las ${t.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',hour12:false})}`;
+      $('summary').hidden = false;
+    } else {
+      $('summary').hidden = true;
+    }
+  }
+
+  ['fName','fPhone','fEmail'].forEach(id => $(id).addEventListener('input', () => {
+    limpiarError();
+    revisar();
+  }));
+
+  // --- Envío ---
+  $('bookForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    limpiarError();
+
+    const nombre = $('fName').value.trim();
+    const tel    = $('fPhone').value.replace(/[\s-]/g,'');
+
+    if (!telValido(tel)) {
+      $('alertMsg').textContent = '';
+      document.querySelector('[data-for=fPhone]').textContent =
+        'Escribe un teléfono español de 9 cifras.';
+      return;
+    }
+    document.querySelector('[data-for=fPhone]').textContent = '';
+
+    if (!emailValido($('fEmail').value)) {
+      document.querySelector('[data-for=fEmail]').textContent =
+        'Ese correo no parece válido. Revísalo o déjalo vacío.';
+      return;
+    }
+    document.querySelector('[data-for=fEmail]').textContent = '';
+
+    const btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Reservando…';
+
+    try {
+      let codigo = null;
+      if (CONECTADO) {
+        // reservar() devuelve el código de reserva (ej. A7K2M9)
+        codigo = await rpc('reservar', {
+          p_barber: sel.barbero.id,
+          p_service: sel.servicio.id,
+          p_inicio: sel.hora,
+          p_nombre: nombre,
+          p_tel: tel,
+          p_email: $('fEmail').value.trim() || null
+        });
+      } else {
+        await new Promise(r => setTimeout(r, 600));   // simulación en demo
+        codigo = 'DEMO26';
+      }
+
+      const hayEmail = $('fEmail').value.trim() !== '';
+
+      if (codigo) {
+        $('codigoValor').textContent = codigo;
+        $('codigoCaja').hidden = false;
+        $('avisoEmail').hidden = !hayEmail;
+        $('avisoSinEmail').hidden = hayEmail;
+
+        // Enlace con los dos datos ya puestos
+        const url = new URL('mi-cita.html', location.href);
+        url.searchParams.set('tel', tel);
+        url.searchParams.set('cod', codigo);
+        $('miCitaLink').href = url.toString();
+        $('guardarCaja').hidden = false;
+
+        // Para el botón de copiar
+        window.__enlaceCita = url.toString();
+      }
+
+      const t = new Date(sel.hora);
+      $('doneDetail').textContent =
+        `${sel.servicio.name} con ${sel.barbero.name}, ` +
+        t.toLocaleDateString('es-ES',{weekday:'long', day:'numeric', month:'long'}) +
+        ` a las ${t.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',hour12:false})}.`;
+
+      document.querySelectorAll('#reservar .step').forEach(s => s.hidden = true);
+      $('done').hidden = false;
+      $('done').scrollIntoView({ block:'center' });
+
+    } catch (err) {
+      const msg = String(err.message || '');
+      // El hueco se ocupó entre que lo vio y le dio a confirmar
+      if (/EMAIL_INVALIDO/i.test(msg)) {
+        document.querySelector('[data-for=fEmail]').textContent =
+          'Ese correo no parece válido. Revísalo o déjalo vacío.';
+      } else if (/no_solapamiento|AFORO_COMPLETO|409|conflict/i.test(msg)) {
+        mostrarError('Vaya, acaban de coger ese hueco. Elige otra hora, hemos actualizado la lista.');
+        cargarHuecos();
+      } else {
+        mostrarError('No hemos podido completar la reserva. Inténtalo de nuevo o llámanos.');
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Confirmar reserva';
+      revisar();
+    }
   });
+
+  // --- Copiar el enlace de la cita ---
+  $('copiarBtn').addEventListener('click', async () => {
+    const url = window.__enlaceCita;
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      avisarCopiado();
+    } catch (e) {
+      // Safari antiguo y contextos sin permiso: selección manual
+      const t = document.createElement('textarea');
+      t.value = url;
+      t.style.position = 'fixed';
+      t.style.opacity = '0';
+      document.body.appendChild(t);
+      t.select();
+      try { document.execCommand('copy'); avisarCopiado(); }
+      catch (_) { prompt('Copia este enlace:', url); }
+      document.body.removeChild(t);
+    }
+  });
+
+  function avisarCopiado() {
+    const a = $('copiadoAviso');
+    a.hidden = false;
+    setTimeout(() => { a.hidden = true; }, 2500);
+  }
+
+  // --- Volver a empezar ---
+  $('againBtn').addEventListener('click', () => {
+    sel.servicio = sel.barbero = sel.dia = sel.hora = null;
+    $('bookForm').reset();
+    document.querySelectorAll('#reservar [role=radio]').forEach(x => {
+      x.classList.remove('is-active');
+      x.setAttribute('aria-checked','false');
+    });
+    $('slotList').innerHTML = '<p class="slots__hint">Elige antes servicio, barbero y día.</p>';
+    $('done').hidden = true;
+    $('codigoCaja').hidden = true;
+    $('guardarCaja').hidden = true;
+    document.querySelectorAll('#reservar .step').forEach(s => s.hidden = false);
+    $('summary').hidden = true;
+    revisar();
+    document.getElementById('reservar').scrollIntoView({ block:'start' });
+  });
+
+  cargarServicios();
+  cargarBarberos();
+  cargarConfig().then(cargarDias);
 
   // Oculta el botón fijo al llegar a la zona de reservas: si no, tapa
   // justo los días seleccionables del calendario en móvil.
