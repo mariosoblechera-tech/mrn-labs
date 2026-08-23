@@ -24,16 +24,6 @@
   --max:1160px;
 }
 
-/* Chatbot de reservas (n8n) — variables del widget @n8n/chat */
-:root {
-  --chat--color-primary: #1f2937;
-  --chat--color-primary-shade-50: #111827;
-  --chat--color-secondary: #b08d57;
-  --chat--toggle--background: #1f2937;
-  --chat--window--width: 380px;
-  --chat--window--height: 600px;
-}
-
 *,*::before,*::after{ box-sizing:border-box; }
 
 /* El atributo hidden debe ganar a cualquier display de más abajo */

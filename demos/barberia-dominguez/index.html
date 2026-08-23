@@ -10,6 +10,54 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=13">
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<!-- Tema del chatbot (n8n) alineado con la marca.
+     Va DESPUÉS del CSS del widget: sus variables por defecto viven en un
+     :root propio que, al cargar más tarde, ganaría la cascada si esto
+     fuera antes. Reutiliza los mismos tokens que styles.css (--gold,
+     --ink...) para que un cambio de marca no haya que tocarlo en dos sitios. -->
+<style>
+  :root{
+    /* Base: dorado de marca como color primario, tinta oscura como secundario */
+    --chat--color--primary: var(--gold);
+    --chat--color--primary-shade-50: var(--gold-dark);
+    --chat--color--primary--shade-100: #6f5228;
+    --chat--color--secondary: var(--ink);
+    --chat--color-secondary-shade-50: var(--ink-soft);
+    --chat--color-dark: var(--ink);
+    --chat--color-light: var(--paper);
+    --chat--color-light-shade-50: var(--paper-alt);
+    --chat--color-light-shade-100: var(--line);
+    --chat--color-medium: var(--line);
+    --chat--color-typing: var(--ink-soft);
+
+    --chat--font-family: var(--font-body);
+
+    --chat--window--width: 380px;
+    --chat--window--height: 600px;
+    --chat--window--border-radius: var(--radius);
+    --chat--window--border: 1px solid var(--line);
+
+    --chat--header--padding: 20px;
+    --chat--heading--font-size: 1.5em;
+
+    --chat--message--border-radius: var(--radius-sm);
+    --chat--message--bot--border: 1px solid var(--line);
+
+    --chat--input--border: 1.5px solid var(--line);
+    --chat--input--border-active: 1.5px solid var(--gold);
+    --chat--input--border-radius: var(--radius-sm);
+
+    --chat--button--border-radius: 999px;
+  }
+
+  /* En móvil, el botón fijo "Pedir cita" ocupa la franja inferior:
+     se sube el widget para que no se solapen (mismo breakpoint que
+     .sticky-cta en styles.css). */
+  @media (max-width:959px){
+    :root{ --chat--window--bottom: 84px; }
+  }
+</style>
 </head>
 <body>
 
