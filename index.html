@@ -72,25 +72,13 @@
   .hero{padding:64px 0 48px;min-height:100vh;display:flex;align-items:center;box-sizing:border-box;}
   .hero .container{width:100%;}
   .hero-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:center;}
-  .hero-copy{max-width:640px;}
-  .hero h1{font-size:clamp(2.4rem,5.5vw,4rem);letter-spacing:-1px;}
+  .hero-copy{max-width:780px;}
+  .hero h1{font-size:clamp(2.6rem,6.5vw,4.6rem);letter-spacing:-1px;}
   .hero h1 em{font-style:normal;color:var(--clay);}
-  .hero .section-sub{max-width:560px;font-size:1.08rem;}
+  .hero .section-sub{max-width:620px;font-size:1.08rem;}
   .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
   .hero-trust{margin-top:22px;font-size:.85rem;color:var(--muted);}
-
-  .hero-banner{margin-top:44px;border-radius:20px;overflow:hidden;position:relative;background:var(--olive);}
-  .hero-banner .ph{
-    aspect-ratio:16/8;display:flex;align-items:center;justify-content:center;
-    color:rgba(255,255,255,.55);font-size:.85rem;text-align:center;padding:20px;
-    background:linear-gradient(120deg,#3c3527,#5b5a3d);
-  }
-  .hero-banner img{width:100%;height:100%;object-fit:cover;}
   [data-parallax]{will-change:transform;transform:scale(1.1);}
-  .hero-banner .ph.horizontal{display:none;}
-  .hero-banner .ph.vertical{display:none;}
-  .hero-banner.img-missing .ph.horizontal{display:flex;}
-  .hero-banner.img-missing picture{display:none;}
 
   /* LOGO STRIP (social proof placeholder) */
   .proof{padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -243,7 +231,6 @@
     .feature-grid{grid-template-columns:1fr 1fr;}
   }
   @media(min-width:860px){
-    .hero-grid{grid-template-columns:1.1fr .9fr;}
     .steps{grid-template-columns:repeat(3,1fr);}
     .pricing-card{grid-template-columns:1.3fr 1fr;}
   }
@@ -252,10 +239,6 @@
     .nav-links.open{display:flex;}
     .menu-toggle{display:block;}
     .nav-cta .btn-ghost{display:none;}
-  }
-  @media(max-width:700px){
-    .hero-banner.img-missing .ph.horizontal{display:none;}
-    .hero-banner.img-missing .ph.vertical{display:flex;aspect-ratio:4/5;}
   }
 </style>
 </head>
@@ -293,15 +276,6 @@
           <a href="#como-funciona" class="btn btn-ghost">Ver cómo funciona</a>
         </div>
         <p class="hero-trust">Sin permanencia · Activación en menos de una semana</p>
-      </div>
-
-      <div class="hero-banner reveal in reveal-d1">
-        <picture>
-          <source media="(max-width:700px)" srcset="images/hero-vertical.jpg">
-          <img class="horizontal" data-parallax src="images/hero-horizontal.jpg" alt="Dueño de un restaurante relajado en su local, con el móvil boca abajo sobre la mesa" onerror="this.closest('.hero-banner').classList.add('img-missing');">
-        </picture>
-        <div class="ph horizontal">Banner horizontal — colócalo en images/hero-horizontal.jpg (recomendado 1920×1080)</div>
-        <div class="ph vertical">Banner vertical — colócalo en images/hero-vertical.jpg (recomendado 1200×1500)</div>
       </div>
     </div>
   </section>
