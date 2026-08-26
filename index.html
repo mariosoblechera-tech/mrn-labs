@@ -170,6 +170,21 @@
   .chat-demo-typing span:nth-child(3){animation-delay:.4s;}
   @keyframes chatDemoBlink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 
+  /* CHAT DEMO — reproductor de audio (prueba real) */
+  .chat-demo-audio{padding:16px 20px;border-top:1px solid var(--line);background:var(--paper);}
+  .chat-demo-audio .chat-demo-audio-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px;}
+  .chat-demo-player{display:flex;align-items:center;gap:14px;}
+  .chat-demo-playbtn{flex:0 0 auto;width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--clay);color:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s, transform .1s;}
+  .chat-demo-playbtn:hover{background:var(--clay-dark);}
+  .chat-demo-playbtn:active{transform:scale(.94);}
+  .chat-demo-playbtn svg{width:20px;height:20px;}
+  .chat-demo-track{flex:1;min-width:0;}
+  .chat-demo-track .chat-demo-track-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+  .chat-demo-bar{height:6px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;overflow:hidden;}
+  .chat-demo-bar .chat-demo-fill{position:absolute;inset:0;width:0%;background:var(--clay);border-radius:99px;transition:width .1s linear;}
+  .chat-demo-time{margin-top:6px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;}
+
   /* HOW IT WORKS */
   .steps{display:grid;grid-template-columns:1fr;gap:28px;margin-top:48px;}
   .step{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px;}
@@ -405,6 +420,21 @@
               </div>
             </div>
             <div class="chat-demo-body" id="mrnChatDemo"></div>
+
+            <div class="chat-demo-audio">
+              <div class="chat-demo-audio-label">Escucha una prueba real</div>
+              <div class="chat-demo-player">
+                <button class="chat-demo-playbtn" id="mrnAudioPlay" aria-label="Reproducir">
+                  <svg id="mrnAudioIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <div class="chat-demo-track">
+                  <div class="chat-demo-track-title">Llamada · Reserva de mesa</div>
+                  <div class="chat-demo-bar" id="mrnAudioBar"><div class="chat-demo-fill" id="mrnAudioFill"></div></div>
+                  <div class="chat-demo-time"><span id="mrnAudioCur">0:00</span> / <span id="mrnAudioDur">0:00</span></div>
+                </div>
+              </div>
+              <audio id="mrnAudioEl" src="audio/prueba-restaurante.mp3" preload="metadata"></audio>
+            </div>
           </div>
         </div>
       </div>
@@ -729,6 +759,43 @@
     });
   }, { threshold: 0.4 });
   io.observe(chat);
+
+  /* ── Reproductor de audio (prueba real) ─────────────────── */
+  const audio = document.getElementById('mrnAudioEl');
+  const btn = document.getElementById('mrnAudioPlay');
+  if (audio && btn) {
+    const icon = document.getElementById('mrnAudioIcon');
+    const fill = document.getElementById('mrnAudioFill');
+    const bar = document.getElementById('mrnAudioBar');
+    const curEl = document.getElementById('mrnAudioCur');
+    const durEl = document.getElementById('mrnAudioDur');
+    const PLAY = 'M8 5v14l11-7z';
+    const PAUSE = 'M6 5h4v14H6zM14 5h4v14h-4z';
+    const fmt = s => {
+      if (!isFinite(s)) return '0:00';
+      const m = Math.floor(s / 60), x = Math.floor(s % 60);
+      return m + ':' + (x < 10 ? '0' : '') + x;
+    };
+
+    btn.addEventListener('click', () => { audio.paused ? audio.play().catch(() => {}) : audio.pause(); });
+    audio.addEventListener('play', () => icon.querySelector('path').setAttribute('d', PAUSE));
+    audio.addEventListener('pause', () => icon.querySelector('path').setAttribute('d', PLAY));
+    audio.addEventListener('loadedmetadata', () => durEl.textContent = fmt(audio.duration));
+    audio.addEventListener('timeupdate', () => {
+      const p = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      fill.style.width = p + '%';
+      curEl.textContent = fmt(audio.currentTime);
+    });
+    audio.addEventListener('ended', () => {
+      icon.querySelector('path').setAttribute('d', PLAY);
+      fill.style.width = '0%';
+      curEl.textContent = '0:00';
+    });
+    bar.addEventListener('click', e => {
+      const rect = bar.getBoundingClientRect();
+      if (audio.duration) audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    });
+  }
 })();
 </script>
 
