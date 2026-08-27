@@ -247,12 +247,15 @@
 
       <div class="reserve">
         <div class="reserve__info">
-          <dl class="reserve__hours">
-            <dt>Todos los días</dt>
-            <dd>18:00 – 23:30</dd>
-            <dt>Jueves a domingo</dt>
-            <dd>también 12:00 – 17:00</dd>
-          </dl>
+          <div class="reserve__hours-block">
+            <p class="reserve__season">Horario de verano</p>
+            <dl class="reserve__hours">
+              <dt>Todos los días</dt>
+              <dd>18:00 – 23:30</dd>
+              <dt>Jueves a domingo</dt>
+              <dd>también 12:00 – 17:00</dd>
+            </dl>
+          </div>
           <p class="reserve__note">
             ¿Grupo de más de 10 personas o una petición especial?
             Escríbenos directamente por
@@ -272,6 +275,12 @@
               <label for="rPhone">Teléfono</label>
               <input type="tel" id="rPhone" name="phone" autocomplete="tel" inputmode="numeric" required placeholder="Ej. 612 345 678">
               <span class="form-err" data-for="rPhone"></span>
+            </div>
+
+            <div class="form-row">
+              <label for="rEmail">Correo electrónico <span class="opt">(opcional)</span></label>
+              <input type="email" id="rEmail" name="email" autocomplete="email" inputmode="email" placeholder="Ej. ana@correo.com">
+              <span class="form-err" data-for="rEmail"></span>
             </div>
 
             <div class="form-row form-row--split">
@@ -513,6 +522,8 @@
     var form = $('reserveForm');
     var alerta = $('reserveAlert');
     var telValido = function (v) { return /^[6-9]\d{8}$/.test(v.replace(/[\s-]/g, '')); };
+    // El correo es opcional: vacío vale, pero si se escribe debe ser válido
+    var emailValido = function (v) { return v.trim() === '' || /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v.trim()); };
 
     function marcarError(id, msg) {
       var el = form.querySelector('[data-for=' + id + ']');
@@ -522,10 +533,11 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       alerta.hidden = true;
-      ['rName', 'rPhone', 'rDate', 'rTime'].forEach(function (id) { marcarError(id, ''); });
+      ['rName', 'rPhone', 'rEmail', 'rDate', 'rTime'].forEach(function (id) { marcarError(id, ''); });
 
       var nombre = $('rName').value.trim();
       var tel = $('rPhone').value.trim();
+      var email = $('rEmail').value.trim();
       var fecha = $('rDate').value;
       var hora = $('rTime').value;
       var comensales = $('rGuests').value;
@@ -533,6 +545,7 @@
       var ok = true;
       if (nombre.length < 2) { marcarError('rName', 'Escribe tu nombre.'); ok = false; }
       if (!telValido(tel)) { marcarError('rPhone', 'Escribe un teléfono español de 9 cifras.'); ok = false; }
+      if (!emailValido(email)) { marcarError('rEmail', 'Ese correo no parece válido. Revísalo o déjalo vacío.'); ok = false; }
       if (!fecha) { marcarError('rDate', 'Elige un día.'); ok = false; }
       if (!hora) { marcarError('rTime', 'Elige una hora.'); ok = false; }
       if (!comensales) {
@@ -554,7 +567,8 @@
           : comensales + (comensales === '1' ? ' persona' : ' personas');
 
         $('reserveDoneText').textContent =
-          'Mesa para ' + quien + ' a nombre de ' + nombre + ', el ' + fechaBonita + ' a las ' + hora + '.';
+          'Mesa para ' + quien + ' a nombre de ' + nombre + ', el ' + fechaBonita + ' a las ' + hora + '.' +
+          (email ? ' Te enviaremos la confirmación también a ' + email + '.' : '');
         form.hidden = true;
         $('reserveDone').hidden = false;
         btn.disabled = false;
