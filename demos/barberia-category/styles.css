@@ -282,6 +282,17 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
   border:3px solid var(--paper);
   box-shadow:var(--shadow);
 }
+/* Avatar con inicial: para cuando no hay foto real del equipo todavía.
+   Mismo lenguaje visual que .barber__avatar en el paso 2 de la reserva. */
+.member__avatar{
+  width:150px; height:150px; margin:0 auto 16px;
+  display:grid; place-items:center;
+  background:var(--ink); color:var(--gold);
+  font-family:var(--font-title); font-size:3.4rem; font-weight:600;
+  border-radius:50%;
+  border:3px solid var(--paper);
+  box-shadow:var(--shadow);
+}
 .member h3{ font-size:1.4rem; margin-bottom:4px; }
 .member p{ margin:0; color:var(--ink-soft); font-size:.95rem; }
 
