@@ -626,6 +626,15 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
 .footer__brand{ display:flex; align-items:center; gap:12px; text-align:left; }
 .footer__brand p{ margin:0; color:#fff; font-family:var(--font-title); font-size:1.15rem; line-height:1.35; }
 .footer__brand span{ font-family:var(--font-body); font-size:.85rem; color:rgba(255,255,255,.55); }
+/* El logotipo real tiene fondo blanco: una tarjeta clara evita que se
+   vea un recuadro feo sobre el fondo oscuro del pie. */
+.footer__brand__logo{
+  flex:0 0 auto; display:flex; align-items:center;
+  background:var(--paper);
+  padding:8px 10px;
+  border-radius:var(--radius-sm);
+}
+.footer__brand__logo img{ display:block; height:52px; width:auto; }
 .footer__nav{ display:flex; flex-wrap:wrap; gap:8px 22px; justify-content:center; }
 .footer__nav a{ text-decoration:none; font-size:.95rem; padding:6px 0; }
 .footer__nav a:hover{ color:var(--gold); }
