@@ -119,6 +119,9 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
 }
 .logo__text{ font-family:var(--font-title); font-size:1.2rem; letter-spacing:.01em; }
 .logo__text strong{ font-weight:600; color:var(--gold); }
+/* Logotipo real en la cabecera: fondo blanco del archivo, se mezcla bien
+   con el header (blanco translúcido), a diferencia del pie oscuro. */
+.logo__img{ height:44px; width:auto; display:block; }
 
 /* Navegación: fuera de pantalla en móvil */
 .nav{
@@ -717,6 +720,7 @@ h1,h2,h3{ font-family:var(--font-title); font-weight:600; line-height:1.15; marg
 
   .header__inner{ min-height:84px; }
   .logo__text{ font-size:1.35rem; }
+  .logo__img{ height:56px; }
 
   .hero{ align-items:center; min-height:640px; padding:0; }
   .hero__facts{ gap:44px; }
