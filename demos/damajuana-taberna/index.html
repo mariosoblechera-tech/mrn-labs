@@ -22,7 +22,7 @@
       <a href="#reviews">Opiniones</a>
       <a href="#visit">Cómo llegar</a>
     </nav>
-    <a href="https://wa.me/34684771767?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Damajuana%20Taberna" target="_blank" rel="noopener" class="btn btn--sm">Reservar</a>
+    <a href="#reservar" class="btn btn--sm">Reservar</a>
   </div>
 </header>
 
@@ -43,7 +43,7 @@
       <h1>Tapas de mercado con acento propio, en el corazón de La Línea.</h1>
       <p class="hero__lede">Salmorejo, ibéricos y carrillera conviven con tacos y sándwich coreano en una carta pensada para compartir — y para quedarse hasta tarde.</p>
       <div class="hero__cta">
-        <a href="https://wa.me/34684771767?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Damajuana%20Taberna" target="_blank" rel="noopener" class="btn">Reservar por WhatsApp</a>
+        <a href="#reservar" class="btn">Reservar mesa</a>
         <a href="#menu" class="btn btn--ghost">Ver la carta</a>
       </div>
       <div class="hero__facts">
@@ -238,6 +238,97 @@
     </div>
   </section>
 
+  <!-- RESERVAR -->
+  <section id="reservar">
+    <div class="wrap">
+      <span class="eyebrow">Reservas</span>
+      <h2>Reserva tu mesa</h2>
+      <p class="lede">Elige día, hora y comensales dentro de nuestro horario, y te confirmamos la reserva.</p>
+
+      <div class="reserve">
+        <div class="reserve__info">
+          <dl class="reserve__hours">
+            <dt>Todos los días</dt>
+            <dd>18:00 – 23:30</dd>
+            <dt>Jueves a domingo</dt>
+            <dd>también 12:00 – 17:00</dd>
+          </dl>
+          <p class="reserve__note">
+            ¿Grupo de más de 10 personas o una petición especial?
+            Escríbenos directamente por
+            <a href="https://wa.me/34684771767?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Damajuana%20Taberna" target="_blank" rel="noopener">WhatsApp</a>.
+          </p>
+        </div>
+
+        <div class="reserve__panel">
+          <form class="reserve__form" id="reserveForm" novalidate>
+            <div class="form-row">
+              <label for="rName">Nombre y apellidos</label>
+              <input type="text" id="rName" name="name" autocomplete="name" required minlength="2" placeholder="Tu nombre">
+              <span class="form-err" data-for="rName"></span>
+            </div>
+
+            <div class="form-row">
+              <label for="rPhone">Teléfono</label>
+              <input type="tel" id="rPhone" name="phone" autocomplete="tel" inputmode="numeric" required placeholder="Ej. 612 345 678">
+              <span class="form-err" data-for="rPhone"></span>
+            </div>
+
+            <div class="form-row form-row--split">
+              <div>
+                <label for="rDate">Fecha</label>
+                <input type="date" id="rDate" name="date" required>
+                <span class="form-err" data-for="rDate"></span>
+              </div>
+              <div>
+                <label for="rGuests">Comensales</label>
+                <select id="rGuests" name="guests" required>
+                  <option value="">—</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="10+">Más de 10</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="rTime">Hora</label>
+              <select id="rTime" name="time" required disabled>
+                <option value="">Elige antes la fecha</option>
+              </select>
+              <span class="form-err" data-for="rTime"></span>
+            </div>
+
+            <div class="form-row">
+              <label for="rNotes">Alguna petición especial <span class="opt">(opcional)</span></label>
+              <textarea id="rNotes" name="notes" rows="2" placeholder="Alergias, celebración, trona para bebé…"></textarea>
+            </div>
+
+            <p class="form-alert" id="reserveAlert" hidden role="alert"></p>
+
+            <button type="submit" class="btn reserve__submit" id="reserveSubmit">Confirmar reserva</button>
+          </form>
+
+          <div class="reserve__done" id="reserveDone" hidden>
+            <div class="reserve__done-mark">✓</div>
+            <h3>¡Reserva enviada!</h3>
+            <p id="reserveDoneText"></p>
+            <p class="reserve__done-note">Te confirmaremos por teléfono o WhatsApp en breve.</p>
+            <button type="button" class="btn btn--ghost" id="reserveAgain">Hacer otra reserva</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- GALLERY -->
   <section id="gallery">
     <div class="wrap">
@@ -319,11 +410,11 @@
           <dt>Horario</dt>
           <dd>Abierto · cierra a las 02:00 (consulta el horario actualizado en Google Maps)</dd>
           <dt>Reservas</dt>
-          <dd><a href="https://wa.me/34684771767?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Damajuana%20Taberna" target="_blank" rel="noopener">+34 684 77 17 67</a></dd>
+          <dd><a href="#reservar">Resérvala online</a> o llama al <a href="tel:+34684771767">684 77 17 67</a></dd>
         </dl>
         <div class="btn-row">
           <a href="https://www.google.com/maps/search/?api=1&query=Damajuana+Taberna+La+L%C3%ADnea+de+la+Concepci%C3%B3n" target="_blank" rel="noopener" class="btn">Ver en Google Maps</a>
-          <a href="https://wa.me/34684771767?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Damajuana%20Taberna" target="_blank" rel="noopener" class="btn btn--ghost">Reservar por WhatsApp</a>
+          <a href="#reservar" class="btn btn--ghost">Reservar mesa</a>
         </div>
       </div>
     </div>
@@ -339,7 +430,7 @@
   <div class="wrap">
     <div class="footer-name">Damajuana Taberna</div>
     <p>C. Méndez Núñez, 2a, 11300 La Línea de la Concepción, Cádiz</p>
-    <p>Reservas por WhatsApp: <a href="https://wa.me/34684771767?text=Hola%2C%20quiero%20reservar%20mesa%20en%20Damajuana%20Taberna" target="_blank" rel="noopener">+34 684 77 17 67</a></p>
+    <p><a href="#reservar">Reserva tu mesa online</a> o llama al <a href="tel:+34684771767">+34 684 77 17 67</a></p>
     <p>© <span id="year"></span> Damajuana Taberna. Todos los derechos reservados.</p>
     <p class="footer-credit">Landing demo creada por <a href="https://mrn-labs.vercel.app" target="_blank" rel="noopener">MRN Labs</a></p>
   </div>
@@ -351,6 +442,134 @@
   window.addEventListener('scroll', function () {
     nav.classList.toggle('is-stuck', window.scrollY > 8);
   }, { passive: true });
+</script>
+
+<script>
+  // =====================================================================
+  //  RESERVA DE MESA
+  //  Demo visual: no hay backend conectado todavía, así que la reserva
+  //  se confirma en el propio navegador (no se guarda en ningún sitio).
+  //  El día que haya un backend real, solo hay que sustituir el bloque
+  //  marcado más abajo por la llamada a la API que corresponda.
+  // =====================================================================
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+
+    // Horario de verano: todos los días 18:00–23:30,
+    // jueves a domingo también 12:00–17:00.
+    var TRAMO_CENA = ['18:00', '23:30'];
+    var TRAMO_COMIDA = ['12:00', '17:00'];
+    var DIAS_CON_COMIDA = [0, 4, 5, 6]; // domingo, jueves, viernes, sábado
+
+    function aMinutos(hhmm) {
+      var p = hhmm.split(':');
+      return (+p[0]) * 60 + (+p[1]);
+    }
+    function aHHMM(mins) {
+      var h = Math.floor(mins / 60), m = mins % 60;
+      return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+    }
+
+    // Huecos de 30 en 30 min, sin ofrecer la hora exacta de cierre
+    // como hora de entrada.
+    function huecosDelDia(fechaStr) {
+      var fecha = new Date(fechaStr + 'T00:00:00');
+      var tramos = [TRAMO_CENA];
+      if (DIAS_CON_COMIDA.indexOf(fecha.getDay()) !== -1) tramos = [TRAMO_COMIDA, TRAMO_CENA];
+
+      var huecos = [];
+      tramos.forEach(function (tramo) {
+        for (var m = aMinutos(tramo[0]); m < aMinutos(tramo[1]); m += 30) huecos.push(aHHMM(m));
+      });
+
+      // Si la fecha elegida es hoy, se quitan las horas ya pasadas
+      // (con 30 min de margen para dar tiempo a llegar).
+      var hoy = new Date();
+      if (fecha.toDateString() === hoy.toDateString()) {
+        var minAhora = hoy.getHours() * 60 + hoy.getMinutes() + 30;
+        huecos = huecos.filter(function (h) { return aMinutos(h) >= minAhora; });
+      }
+      return huecos;
+    }
+
+    var fInput = $('rDate');
+    var tSelect = $('rTime');
+
+    fInput.min = new Date().toISOString().slice(0, 10); // no se puede reservar en el pasado
+
+    fInput.addEventListener('change', function () {
+      var huecos = huecosDelDia(fInput.value);
+      if (!huecos.length) {
+        tSelect.innerHTML = '<option value="">Sin huecos ese día — prueba otra fecha</option>';
+        tSelect.disabled = true;
+        return;
+      }
+      tSelect.innerHTML = '<option value="">Elige una hora</option>' +
+        huecos.map(function (h) { return '<option value="' + h + '">' + h + '</option>'; }).join('');
+      tSelect.disabled = false;
+    });
+
+    // ---- Validación y envío ----
+    var form = $('reserveForm');
+    var alerta = $('reserveAlert');
+    var telValido = function (v) { return /^[6-9]\d{8}$/.test(v.replace(/[\s-]/g, '')); };
+
+    function marcarError(id, msg) {
+      var el = form.querySelector('[data-for=' + id + ']');
+      if (el) el.textContent = msg || '';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      alerta.hidden = true;
+      ['rName', 'rPhone', 'rDate', 'rTime'].forEach(function (id) { marcarError(id, ''); });
+
+      var nombre = $('rName').value.trim();
+      var tel = $('rPhone').value.trim();
+      var fecha = $('rDate').value;
+      var hora = $('rTime').value;
+      var comensales = $('rGuests').value;
+
+      var ok = true;
+      if (nombre.length < 2) { marcarError('rName', 'Escribe tu nombre.'); ok = false; }
+      if (!telValido(tel)) { marcarError('rPhone', 'Escribe un teléfono español de 9 cifras.'); ok = false; }
+      if (!fecha) { marcarError('rDate', 'Elige un día.'); ok = false; }
+      if (!hora) { marcarError('rTime', 'Elige una hora.'); ok = false; }
+      if (!comensales) {
+        alerta.hidden = false;
+        alerta.textContent = 'Indica para cuántas personas es la reserva.';
+        ok = false;
+      }
+      if (!ok) return;
+
+      var btn = $('reserveSubmit');
+      btn.disabled = true;
+      btn.textContent = 'Reservando…';
+
+      setTimeout(function () {
+        var fechaBonita = new Date(fecha + 'T00:00:00')
+          .toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        var quien = comensales === '10+'
+          ? 'más de 10 personas'
+          : comensales + (comensales === '1' ? ' persona' : ' personas');
+
+        $('reserveDoneText').textContent =
+          'Mesa para ' + quien + ' a nombre de ' + nombre + ', el ' + fechaBonita + ' a las ' + hora + '.';
+        form.hidden = true;
+        $('reserveDone').hidden = false;
+        btn.disabled = false;
+        btn.textContent = 'Confirmar reserva';
+      }, 600);
+    });
+
+    $('reserveAgain').addEventListener('click', function () {
+      form.reset();
+      tSelect.innerHTML = '<option value="">Elige antes la fecha</option>';
+      tSelect.disabled = true;
+      form.hidden = false;
+      $('reserveDone').hidden = true;
+    });
+  })();
 </script>
 
 </body>
