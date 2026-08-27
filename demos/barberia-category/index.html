@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbería Category — Barbería en La Línea de la Concepción</title>
+<meta name="description" content="Barbería Category: cortes degradados, barba y afeitado en La Línea de la Concepción. Reserva tu cita online en segundos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+
+<!-- ============ CABECERA ============ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#inicio" class="logo">
+      <span class="logo__mark">C</span>
+      <span class="logo__text">Barbería<strong>Category</strong></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#contacto">Contacto</a>
+      <a href="mi-cita.html">Mi cita</a>
+      <a href="#reservar" class="btn btn--primary nav__cta">Pedir cita</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <!-- IMAGEN 1: cambia el src por una foto real del local (recomendado 1600x1000px) -->
+  <img class="hero__bg"
+       src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1600&q=80"
+       alt="Interior de la barbería">
+  <div class="hero__overlay"></div>
+
+  <div class="container hero__content">
+    <p class="hero__eyebrow">Barbería moderna · La Línea de la Concepción</p>
+    <h1 class="hero__title">Estilo con acento propio</h1>
+    <p class="hero__text">
+      Degradados, barba y afeitado con técnica y sin prisas. Un equipo joven
+      que cuida cada detalle para que salgas exactamente como querías.
+    </p>
+    <div class="hero__actions">
+      <a href="#reservar" class="btn btn--primary btn--lg">Reservar cita</a>
+      <a href="tel:+34956000000" class="btn btn--ghost btn--lg">Llamar: 956 000 000</a>
+    </div>
+    <ul class="hero__facts">
+      <li><strong>5,0★</strong> 15 reseñas</li>
+      <li><strong>35 min</strong> corte medio</li>
+      <li><strong>L–S</strong> 10:00 – 20:30</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SERVICIOS ============ -->
+<section class="section" id="servicios">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Servicios</p>
+      <h2 class="section__title">Precios claros, sin sorpresas</h2>
+      <p class="section__sub">Los mismos servicios y precios de siempre, ahora con reserva online.</p>
+    </header>
+
+    <div class="services">
+      <article class="service">
+        <div class="service__top">
+          <h3>Corte Degradado</h3>
+          <span class="service__price">13,20 €</span>
+        </div>
+        <p>Fade a máquina con acabado a tijera, adaptado a tu tipo de pelo.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+
+      <article class="service service--featured">
+        <span class="service__tag">Más pedido</span>
+        <div class="service__top">
+          <h3>Corte degradado + barba</h3>
+          <span class="service__price">18,70 €</span>
+        </div>
+        <p>El pack completo: degradado y arreglo de barba en una sola cita.</p>
+        <span class="service__meta">45 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Corte Clásico</h3>
+          <span class="service__price">11,00 €</span>
+        </div>
+        <p>Corte de toda la vida, a tijera y máquina, sin complicaciones.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Corte clásico y barba</h3>
+          <span class="service__price">16,50 €</span>
+        </div>
+        <p>Corte clásico más perfilado de barba, acabado impecable.</p>
+        <span class="service__meta">45 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Niños (hasta 12 años)</h3>
+          <span class="service__price">11,00 €</span>
+        </div>
+        <p>Para los más pequeños, con paciencia y sin agobios.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Arreglo de barba</h3>
+          <span class="service__price">6,60 €</span>
+        </div>
+        <p>Perfilado y definición de barba, toalla caliente incluida.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+
+      <article class="service">
+        <div class="service__top">
+          <h3>Rapado (solo máquina)</h3>
+          <span class="service__price">8,80 €</span>
+        </div>
+        <p>Rapado uniforme a máquina, rápido y sin florituras.</p>
+        <span class="service__meta">30 min</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOBRE NOSOTROS ============ -->
+<section class="section section--alt" id="nosotros">
+  <div class="container about">
+    <div class="about__media">
+      <!-- IMAGEN 2: cambia el src (recomendado 900x1100px) -->
+      <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=900&q=80"
+           alt="Barbero trabajando en la barbería" loading="lazy">
+    </div>
+    <div class="about__text">
+      <p class="eyebrow">La casa</p>
+      <h2 class="section__title">Técnica actual, trato de barrio</h2>
+      <p>
+        En Barbería Category mezclamos las últimas tendencias en degradados
+        con el trato cercano de toda la vida. Cada corte se piensa para tu
+        cara y tu pelo, no al revés.
+      </p>
+      <p>
+        Trabajamos con cita previa para que nadie tenga que esperar de pie,
+        y con producto profesional en cada servicio.
+      </p>
+      <ul class="checklist">
+        <li>Equipo joven, especializado en degradados</li>
+        <li>Pago con tarjeta o efectivo</li>
+        <li>Cita previa online, por teléfono o WhatsApp</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ============ -->
+<section class="section" id="galeria">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Galería</p>
+      <h2 class="section__title">Nuestro trabajo</h2>
+      <p class="section__sub">Sustituye estas imágenes por fotos reales del local y de vuestros cortes.</p>
+    </header>
+
+    <div class="gallery">
+      <!-- IMÁGENES 3 a 8: cambia cada src (recomendado 800x800px) -->
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80" alt="Corte de pelo degradado" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Arreglo de barba con navaja" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&q=80" alt="Herramientas de barbería" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800&q=80" alt="Silla de barbero clásica" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80" alt="Detalle del interior del local" loading="lazy">
+      </figure>
+      <figure class="gallery__item">
+        <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=800&q=80" alt="Producto de peinado" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPO ============ -->
+<section class="section section--alt" id="equipo">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Equipo</p>
+      <h2 class="section__title">Quién te va a atender</h2>
+    </header>
+
+    <div class="team">
+      <!-- IMÁGENES 9 a 11: retratos reales del equipo (recomendado 600x600px) -->
+      <article class="member">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Retrato de Said" loading="lazy">
+        <h3>Said</h3>
+        <p>Especialista en degradados</p>
+      </article>
+      <article class="member">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Retrato de Ahmed" loading="lazy">
+        <h3>Ahmed</h3>
+        <p>Corte clásico y barba</p>
+      </article>
+      <article class="member">
+        <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=600&q=80" alt="Retrato de Yassine" loading="lazy">
+        <h3>Yassine</h3>
+        <p>Afeitado y diseño de barba</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESERVAR ============ -->
+<section class="section" id="reservar">
+  <div class="container">
+    <header class="section__head">
+      <p class="eyebrow">Reservas</p>
+      <h2 class="section__title">Elige tu día y tu hora</h2>
+      <p class="section__sub">
+        En cuatro pasos y sin registrarte. Solo necesitamos tu nombre y un teléfono.
+      </p>
+    </header>
+
+    <!-- ---- Paso 1: servicio ---- -->
+    <div class="step" data-step="1">
+      <p class="step__label"><span class="step__num">1</span> ¿Qué te vas a hacer?</p>
+      <div class="options" id="serviceList" role="radiogroup" aria-label="Elige servicio">
+        <!-- Los rellena la base de datos. Si no hay conexión, se usan estos. -->
+      </div>
+    </div>
+
+    <!-- ---- Paso 2: barbero ---- -->
+    <div class="step" data-step="2">
+      <p class="step__label"><span class="step__num">2</span> ¿Con quién?</p>
+      <div class="barbers" id="barberList" role="radiogroup" aria-label="Elige barbero">
+      </div>
+    </div>
+
+    <!-- ---- Paso 3: día ---- -->
+    <div class="step" data-step="3">
+      <p class="step__label"><span class="step__num">3</span> ¿Qué día?</p>
+      <div class="days" id="dayList" role="radiogroup" aria-label="Elige día"></div>
+    </div>
+
+    <!-- ---- Paso 4: hora ---- -->
+    <div class="step" data-step="4">
+      <p class="step__label"><span class="step__num">4</span> ¿A qué hora?</p>
+      <div class="slots" id="slotList" aria-live="polite">
+        <p class="slots__hint">Elige antes servicio, barbero y día.</p>
+      </div>
+    </div>
+
+    <!-- ---- Paso 5: datos ---- -->
+    <div class="step" data-step="5">
+      <p class="step__label"><span class="step__num">5</span> Tus datos</p>
+      <form class="bookform" id="bookForm" novalidate>
+        <div class="bookform__row">
+          <label for="fName">Nombre y apellidos</label>
+          <input type="text" id="fName" name="name" autocomplete="name"
+                 required minlength="2" placeholder="Ej. María García">
+          <span class="bookform__err" data-for="fName"></span>
+        </div>
+
+        <div class="bookform__row">
+          <label for="fPhone">Teléfono de contacto</label>
+          <input type="tel" id="fPhone" name="phone" autocomplete="tel"
+                 inputmode="numeric" required placeholder="Ej. 612 345 678">
+          <span class="bookform__hint">Solo para avisarte si hay algún cambio.</span>
+          <span class="bookform__err" data-for="fPhone"></span>
+        </div>
+
+        <div class="bookform__row">
+          <label for="fEmail">Correo electrónico <span class="opcional">(opcional)</span></label>
+          <input type="email" id="fEmail" name="email" autocomplete="email"
+                 inputmode="email" placeholder="Ej. maria@correo.com">
+          <span class="bookform__hint">
+            Si lo pones, te enviamos la confirmación con tu código de reserva.
+          </span>
+          <span class="bookform__err" data-for="fEmail"></span>
+        </div>
+
+        <!-- Resumen antes de confirmar: que nadie reserve a ciegas -->
+        <div class="summary" id="summary" hidden>
+          <p class="summary__title">Vas a reservar</p>
+          <p class="summary__line" id="summaryLine"></p>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg bookform__submit"
+                id="submitBtn" disabled>Confirmar reserva</button>
+
+        <p class="bookform__legal">
+          Al reservar aceptas que guardemos tu nombre y teléfono para gestionar la cita.
+          Puedes cancelarla cuando quieras desde <a href="mi-cita.html">Mi cita</a>.
+        </p>
+      </form>
+    </div>
+
+    <!-- ---- Confirmación ---- -->
+    <div class="done" id="done" hidden>
+      <div class="done__mark">✓</div>
+      <h3 class="done__title">¡Cita confirmada!</h3>
+      <p class="done__detail" id="doneDetail"></p>
+      <div class="codigo" id="codigoCaja" hidden>
+        <p class="codigo__label">Tu código de reserva</p>
+        <p class="codigo__valor" id="codigoValor"></p>
+        <p class="codigo__nota">
+          Apúntalo: con él y tu teléfono puedes cambiar o cancelar la cita.
+        </p>
+        <p class="codigo__mail" id="avisoEmail" hidden>
+          Te lo hemos enviado también por correo.
+        </p>
+        <p class="codigo__mail codigo__mail--ojo" id="avisoSinEmail" hidden>
+          No nos has dejado correo, así que apunta este código.
+        </p>
+      </div>
+
+      <!-- Atajo: el enlace ya lleva teléfono y código, así el cliente no
+           tiene que escribir nada para gestionar su cita. -->
+      <div class="guardar" id="guardarCaja" hidden>
+        <p class="guardar__titulo">Guarda este enlace</p>
+        <p class="guardar__texto">
+          Ábrelo cuando quieras para cambiar o cancelar tu cita, sin escribir nada.
+        </p>
+        <div class="guardar__acciones">
+          <a class="btn btn--primary" id="miCitaLink" href="#">Abrir mi cita</a>
+          <button type="button" class="btn btn--ghost" id="copiarBtn">Copiar enlace</button>
+        </div>
+        <p class="guardar__ok" id="copiadoAviso" hidden>Enlace copiado ✓</p>
+      </div>
+      <p class="done__note">
+        Te esperamos en Calle del Clavel, 11.
+      </p>
+      <div class="done__actions">
+        <a class="btn btn--ghost" href="tel:+34956000000">Llamar a la barbería</a>
+        <button type="button" class="btn btn--ghost" id="againBtn">Reservar otra cita</button>
+      </div>
+    </div>
+
+    <!-- Aviso de error, para que nunca quede en pantalla muerta -->
+    <div class="alert" id="alert" hidden role="alert">
+      <p id="alertMsg"></p>
+      <a class="btn btn--primary" href="tel:+34956000000">Reservar por teléfono</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="section section--alt" id="contacto">
+  <div class="container contact">
+    <div class="contact__block">
+      <p class="eyebrow">Dónde estamos</p>
+      <h2 class="section__title">Contacto y horario</h2>
+
+      <dl class="info">
+        <div>
+          <dt>Dirección</dt>
+          <dd>Calle del Clavel, 11 · La Línea de la Concepción (Cádiz)</dd>
+        </div>
+        <div>
+          <dt>Teléfono</dt>
+          <dd><a href="tel:+34956000000">956 000 000</a></dd>
+        </div>
+        <div>
+          <dt>WhatsApp</dt>
+          <dd><a href="https://wa.me/34956000000" target="_blank" rel="noopener">956 000 000</a></dd>
+        </div>
+        <div>
+          <dt>Correo</dt>
+          <dd><a href="mailto:hola@barberiacategory.com">hola@barberiacategory.com</a></dd>
+        </div>
+        <div>
+          <dt>Horario</dt>
+          <dd>Lunes a sábado: 10:00 – 20:30<br>Domingo: cerrado</dd>
+        </div>
+      </dl>
+
+      <div class="contact__actions">
+        <a class="btn btn--primary" href="#reservar">Pedir cita</a>
+        <a class="btn btn--ghost" href="https://wa.me/34956000000" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a class="btn btn--ghost" href="https://maps.google.com/?q=Calle+del+Clavel+11+La+Linea+de+la+Concepcion" target="_blank" rel="noopener">Ver en el mapa</a>
+      </div>
+    </div>
+
+    <div class="contact__map">
+      <!-- Iframe de Google Maps con la dirección real del negocio -->
+      <iframe
+        src="https://www.google.com/maps?q=Calle+del+Clavel+11+La+Linea+de+la+Concepcion&output=embed"
+        title="Mapa de la barbería"
+        width="100%" height="100%" style="border:0" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIE ============ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="logo__mark">C</span>
+      <p>Barbería Category<br><span>Calle del Clavel, 11 · La Línea de la Concepción</span></p>
+    </div>
+    <nav class="footer__nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#galeria">Galería</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <p class="footer__legal">© 2026 Barbería Category. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- Botón fijo de reserva en móvil -->
+<a href="#reservar" class="sticky-cta">Pedir cita</a>
+
+<script>
+  // Menú móvil
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('nav--open');
+    burger.classList.toggle('burger--open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('nav--open');
+    burger.classList.remove('burger--open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+
+  // =====================================================================
+  //  RESERVAS
+  //  Demo visual: sin Supabase configurado todavía, así que corre siempre
+  //  en modo DEMO con estos datos de muestra. En cuanto se conecte una
+  //  base de datos real (mismo patrón que Barbería Domínguez), pega aquí
+  //  la URL y la clave anon y el resto del flujo funciona igual.
+  // =====================================================================
+
+  // --- Configuración: pega aquí los datos de Supabase cuando toque ---
+  const SUPABASE_URL  = '';   // https://xxxxx.supabase.co
+  const SUPABASE_ANON  = '';  // la clave anon (pública, no la service_role)
+
+  // Quita la barra final y un /rest/v1 de más, por si se pegan de sobra
+  const BASE = SUPABASE_URL.trim().replace(/\/+$/,'').replace(/\/rest\/v1$/,'');
+  const CONECTADO = Boolean(BASE && SUPABASE_ANON);
+
+  // Datos de muestra para ver el diseño antes de conectar la base de datos
+  const DEMO = {
+    servicios: [
+      { id:'s1', name:'Corte Degradado',        duration_min:30, price_cents:1320 },
+      { id:'s2', name:'Corte degradado + barba', duration_min:45, price_cents:1870 },
+      { id:'s3', name:'Corte Clásico',          duration_min:30, price_cents:1100 },
+      { id:'s4', name:'Corte clásico y barba',  duration_min:45, price_cents:1650 },
+      { id:'s5', name:'Niños (hasta 12 años)',  duration_min:30, price_cents:1100 },
+      { id:'s6', name:'Arreglo de barba',       duration_min:30, price_cents:660 },
+      { id:'s7', name:'Rapado (solo máquina)',  duration_min:30, price_cents:880 }
+    ],
+    barberos: [
+      { id:'b1', name:'Said',    specialty:'Especialista en degradados' },
+      { id:'b2', name:'Ahmed',   specialty:'Corte clásico y barba' },
+      { id:'b3', name:'Yassine', specialty:'Afeitado y diseño de barba' }
+    ]
+  };
+
+  // Estado de la reserva en curso
+  const sel = { servicio:null, barbero:null, dia:null, hora:null };
+
+  const $ = id => document.getElementById(id);
+  const euros = c => (c/100).toLocaleString('es-ES',
+    { style:'currency', currency:'EUR', minimumFractionDigits:0 });
+
+  // --- Llamadas a Supabase (funciones RPC, nunca a las tablas) ---
+  async function rpc(fn, params) {
+    const r = await fetch(`${BASE}/rest/v1/rpc/${fn}`, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`
+      },
+      body: JSON.stringify(params)
+    });
+    if (!r.ok) {
+      const t = await r.text();
+      throw new Error(t || `Error ${r.status}`);
+    }
+    return r.json();
+  }
+
+  function mostrarError(msg) {
+    $('alertMsg').textContent = msg;
+    $('alert').hidden = false;
+  }
+  const limpiarError = () => { $('alert').hidden = true; };
+
+  // --- Paso 1: servicios ---
+  async function cargarServicios() {
+    let lista = DEMO.servicios;
+    if (CONECTADO) {
+      try { lista = await rpc('servicios_activos', {}); }
+      catch (e) { console.warn('Servicios: usando demo', e); }
+    }
+    $('serviceList').innerHTML = lista.map(s => `
+      <button type="button" class="option" role="radio" aria-checked="false"
+              data-id="${s.id}" data-name="${s.name}" data-dur="${s.duration_min}">
+        <span class="option__name">${s.name}</span>
+        <span class="option__meta">${s.duration_min} min · ${euros(s.price_cents)}</span>
+      </button>`).join('');
+
+    $('serviceList').querySelectorAll('.option').forEach(b => {
+      b.addEventListener('click', () => {
+        marcar($('serviceList'), b);
+        sel.servicio = { id:b.dataset.id, name:b.dataset.name, dur:+b.dataset.dur };
+        cargarHuecos();
+        revisar();
+      });
+    });
+  }
+
+  // --- Paso 2: barberos ---
+  async function cargarBarberos() {
+    let lista = DEMO.barberos;
+    if (CONECTADO) {
+      try { lista = await rpc('barberos_activos', {}); }
+      catch (e) { console.warn('Barberos: usando demo', e); }
+    }
+    $('barberList').innerHTML = lista.map(b => `
+      <button type="button" class="barber" role="radio" aria-checked="false"
+              data-id="${b.id}" data-name="${b.name}">
+        <span class="barber__avatar">${b.name.charAt(0)}</span>
+        <span class="barber__info">
+          <strong>${b.name}</strong>
+          <small>${b.specialty || ''}</small>
+        </span>
+      </button>`).join('');
+
+    $('barberList').querySelectorAll('.barber').forEach(b => {
+      b.addEventListener('click', () => {
+        marcar($('barberList'), b, 'is-active');
+        sel.barbero = { id:b.dataset.id, name:b.dataset.name };
+        cargarHuecos();
+        revisar();
+      });
+    });
+  }
+
+  // --- Paso 3: los días que permita la configuración ---
+  // El número lo decide la base de datos, no este código: así el jefe lo
+  // cambia desde el panel sin tocar el HTML.
+  let DIAS_VISTA = 14;
+
+  async function cargarConfig() {
+    if (!CONECTADO) return;
+    try {
+      const c = await rpc('config_publica', {});
+      if (c && c[0]?.dias_antelacion) DIAS_VISTA = c[0].dias_antelacion;
+    } catch (e) { /* nos quedamos con el valor por defecto */ }
+  }
+
+  function cargarDias() {
+    const hoy = new Date(); hoy.setHours(0,0,0,0);
+    let html = '';
+    for (let i = 0; i <= DIAS_VISTA; i++) {
+      const d = new Date(hoy); d.setDate(d.getDate() + i);
+      if (d.getDay() === 0) continue;                 // domingo cerrado
+      // Fecha local, no UTC: con toISOString() en España el día
+      // retrocede al anterior y se ofrecían días desplazados.
+      const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` +
+                  `-${String(d.getDate()).padStart(2,'0')}`;
+      const dia = d.toLocaleDateString('es-ES', { weekday:'short' });
+      html += `
+        <button type="button" class="day" role="radio" aria-checked="false" data-date="${iso}">
+          <span class="day__name">${i === 0 ? 'Hoy' : dia}</span>
+          <span class="day__num">${d.getDate()}</span>
+          <span class="day__mon">${d.toLocaleDateString('es-ES',{month:'short'})}</span>
+        </button>`;
+    }
+    $('dayList').innerHTML = html;
+    $('dayList').querySelectorAll('.day').forEach(b => {
+      b.addEventListener('click', () => {
+        marcar($('dayList'), b);
+        sel.dia = b.dataset.date;
+        cargarHuecos();
+        revisar();
+      });
+    });
+  }
+
+  // --- Paso 4: huecos reales ---
+  async function cargarHuecos() {
+    const caja = $('slotList');
+    sel.hora = null;
+    revisar();
+
+    if (!sel.servicio || !sel.barbero || !sel.dia) {
+      caja.innerHTML = '<p class="slots__hint">Elige antes servicio, barbero y día.</p>';
+      return;
+    }
+
+    caja.innerHTML = '<p class="slots__hint">Buscando huecos libres…</p>';
+
+    let horas = [];
+    if (CONECTADO) {
+      try {
+        horas = await rpc('huecos_libres', {
+          p_barber: sel.barbero.id,
+          p_service: sel.servicio.id,
+          p_dia: sel.dia
+        });
+      } catch (e) {
+        caja.innerHTML = '';
+        mostrarError('No hemos podido consultar los huecos. Inténtalo de nuevo o llámanos.');
+        return;
+      }
+    } else {
+      horas = huecosDemo();
+    }
+
+    if (!horas.length) {
+      caja.innerHTML = `<p class="slots__empty">
+        No quedan huecos ese día con ${sel.barbero.name}.
+        Prueba otro día u otro barbero.</p>`;
+      return;
+    }
+
+    caja.innerHTML = horas.map(h => {
+      const t = new Date(h.slot || h);
+      const hhmm = t.toLocaleTimeString('es-ES',
+        { hour:'2-digit', minute:'2-digit', hour12:false });
+      return `<button type="button" class="slot" data-iso="${t.toISOString()}">${hhmm}</button>`;
+    }).join('');
+
+    caja.querySelectorAll('.slot').forEach(b => {
+      b.addEventListener('click', () => {
+        caja.querySelectorAll('.slot').forEach(x => x.classList.remove('is-active'));
+        b.classList.add('is-active');
+        sel.hora = b.dataset.iso;
+        revisar();
+      });
+    });
+  }
+
+  // Horas de ejemplo mientras no hay base de datos
+  function huecosDemo() {
+    const out = [];
+    const base = new Date(sel.dia + 'T10:00:00');
+    for (let i = 0; i < 14; i++) {
+      const t = new Date(base.getTime() + i * 45 * 60000);
+      if (t.getHours() >= 14 && t.getHours() < 16) continue;   // comida
+      if (t > new Date()) out.push(t.toISOString());
+    }
+    return out;
+  }
+
+  // --- Utilidades de selección ---
+  function marcar(caja, btn, clase = 'is-active') {
+    caja.querySelectorAll('[role=radio]').forEach(x => {
+      x.classList.remove(clase);
+      x.setAttribute('aria-checked','false');
+    });
+    btn.classList.add(clase);
+    btn.setAttribute('aria-checked','true');
+  }
+
+  // --- Validación y resumen ---
+  const telValido = v => /^[6-9]\d{8}$/.test(v.replace(/[\s-]/g,''));
+  // El correo es opcional: vacío vale, pero si se escribe debe ser válido
+  const emailValido = v => v.trim() === '' || /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v.trim());
+
+  function revisar() {
+    const nombre = $('fName').value.trim();
+    const tel    = $('fPhone').value.trim();
+    const listo  = sel.servicio && sel.barbero && sel.dia && sel.hora
+                   && nombre.length >= 2 && telValido(tel)
+                   && emailValido($('fEmail').value);
+    $('submitBtn').disabled = !listo;
+
+    if (sel.servicio && sel.barbero && sel.hora) {
+      const t = new Date(sel.hora);
+      $('summaryLine').textContent =
+        `${sel.servicio.name} con ${sel.barbero.name} · ` +
+        t.toLocaleDateString('es-ES',{weekday:'long', day:'numeric', month:'long'}) +
+        ` a las ${t.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',hour12:false})}`;
+      $('summary').hidden = false;
+    } else {
+      $('summary').hidden = true;
+    }
+  }
+
+  ['fName','fPhone','fEmail'].forEach(id => $(id).addEventListener('input', () => {
+    limpiarError();
+    revisar();
+  }));
+
+  // --- Envío ---
+  $('bookForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    limpiarError();
+
+    const nombre = $('fName').value.trim();
+    const tel    = $('fPhone').value.replace(/[\s-]/g,'');
+
+    if (!telValido(tel)) {
+      $('alertMsg').textContent = '';
+      document.querySelector('[data-for=fPhone]').textContent =
+        'Escribe un teléfono español de 9 cifras.';
+      return;
+    }
+    document.querySelector('[data-for=fPhone]').textContent = '';
+
+    if (!emailValido($('fEmail').value)) {
+      document.querySelector('[data-for=fEmail]').textContent =
+        'Ese correo no parece válido. Revísalo o déjalo vacío.';
+      return;
+    }
+    document.querySelector('[data-for=fEmail]').textContent = '';
+
+    const btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Reservando…';
+
+    try {
+      let codigo = null;
+      if (CONECTADO) {
+        // reservar() devuelve el código de reserva (ej. A7K2M9)
+        codigo = await rpc('reservar', {
+          p_barber: sel.barbero.id,
+          p_service: sel.servicio.id,
+          p_inicio: sel.hora,
+          p_nombre: nombre,
+          p_tel: tel,
+          p_email: $('fEmail').value.trim() || null
+        });
+      } else {
+        await new Promise(r => setTimeout(r, 600));   // simulación en demo
+        codigo = 'DEMO26';
+      }
+
+      const hayEmail = $('fEmail').value.trim() !== '';
+
+      if (codigo) {
+        $('codigoValor').textContent = codigo;
+        $('codigoCaja').hidden = false;
+        $('avisoEmail').hidden = !hayEmail;
+        $('avisoSinEmail').hidden = hayEmail;
+
+        // Enlace con los dos datos ya puestos
+        const url = new URL('mi-cita.html', location.href);
+        url.searchParams.set('tel', tel);
+        url.searchParams.set('cod', codigo);
+        $('miCitaLink').href = url.toString();
+        $('guardarCaja').hidden = false;
+
+        // Para el botón de copiar
+        window.__enlaceCita = url.toString();
+      }
+
+      const t = new Date(sel.hora);
+      $('doneDetail').textContent =
+        `${sel.servicio.name} con ${sel.barbero.name}, ` +
+        t.toLocaleDateString('es-ES',{weekday:'long', day:'numeric', month:'long'}) +
+        ` a las ${t.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit',hour12:false})}.`;
+
+      document.querySelectorAll('#reservar .step').forEach(s => s.hidden = true);
+      $('done').hidden = false;
+      $('done').scrollIntoView({ block:'center' });
+
+    } catch (err) {
+      const msg = String(err.message || '');
+      // El hueco se ocupó entre que lo vio y le dio a confirmar
+      if (/EMAIL_INVALIDO/i.test(msg)) {
+        document.querySelector('[data-for=fEmail]').textContent =
+          'Ese correo no parece válido. Revísalo o déjalo vacío.';
+      } else if (/no_solapamiento|AFORO_COMPLETO|409|conflict/i.test(msg)) {
+        mostrarError('Vaya, acaban de coger ese hueco. Elige otra hora, hemos actualizado la lista.');
+        cargarHuecos();
+      } else {
+        mostrarError('No hemos podido completar la reserva. Inténtalo de nuevo o llámanos.');
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Confirmar reserva';
+      revisar();
+    }
+  });
+
+  // --- Copiar el enlace de la cita ---
+  $('copiarBtn').addEventListener('click', async () => {
+    const url = window.__enlaceCita;
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      avisarCopiado();
+    } catch (e) {
+      // Safari antiguo y contextos sin permiso: selección manual
+      const t = document.createElement('textarea');
+      t.value = url;
+      t.style.position = 'fixed';
+      t.style.opacity = '0';
+      document.body.appendChild(t);
+      t.select();
+      try { document.execCommand('copy'); avisarCopiado(); }
+      catch (_) { prompt('Copia este enlace:', url); }
+      document.body.removeChild(t);
+    }
+  });
+
+  function avisarCopiado() {
+    const a = $('copiadoAviso');
+    a.hidden = false;
+    setTimeout(() => { a.hidden = true; }, 2500);
+  }
+
+  // --- Volver a empezar ---
+  $('againBtn').addEventListener('click', () => {
+    sel.servicio = sel.barbero = sel.dia = sel.hora = null;
+    $('bookForm').reset();
+    document.querySelectorAll('#reservar [role=radio]').forEach(x => {
+      x.classList.remove('is-active');
+      x.setAttribute('aria-checked','false');
+    });
+    $('slotList').innerHTML = '<p class="slots__hint">Elige antes servicio, barbero y día.</p>';
+    $('done').hidden = true;
+    $('codigoCaja').hidden = true;
+    $('guardarCaja').hidden = true;
+    document.querySelectorAll('#reservar .step').forEach(s => s.hidden = false);
+    $('summary').hidden = true;
+    revisar();
+    document.getElementById('reservar').scrollIntoView({ block:'start' });
+  });
+
+  cargarServicios();
+  cargarBarberos();
+  cargarConfig().then(cargarDias);
+
+  // Oculta el botón fijo al llegar a la zona de reservas: si no, tapa
+  // justo los días seleccionables del calendario en móvil.
+  const sticky = document.querySelector('.sticky-cta');
+  const booking = document.getElementById('reservar');
+
+  // Cálculo directo por posición: funciona en cualquier navegador y no
+  // depende de que se dispare ningún observador.
+  const updateSticky = () => {
+    const r = booking.getBoundingClientRect();
+    const solapa = r.top < window.innerHeight - 40 && r.bottom > 0;
+    sticky.classList.toggle('sticky-cta--hidden', solapa);
+  };
+  updateSticky();
+  window.addEventListener('scroll', updateSticky, { passive: true });
+  window.addEventListener('resize', updateSticky);
+
+  // Sombra en la cabecera al hacer scroll
+  const header = document.getElementById('header');
+  const onScroll = () => header.classList.toggle('header--scrolled', window.scrollY > 20);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+</body>
+</html>
