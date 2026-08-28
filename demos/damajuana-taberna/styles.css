@@ -285,3 +285,37 @@ footer .footer-credit a{color:var(--accent);font-weight:600;}
   section{padding:64px 0;}
   h2{font-size:1.7rem;}
 }
+
+/* HERO — Ken Burns en bucle */
+.hero--kb img{
+  animation: heroKenBurns 14s cubic-bezier(.45,0,.55,1) infinite;
+  transform-origin: 46% 40%;
+}
+@keyframes heroKenBurns{
+  0%   { transform: scale(1.08); transform-origin: 46% 40%; }
+  35%  { transform: scale(1.16); transform-origin: 58% 46%; }
+  70%  { transform: scale(1.30); transform-origin: 62% 55%; }
+  100% { transform: scale(1.08); transform-origin: 46% 40%; }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero--kb img{ animation: none; }
+}
+
+/* HERO — entrada de texto en cascada (una sola vez, al cargar) */
+.hero__content .eyebrow,
+.hero__content h1,
+.hero__content .hero__lede,
+.hero__content .hero__cta,
+.hero__content .hero__facts{
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeUp .8s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero__content .eyebrow{ animation-delay: .15s; }
+.hero__content h1{ animation-delay: .35s; }
+.hero__content .hero__lede{ animation-delay: .55s; }
+.hero__content .hero__cta{ animation-delay: .75s; }
+.hero__content .hero__facts{ animation-delay: .9s; }
+@keyframes heroFadeUp{
+  to{ opacity: 1; transform: translateY(0); }
+}
