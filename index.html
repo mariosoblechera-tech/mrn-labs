@@ -145,7 +145,7 @@
   .chat-demo{width:100%;max-width:440px;margin:0 auto;}
   .chat-demo-card{background:var(--white);border:1px solid var(--line);border-radius:26px;box-shadow:0 26px 60px -28px rgba(35,26,20,.28);overflow:hidden;}
   .chat-demo-head{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line);background:var(--paper);}
-  .chat-demo-avatar{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--clay),var(--clay-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;letter-spacing:.5px;flex-shrink:0;}
+  .chat-demo-avatar{width:44px;height:44px;border-radius:13px;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:5px;flex-shrink:0;}
   .chat-demo-head h3{margin:0;font-size:18px;color:var(--ink);font-weight:600;}
   .chat-demo-status{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--muted);margin-top:2px;}
   .chat-demo-dot{width:7px;height:7px;border-radius:50%;background:var(--olive);animation:chatDemoPulse 2s cubic-bezier(.4,0,.6,1) infinite;}
@@ -278,6 +278,10 @@
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy reveal in">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+          <img src="images/lobo-logo.png" alt="Lobo" style="width:32px;height:32px;object-fit:contain;">
+          <span style="font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:var(--ink);">Lobo</span>
+        </div>
         <span class="eyebrow">IA para clínicas de injerto capilar</span>
         <h1>Tu paciente no te llama a las 3 de la mañana. <em>Te escribe.</em><br>Y si nadie contesta, se asusta.</h1>
         <p class="section-sub">Una IA hace el seguimiento postoperatorio de tus pacientes por WhatsApp, 24 horas al día, para que tu equipo se dedique a operar, no a apagar fuegos a medianoche.</p>
@@ -341,7 +345,7 @@
       <div class="reveal" style="max-width:680px;">
         <span class="eyebrow">La solución</span>
         <h2 class="section-h2">El seguimiento que nunca duerme, nunca se cansa, y nunca deja a un paciente esperando en pánico.</h2>
-        <p class="section-sub" style="max-width:640px;">Nuestra IA hace el seguimiento postoperatorio completo de cada paciente por WhatsApp: entiende síntomas, tranquiliza, y avisa a tu equipo médico solo cuando hace falta de verdad.</p>
+        <p class="section-sub" style="max-width:640px;">Se llama Lobo. Hace el seguimiento postoperatorio completo de cada paciente por WhatsApp: entiende síntomas, tranquiliza, y avisa a tu equipo médico solo cuando hace falta de verdad.</p>
         <ul class="benefit-strip">
           <li>Detecta fiebre, sangrado o dolor agudo y avisa al doctor al momento</li>
           <li>Seguimiento día a día, adaptado a la fase exacta de cada paciente</li>
@@ -393,10 +397,10 @@
         <div class="chat-demo">
           <div class="chat-demo-card">
             <div class="chat-demo-head">
-              <div class="chat-demo-avatar">MRN</div>
+              <div class="chat-demo-avatar"><img src="images/lobo-logo.png" alt="Lobo" style="width:100%;height:100%;object-fit:contain;"></div>
               <div>
-                <h3>Seguimiento postoperatorio</h3>
-                <div class="chat-demo-status"><span class="chat-demo-dot"></span> Asistente en línea</div>
+                <h3>Lobo</h3>
+                <div class="chat-demo-status"><span class="chat-demo-dot"></span> Seguimiento postoperatorio · en línea</div>
               </div>
             </div>
             <div class="chat-demo-body" id="mrnChatDemo"></div>
