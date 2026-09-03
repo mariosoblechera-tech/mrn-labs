@@ -64,7 +64,6 @@
   .reveal-d1{transition-delay:.1s;} .reveal-d2{transition-delay:.2s;} .reveal-d3{transition-delay:.3s;}
   @media(prefers-reduced-motion:reduce){
     .reveal{opacity:1!important;transform:none!important;transition:none!important;}
-    [data-parallax]{transform:none!important;}
   }
 
   /* NAV */
@@ -100,7 +99,6 @@
   @media(prefers-reduced-motion:reduce){
     .hero-bg video{display:none;}
   }
-  [data-parallax]{will-change:transform;transform:scale(1.1);}
 
   .bg-cream{background:var(--cream);}
 
@@ -119,19 +117,6 @@
   .benefit-strip li{padding-left:26px;position:relative;color:var(--ink);font-size:.95rem;}
   .benefit-strip li::before{content:"✓";position:absolute;left:0;color:var(--clay);font-weight:700;}
   @media(min-width:700px){ .benefit-strip{grid-template-columns:1fr 1fr;} }
-
-  /* TEAM BANNER */
-  .team-banner{background:var(--white);border:1px solid var(--line);border-radius:24px;overflow:hidden;}
-  .team-banner-media{aspect-ratio:16/10;overflow:hidden;}
-  .team-banner-media img{width:100%;height:100%;object-fit:cover;object-position:center 62%;}
-  .team-banner-copy{padding:32px;}
-  .team-banner-copy h2{font-size:clamp(1.4rem,3vw,1.9rem);}
-  .team-banner-copy p{color:var(--muted);margin-top:10px;font-size:.95rem;line-height:1.65;max-width:480px;}
-  @media(min-width:700px){
-    .team-banner{display:grid;grid-template-columns:1.1fr .9fr;}
-    .team-banner-media{aspect-ratio:auto;height:100%;}
-    .team-banner-copy{padding:48px;display:flex;flex-direction:column;justify-content:center;}
-  }
 
   /* CHAT DEMO (bot en directo) */
   .chat-demo-split{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
@@ -314,12 +299,10 @@
     <div class="container reveal" style="max-width:760px;">
       <span class="eyebrow">El problema</span>
       <h2 class="section-h2">No es la cicatriz. Es el silencio de después.</h2>
-      <p class="section-sub" style="max-width:640px;">Tu paciente sale del quirófano tranquilo. Esa misma noche, a solas, un picor raro se convierte en pánico. Si nadie contesta, no piensa "es normal". Piensa "algo ha salido mal".</p>
+      <p class="section-sub" style="max-width:640px;">Tu paciente sale del quirófano tranquilo. Esa misma noche, a solas, un picor raro se convierte en pánico.</p>
       <ul class="pain-list">
-        <li>Tu recepción contesta la misma pregunta sobre costras y lavados quince veces al día.</li>
         <li>Un paciente te escribe a las 2 de la mañana con dolor, y nadie lo ve hasta las 9.</li>
         <li>Una mala reseña que nace de un mensaje sin contestar, no de una mala operación.</li>
-        <li>Cada revisión sin confirmar es un hueco vacío en la agenda de mañana.</li>
       </ul>
       <blockquote class="punchline">Operas con precisión quirúrgica. Y luego dejas el después en manos de un teléfono que nadie coge a tiempo.</blockquote>
       <a href="#producto" style="font-weight:700;color:var(--clay);">Así es como lo resolvemos ↓</a>
@@ -380,25 +363,6 @@
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- TEAM -->
-  <section class="bg-cream">
-    <div class="container reveal">
-      <div class="team-banner">
-        <div class="team-banner-media">
-          <picture>
-            <source media="(max-width:700px)" srcset="images/team-mobile.jpg">
-            <img data-parallax src="images/team.jpg" alt="Los tres fundadores de MRN Labs" style="object-position:center 30%">
-          </picture>
-        </div>
-        <div class="team-banner-copy">
-          <span class="eyebrow">El origen (de verdad)</span>
-          <h2>Nacimos un día de playa, con demasiado calor y demasiadas ideas</h2>
-          <p>Somos tres amigos que, un verano, a pleno sol y sin mucha sombra, decidimos que ya estaba bien de ver negocios dejar a sus clientes esperando respuesta. No hubo powerpoint ni ronda de inversores. Hubo arena, calor de justicia y la certeza de que esto se podía hacer mejor. Hoy nos hemos especializado en algo muy concreto: el seguimiento postoperatorio de clínicas de injerto capilar, porque ahí vimos el problema más claro que en ningún otro sitio. Pacientes solos, de noche, con miedo, y nadie al otro lado del teléfono.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -600,33 +564,6 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
-
-  // subtle scroll parallax on banner photos
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const parallaxEls = document.querySelectorAll('[data-parallax]');
-  if (!reduceMotion && parallaxEls.length) {
-    const active = new Set();
-    const pio = new IntersectionObserver(entries => {
-      entries.forEach(e => e.isIntersecting ? active.add(e.target) : active.delete(e.target));
-    });
-    parallaxEls.forEach(el => pio.observe(el));
-
-    let ticking = false;
-    function updateParallax() {
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      active.forEach(el => {
-        const rect = el.parentElement.getBoundingClientRect();
-        const centerOffset = (rect.top + rect.height / 2) - vh / 2;
-        const shift = Math.max(-24, Math.min(24, centerOffset * -0.06));
-        el.style.transform = `scale(1.1) translateY(${shift.toFixed(1)}px)`;
-      });
-      ticking = false;
-    }
-    window.addEventListener('scroll', () => {
-      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
-    }, { passive: true });
-    updateParallax();
-  }
 </script>
 
 <!-- ============================================================= -->
@@ -639,7 +576,7 @@
 
   const script = [
     { type: 'user', text: 'Hola, tengo unas costras raras en la zona del injerto, ¿es normal?', gap: 600 },
-    { type: 'bot',  chip: 'clasificar_sintoma', text: 'Hola Marta 👋 Sí, es totalmente normal en el día 5. Aquí tienes cómo cuidarlo hoy 👇', typing: 1100, gap: 500 },
+    { type: 'bot',  chip: 'clasificar_sintoma', text: 'Hola Roberto 👋 Sí, es totalmente normal en el día 5. Aquí tienes cómo cuidarlo hoy 👇', typing: 1100, gap: 500 },
     { type: 'user', text: 'Vale, gracias. ¿Puedo dormir de lado?', gap: 1500 },
     { type: 'bot',  chip: 'consultar_protocolo', text: 'Mejor bocarriba unos días más. Te lo recuerdo también mañana ✅', typing: 1200, gap: 500 },
     { type: 'user', text: 'Perfecto, muchas gracias.', gap: 1300 },
