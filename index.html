@@ -79,15 +79,27 @@
   .menu-toggle span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;}
 
   /* HERO */
-  .hero{padding:120px 0 48px;min-height:100vh;display:flex;align-items:flex-start;box-sizing:border-box;}
-  .hero .container{width:100%;}
+  .hero{position:relative;overflow:hidden;padding:120px 0 48px;min-height:100vh;display:flex;align-items:flex-start;box-sizing:border-box;}
+  .hero-bg{position:absolute;inset:0;z-index:0;background:#1a120c center/cover no-repeat;background-image:url('images/hero-bg-poster.jpg');}
+  .hero-bg video{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,13,8,.55) 0%,rgba(20,13,8,.65) 45%,rgba(20,13,8,.88) 100%);}
+  .hero .container{width:100%;position:relative;z-index:2;}
   .hero-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:center;}
   .hero-copy{max-width:780px;}
-  .hero h1{font-size:clamp(2.6rem,6.5vw,4.6rem);letter-spacing:-1px;}
-  .hero h1 em{font-style:normal;color:var(--clay);}
-  .hero .section-sub{max-width:620px;font-size:1.08rem;}
+  .hero h1{font-size:clamp(2.6rem,6.5vw,4.6rem);letter-spacing:-1px;color:#fff;}
+  .hero h1 em{font-style:normal;color:#E8A97C;}
+  .hero .eyebrow{color:#E8A97C;}
+  .hero .section-sub{max-width:620px;font-size:1.08rem;color:rgba(255,255,255,.78);}
   .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
-  .hero-trust{margin-top:22px;font-size:.85rem;color:var(--muted);}
+  .hero-cta .btn-ghost{color:#fff;border-color:rgba(255,255,255,.4);}
+  .hero-cta .btn-ghost:hover{border-color:#fff;}
+  .hero-trust{margin-top:22px;font-size:.85rem;color:rgba(255,255,255,.6);}
+  @media(max-width:700px){
+    .hero-bg video{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .hero-bg video{display:none;}
+  }
   [data-parallax]{will-change:transform;transform:scale(1.1);}
 
   /* LOGO STRIP (social proof placeholder) */
@@ -302,11 +314,31 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <video id="heroVideo" muted loop playsinline preload="none" poster="images/hero-bg-poster.jpg"></video>
+    </div>
+    <script>
+      // Solo cargamos el vídeo de fondo en pantallas grandes y sin "reducir movimiento",
+      // así en móvil el navegador nunca llega a descargarlo (el <video> no tiene <source>).
+      (function () {
+        var v = document.getElementById('heroVideo');
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (v && window.innerWidth >= 700 && !reduceMotion) {
+          var s = document.createElement('source');
+          s.src = 'images/hero-bg.mp4';
+          s.type = 'video/mp4';
+          v.appendChild(s);
+          v.load();
+          v.play().catch(function () {});
+        }
+      })();
+    </script>
+    <div class="hero-scrim"></div>
     <div class="container hero-grid">
       <div class="hero-copy reveal in">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
           <img src="images/lobo-logo.png" alt="Lobo" style="width:32px;height:32px;object-fit:contain;">
-          <span style="font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:var(--ink);">Lobo</span>
+          <span style="font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:#fff;">Lobo</span>
         </div>
         <span class="eyebrow">IA para clínicas de injerto capilar</span>
         <h1>Tu paciente no te llama a las 3 de la mañana. <em>Te escribe.</em><br>Y si nadie contesta, se asusta.</h1>
